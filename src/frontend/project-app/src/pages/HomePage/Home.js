@@ -4,6 +4,7 @@ import { logoutAccount } from "../../api/firebase-auth";
 
 /* Components */
 import HomeNew from "./components/HomeNew";
+import HomeAnalytics from "./components/HomeAnalytics";
 
 const Home = () => {
     /* Navigation */
@@ -29,6 +30,7 @@ const Home = () => {
     return (
         <div>
             <HomeNew />
+            <HomeAnalytics />
         </div>
     );
 }
