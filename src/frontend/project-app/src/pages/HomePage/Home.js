@@ -14,7 +14,7 @@ const Home = () => {
             <HomeSidebar />
 
             {/* changing screen */}
-            <div className="w-full flex flex-col">
+            <div className="w-full h-screen flex flex-col">
                 {/* <HomeNew /> */}
                 <HomeAnalytics />
             </div>
