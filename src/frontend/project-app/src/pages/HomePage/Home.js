@@ -29,6 +29,12 @@ const Home = () => {
 
     return (
         <div>
+            {/* nav bar */}
+            <div>
+
+            </div>
+
+            {/* changing screen */}
             <HomeNew />
             <HomeAnalytics />
         </div>
