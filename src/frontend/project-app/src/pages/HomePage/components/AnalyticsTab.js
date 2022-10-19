@@ -5,7 +5,7 @@ import AnalyticsLineGraph from "./AnalyticsLineGraph";
 
 const AnalyticsTab = () => {
     return (
-        <div className="flex flex-col justify-evenly content-center h-screen bg-slate-500">
+        <div className="flex flex-col justify-evenly items-center h-full w-full bg-slate-200 border-black border-8">
             {/* AnalyticsTab */}
             <AnalyticsHeatmap />
             <AnalyticsLineGraph />

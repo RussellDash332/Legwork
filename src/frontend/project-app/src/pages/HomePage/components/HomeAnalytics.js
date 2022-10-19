@@ -14,13 +14,8 @@ const HomeAnalytics = () => {
         setTabToggle(1);
     }
 
-    const clickTab3 = () => {
-        setTabToggle(2);
-    }
-
     return (
-        <div className="min-h-screen h-full w-full bg-blue-200">
-
+        <div className="flex flex-col min-h-screen w-full h-screen border-red-500 border-8">       
             {/* Tab bar */}
             <div className="tabs bg-red-100">
                 <a className={(tabToggle == 0) 
@@ -35,21 +30,13 @@ const HomeAnalytics = () => {
                     onClick={clickAnalyticsTab}>
                         Analytics
                 </a> 
-                <a className={(tabToggle == 2) 
-                    ? "tab tab-lg tab-lifted tab-active"
-                    : "tab tab-lg tab-lifted"} 
-                    onClick={clickTab3}>
-                        Tab 3
-                </a>
             </div>
 
             {/* Content */}
-            <div classname="w-screen h-screen bg-green-400">
+            <div className="w-full h-full bg-green-100 border-green-500 border-8">
                 {(tabToggle == 0) && <LiveTab /> }
                 {(tabToggle == 1) && <AnalyticsTab /> }
-                {(tabToggle == 2) && <div> Tab 3</div> }
             </div>
-
 
         </div>
     );
