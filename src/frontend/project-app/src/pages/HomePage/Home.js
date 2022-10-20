@@ -1,36 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { logoutAccount } from "../../api/firebase-auth";
+
 
 /* Components */
-import HomeNew from "./components/HomeNew";
-import HomeAnalytics from "./components/HomeAnalytics";
+import HomeNew from './components/HomeNew';
+import HomeAnalytics from './components/HomeAnalytics';
+import HomeSidebar from "./components/HomeSidebar";
 
 const Home = () => {
-    /* Navigation */
-    const navigate = useNavigate();
-    const [logoutToggle, setLogoutToggle] = useState(false);
-
-    useEffect(() => {
-        if (logoutToggle) {
-            logoutAccount(() => {
-                setLogoutToggle(false);
-                navigate("/login");
-            },
-            () => {
-                console.log("failed to logout");
-            })
-        }
-    }, [logoutToggle])
-
-    const clickLogout = () => {
-        setLogoutToggle(true);
-    }
 
     return (
-        <div>
-            <HomeNew />
-            <HomeAnalytics />
+        <div className="flex w-screen min-h-screen pl-16">
+            {/* nav bar */}
+            <HomeSidebar />
+
+            {/* changing screen */}
+            <div className="w-full h-screen flex flex-col">
+                {/* <HomeNew /> */}
+                <HomeAnalytics />
+            </div>
+            
         </div>
     );
 }

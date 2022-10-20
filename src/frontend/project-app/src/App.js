@@ -20,7 +20,7 @@ function App() {
     <Router>
 
       {/* development navigation */}
-      <div>
+      {/* <div>
         <nav>
           <ul>
             <li> <Link to="/login">Login</Link> </li>
@@ -29,7 +29,7 @@ function App() {
             <li> <Link to="/configuration">Configuration</Link> </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
 
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />}/>

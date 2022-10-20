@@ -1,13 +1,43 @@
 import React, { useEffect, useState } from "react";
 
+import LiveTab from "./LiveTab";
+import AnalyticsTab from "./AnalyticsTab";
+
 const HomeAnalytics = () => {
+    const [tabToggle, setTabToggle] = useState(0);
+
+    const clickLiveTab = () => {
+        setTabToggle(0); 
+    }
+
+    const clickAnalyticsTab = () => {
+        setTabToggle(1);
+    }
+
     return (
-        <div className="flex flex-col min-h-screen w-full bg-slate-200 justify-start">
-            <h1 className="text-5xl font-bold p-4 text-indigo-700">Megan's Supermarket</h1>
-            <hr className="w-3/5 h-2 bg-indigo-700 border-0" />
-            <div className="mx-auto content-center flex box-border border-4 h-96 w-3/5 m-10 p-4 outline outline-4 outline-blue-300">
-                <h1 className="text-5xl mx-auto font-bold p-4 text-blue-700">Heat Map Here</h1>
+        <div className="flex flex-col min-h-screen w-full h-screen border-red-500 border-8">       
+            {/* Tab bar */}
+            <div className="tabs bg-red-100">
+                <a className={(tabToggle == 0) 
+                    ? "tab tab-lg tab-lifted tab-active"
+                    : "tab tab-lg tab-lifted"} 
+                    onClick={clickLiveTab}>
+                        Live
+                </a> 
+                <a className={(tabToggle == 1) 
+                    ? "tab tab-lg tab-lifted tab-active"
+                    : "tab tab-lg tab-lifted"} 
+                    onClick={clickAnalyticsTab}>
+                        Analytics
+                </a> 
             </div>
+
+            {/* Content */}
+            <div className="w-full h-full bg-green-100 border-green-500 border-8">
+                {(tabToggle == 0) && <LiveTab /> }
+                {(tabToggle == 1) && <AnalyticsTab /> }
+            </div>
+
         </div>
     );
 }
