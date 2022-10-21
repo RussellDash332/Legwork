@@ -4,6 +4,7 @@ images/
 annotations/
 results/
 external/
+models/
 
 # Sandbox folders
 sandbox/
