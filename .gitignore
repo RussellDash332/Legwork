@@ -5,7 +5,7 @@ annotations/
 results/
 external/
 tensorflow/models/
-tensorflow/protoc/
+protoc/
 
 # Sandbox folders
 sandbox/
