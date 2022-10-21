@@ -1,10 +1,11 @@
 # Model-related
-*.tar.gz
+*.tar.gz*
 images/
 annotations/
 results/
 external/
 models/
+protoc/
 
 # Sandbox folders
 sandbox/

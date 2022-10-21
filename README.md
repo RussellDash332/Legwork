@@ -2,7 +2,19 @@
 
 ## Directory structure
 ````
-└── src (all codes)
+└── src
     ├── backend
+    |   ├── esp32cam (camera setup)
+    |   ├── firebase (to upload to database)
+    |   └── tensorflow (to handle model training)
+    |       ├── cocoapi
+    |       ├── data
+    |       |   ├── test
+    |       |   ├── train
+    |       |   └── valid
+    |       ├── models (all the model checkpoints)
+    |       └── setup (scripts to setup environment)
+    |           ├── [protoc] (see the setup guide for backend)
+    |           └── object_detection
     └── frontend
 ````
