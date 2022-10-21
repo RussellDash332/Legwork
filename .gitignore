@@ -1,10 +1,10 @@
 # Model-related
-*.tar.gz
+*.tar.gz*
 images/
 annotations/
 results/
 external/
-tensorflow/models/
+models/
 protoc/
 
 # Sandbox folders
