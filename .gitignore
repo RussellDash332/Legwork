@@ -4,7 +4,8 @@ images/
 annotations/
 results/
 external/
-models/
+tensorflow/models/
+tensorflow/protoc/
 
 # Sandbox folders
 sandbox/
