@@ -58,7 +58,7 @@ Full guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-using-
       ```sh
       python model_main_tf2.py \
         --pipeline_config_path=models/rcnn_model_1/pipeline.config \
-        --model_dir=models/rcnn_model_1/saved_model/saved_model.pb \
+        --model_dir=models/rcnn_model_1/saved_model \
         --checkpoint_every_n=1000 \
         --num_workers=2 \
         --alsologtostderr
