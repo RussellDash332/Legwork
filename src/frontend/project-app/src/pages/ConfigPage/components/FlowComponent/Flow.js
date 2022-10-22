@@ -1,56 +1,43 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useContext } from 'react';
 import ReactFlow, {
-  Controls,
-  Background,
-  applyNodeChanges,
-  applyEdgeChanges,
-  addEdge,
+    Controls,
+    Background,
+    useReactFlow
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import FlowContext from './FlowContext';
 
-const initialNodes = [
-  {
-    id: '1',
-    data: { label: 'Hello' },
-    position: { x: 0, y: 0 },
-    type: 'input',
-  },
-  {
-    id: '2',
-    data: { label: 'World' },
-    position: { x: 100, y: 100 },
-  },
-];
+const Flow = () => {
+  const { nodes, setNodes, onNodesChange,
+    edges, setEdges, onEdgesChange,
+    nodeTypes,
+    gridBgToggle,
+    nextPosID } = useContext(FlowContext);
 
-const initialEdges = [];
+  const { fitView } = useReactFlow();
 
-const Flow = (props) => {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
-
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    []
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
-  );
-
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  useEffect(() => {
+    console.log("fit view")
+    fitView()
+  }, [nodes.length])
 
   return (
     <div style={{ height: '100%' }}>
-      <ReactFlow
-        nodes={nodes}
-        onNodesChange={onNodesChange}
-        edges={edges}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-      >
-        <Background />
-        <Controls />
-      </ReactFlow>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          nodeTypes={nodeTypes}
+        >
+          <Background />
+          <Controls />
+          <div>
+            {/* <button className="btn absolute z-10 right-0 top-40" onClick={generatePath}>Add</button> */}
+            <button className='bth absolute z-10 right-0 top-60' onClick={fitView}>fit</button>
+          </div>
+          <div>{nextPosID}</div>
+        </ReactFlow>
     </div>
   );
 }
