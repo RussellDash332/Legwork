@@ -22,7 +22,7 @@ const AnalyticsHeatmap = () => {
                 points={dataPoints}
                 fitBoundsOnLoad
                 fitBoundsOnUpdate
-                radius={25}
+                radius={20}
                 latitudeExtractor={(m) => m.coordinates[0]}
                 longitudeExtractor={(m) => m.coordinates[1]}
                 intensityExtractor={(m) => m.intensity}
