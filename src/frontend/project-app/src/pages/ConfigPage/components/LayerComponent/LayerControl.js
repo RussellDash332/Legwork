@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoIosCloudUpload } from "react-icons/io";
+import FlowContext from "../FlowComponent/FlowContext";
 
 const LayerControl = (props) => {
+    const { gridBgToggle, setGridBgToggle } = useContext(FlowContext);
     const [gridToggle, setGridToggle] = useState(true);
     const [floorplanToggle, setFloorplanToggle] = useState(true);
     const [floorplan, setFloorplan] = useState(""); // Floorplan image link
 
     const clickGrid = () => {
-        setGridToggle(!gridToggle);
+        setGridBgToggle(!gridBgToggle);
     }
 
     const clickFloorplan = () => {
@@ -28,7 +30,7 @@ const LayerControl = (props) => {
                 <label className="label cursor-pointer w-max">
                     <input type="checkbox"
                         className="checkbox checkbox-primary checkbox-xs"
-                        checked={gridToggle} 
+                        checked={gridBgToggle} 
                         onClick={clickGrid} />
                     <span className="label-text font-bold ml-3">Gridlines</span> 
                 </label>

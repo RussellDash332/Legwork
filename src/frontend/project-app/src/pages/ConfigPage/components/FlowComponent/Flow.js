@@ -30,7 +30,7 @@ const Flow = () => {
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
         >
-          <Background />
+          {(gridBgToggle) && <Background />}
           <Controls />
           <div>
             {/* <button className="btn absolute z-10 right-0 top-40" onClick={generatePath}>Add</button> */}
