@@ -11,9 +11,11 @@ const AddNode = () => {
             <a href="#" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</a>
 
             {/* Title */}
-            <div className="form-control mb-4">
+            <div className="form-control mb-2">
                 <h3 className="font-bold text-2xl">Add New Component</h3>
             </div>
+
+            <hr className="h-1 text-primary bg-primary mb-4"/>
             
             {/* Content */}
             <div className="flex flex-col w-full lg:flex-row">
