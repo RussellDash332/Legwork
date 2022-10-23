@@ -1,10 +1,30 @@
 import React from "react";
 import DateRangeComp from "./DateRangeComp";
-// import TimeRangeSlider from "./TimeRangeSlider";
 import TimeRangeSlider from "react-time-range-slider";
 
 
-const FilterSidebar = () => {
+const FilterSidebar = ({filterValue, setFilterValue, setToggle}) => {
+
+    //hirarechy of components
+    // analytics tab
+    // - filter sidebar, heatmap, linegraph
+    // - daterangecomponent, timerangecomponent, toggles
+    // - daterangecomponent
+
+    const changeStartHandler = (time) => {
+        console.log("Start Handler Called", time);
+    }
+
+    const timeChangeHandler = (time) => {
+        setFilterValue(time);
+    }
+
+    const changeCompleteHandler = (time) => {
+        console.log("Complete Handler Called", time);
+    }
+
+    // daterange comp functions
+
     return (
         <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -25,80 +45,34 @@ const FilterSidebar = () => {
 
                     </div>
 
-                    {/* <div classname="TimeRangeSlider"> */}
-                    <div id="TimeRangeSlider">
+                    <div classname="TimeRangeSlider">
                         <h4>Time Range</h4>
                         <TimeRangeSlider
                             disabled={false}
                             format={24}
-                            maxValue={100}
-                            minValue={0}
+                            maxValue={"23:59"}
+                            minValue={"00:00"}
                             name={"time_range"}
-                        
+                            onChangeStart={changeStartHandler}
+                            onChangeComplete={changeCompleteHandler}
+                            onChange={timeChangeHandler}
                             step={15}
-                            value={10}/>
-
-                        <br /><br />
+                            value={filterValue}/>
+                        <div>Start Time: {filterValue.start} End Time: {filterValue.end}</div>
                         <hr />
-
                     </div>
 
-                    <li><a><div className="dropdown">
+                    <a><div className="dropdown" onClick={() => setToggle("year")}>
                         <label tabIndex={0} className="btn m-1">Year</label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">2019</span>
-                                    <input type="checkbox" checked className="checkbox checkbox-primary" />
-                                </label>
-                            </div></li>
-                            <li><div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">2020</span>
-                                    <input type="checkbox" checked className="checkbox checkbox-primary" />
-                                </label>
-                            </div></li>
-                        </ul>
-                    </div></a></li>
-
-                    <li><a><div className="dropdown">
+                    </div></a>
+                    <a><div className="dropdown" onClick={() => setToggle("month")}>
                         <label tabIndex={0} className="btn m-1">Month</label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">January</span>
-                                    <input type="checkbox" checked className="checkbox checkbox-primary" />
-                                </label>
-                            </div></li>
-                            <li><div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">February</span>
-                                    <input type="checkbox" checked className="checkbox checkbox-primary" />
-                                </label>
-                            </div></li>
-                        </ul>
-                    </div></a></li>
-
-                    <li><a><div className="dropdown">
+                    </div></a>
+                    <a><div className="dropdown" onClick={() => setToggle("day")}>
                         <label tabIndex={0} className="btn m-1">Day</label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">Monday</span>
-                                    <input type="checkbox" checked className="checkbox checkbox-primary" />
-                                </label>
-                            </div></li>
-                            <li><div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">Tuesday</span>
-                                    <input type="checkbox" checked className="checkbox checkbox-primary" />
-                                </label>
-                            </div></li>
-                        </ul>
-                    </div></a></li>
-                </ul>
+                    </div></a>
+                </ul>     
             </div>
-
         </div>
     );
 }
