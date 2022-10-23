@@ -3,17 +3,15 @@ import { IoIosCloudUpload } from "react-icons/io";
 import FlowContext from "../FlowComponent/FlowContext";
 
 const LayerControl = (props) => {
-    const { gridBgToggle, setGridBgToggle } = useContext(FlowContext);
-    const [gridToggle, setGridToggle] = useState(true);
-    const [floorplanToggle, setFloorplanToggle] = useState(true);
+    const { gridBgToggle, setGridBgToggle, floorplanBgToggle, setFloorplanBgToggle } = useContext(FlowContext);
     const [floorplan, setFloorplan] = useState(""); // Floorplan image link
 
-    const clickGrid = () => {
+    const toggleGrid = () => {
         setGridBgToggle(!gridBgToggle);
     }
 
-    const clickFloorplan = () => {
-        setFloorplanToggle(!floorplanToggle);
+    const toggleFloorplan = () => {
+        setFloorplanBgToggle(!floorplanBgToggle);
     }
 
     const uploadFloorplan = () => {
@@ -31,7 +29,7 @@ const LayerControl = (props) => {
                     <input type="checkbox"
                         className="checkbox checkbox-primary checkbox-xs"
                         checked={gridBgToggle} 
-                        onClick={clickGrid} />
+                        onClick={toggleGrid} />
                     <span className="label-text font-bold ml-3">Gridlines</span> 
                 </label>
             </div>
@@ -40,12 +38,16 @@ const LayerControl = (props) => {
                 <label className="label cursor-pointer w-max">
                     <input type="checkbox"
                         className="checkbox checkbox-primary checkbox-xs" 
-                        checked={floorplanToggle}
-                        onClick={clickFloorplan} 
+                        checked={floorplanBgToggle}
+                        onClick={uploadFloorplan} 
                         disabled={!(floorplan)} />
                     <span className="label-text font-bold ml-3">Floorplan</span>                   
                 </label>
-                <IoIosCloudUpload className="btn btn-square btn-xs btn-ghost" onClick={uploadFloorplan}/>  
+
+                <a href="#uploadFloorplan">
+                    <IoIosCloudUpload className="btn btn-square btn-xs btn-ghost"/>  
+                </a>
+                
             </div>
             
         </div>
