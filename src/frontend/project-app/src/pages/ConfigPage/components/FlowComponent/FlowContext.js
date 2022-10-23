@@ -1,35 +1,52 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import { useNodesState, useEdgesState } from 'reactflow';
+import { getUserNodes } from "../../../../api/firebase-db";
+import { UserContext } from "../../../ProtectedRoute";
 import { FlowNodeObject, FlowEdgeObject } from "./FlowObjects";
-import { camera } from "./CustomFlowNode";
+import { camera, image } from "./CustomFlowNode";
 
 const FlowContext = createContext();
 
-const initialNodes = [
-    { id: '1', data: { label: 'Node 1' }, position: { x: 100, y: 100 } },
-    { id: '2', data: { label: 'Node 2' }, position: { x: 0, y: 0 } },
-    new FlowNodeObject('3', 'node 3', 300, 300)
-  ];
+// const initialNodes = [
+//     { id: '1', data: { label: 'Node 1' }, position: { x: 0, y: 0 } },
+//     { id: '2', data: { label: 'Node 2' }, position: { x: 1400, y: 600 } },
+//     new FlowNodeObject('3', 'node 3', 300, 300)
+//   ];
   
-  const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+//   const initialEdges = [{ id: 'e1-2', source: '1', target: '2' , type: 'step'}];
 
 const nodeTypes = {
-    camera: camera
+    camera: camera,
+    image: image
 };
 
 export const FlowContextProvider = ({children}) => {
+    const { user } = useContext(UserContext);
+
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [nextPosID, setNextPosID] = useState(1);
     const [gridBgToggle, setGridBgToggle] = useState(true);
+    const [floorplanBgToggle, setFloorplanBgToggle] = useState(true);
+    const [floorplanImage, setFloorplanImage] = useState({});
 
     useEffect(() => {
-        // Read from database
-        setNodes(initialNodes);
-        setEdges(initialEdges);
-    
-        // Set next possible id to +1 from current max value
-        setNextPosID(initialNodes.length + 1);       
+        getUserNodes(user.uid,
+        (nodeData) => {
+            if (nodeData) {
+
+                if (nodeData.nodes) {
+                    const nodes = nodeData.nodes;
+                    setNodes(nodes);
+                    setNextPosID(nodes.length + 1); 
+                }
+
+                if (nodeData.edges) {
+                    const edges = nodeData.edges;
+                    setEdges(edges);
+                }
+            }
+        })              
     }, [])
 
     const generateID = () => {
@@ -44,7 +61,7 @@ export const FlowContextProvider = ({children}) => {
 
     const generatePath = (id1, label1, id2, label2) => {
         const node_posID = generateID();
-        console.log(node_posID);
+        // console.log(node_posID);
     
         // Node 1
         const newNode1 = new FlowNodeObject(
@@ -69,12 +86,12 @@ export const FlowContextProvider = ({children}) => {
         );
     
         setNodes((nds) => nds.concat([newNode1, newNode2]));
-        setEdges((edg) => edg.concat(newEdge))
+        setEdges((edg) => edg.concat(newEdge));
     }
     
     const generateSpot = (id, label) => {
         const node_posID = generateID();
-        console.log(node_posID);
+        // console.log(node_posID);
     
         // Node
         const newNode = new FlowNodeObject(
@@ -91,10 +108,8 @@ export const FlowContextProvider = ({children}) => {
         <FlowContext.Provider
             value={{
                 nodes,
-                setNodes,
                 onNodesChange,
                 edges,
-                setEdges,
                 onEdgesChange,
                 nodeTypes,
                 generatePath,
@@ -102,6 +117,10 @@ export const FlowContextProvider = ({children}) => {
                 isUniqueID,
                 gridBgToggle,
                 setGridBgToggle,
+                floorplanBgToggle,
+                setFloorplanBgToggle,
+                floorplanImage, 
+                setFloorplanImage,
                 nextPosID
             }}
         >

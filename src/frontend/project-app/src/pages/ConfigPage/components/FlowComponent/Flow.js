@@ -14,15 +14,15 @@ const Flow = () => {
     gridBgToggle,
     nextPosID } = useContext(FlowContext);
 
-  const { fitView } = useReactFlow();
+  // const { fitView } = useReactFlow();
 
-  useEffect(() => {
-    console.log("fit view")
-    fitView()
-  }, [nodes.length])
+  // useEffect(() => {
+  //   console.log("fit view")
+  //   fitView()
+  // }, [nodes.length])
 
   return (
-    <div style={{ height: '100%' }}>
+    <div className="h-full w-full">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -30,13 +30,13 @@ const Flow = () => {
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
         >
-          {(gridBgToggle) && <Background />}
+          {(gridBgToggle) && <Background variant="cross"/>}
           <Controls />
           <div>
             {/* <button className="btn absolute z-10 right-0 top-40" onClick={generatePath}>Add</button> */}
-            <button className='bth absolute z-10 right-0 top-60' onClick={fitView}>fit</button>
+            {/* <button className='bth absolute z-10 right-0 top-60' onClick={fitView}>fit</button> */}
           </div>
-          <div>{nextPosID}</div>
+          {/* <div>{nextPosID}</div> */}
         </ReactFlow>
     </div>
   );
