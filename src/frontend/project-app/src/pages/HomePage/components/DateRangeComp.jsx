@@ -47,7 +47,7 @@ const DateRangeComp = () => {
     }
 
     return (
-        <div className = "calendarWrap w-24">
+        <div className = "calendarWrap">
 
             <input
                 value = {` ${format(range[0].startDate, "MM/dd/yyyy")} to ${format(range[0].endDate, "MM/dd/yyyy")} ` }
