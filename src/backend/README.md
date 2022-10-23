@@ -72,3 +72,5 @@ TBC.
   - The solution is to ensure that these two packages are of the same version: `opencv-python` and `opencv-python-headless`.
 - Getting this error https://stackoverflow.com/questions/70537488/cannot-import-name-registermattype-from-cv2-cv2
   - One common error solution is to do `pip install opencv-python-headless==4.5.2.52`.
+- AttributeError: module 'tensorflow.python.training.experimental.mixed_precision' has no attribute '_register_wrapper_optimizer_cls'
+  - Based on [this](https://stackoverflow.com/questions/66178738/attributeerror-module-tensorflow-python-training-experimental-mixed-precision), the solution is to upgrade the `keras` package via `pip install keras --upgrade`.
