@@ -98,7 +98,7 @@ const Configuration = () => {
                 </div>
                 </div>
 
-                <div className="h-full bg-green-100" style={{borderColor: 'red', borderWidth: '3'}}>
+                <div className="h-full">
                     <ReactFlowProvider>
                         <Flow scale={scale}/>
                     </ReactFlowProvider>
@@ -117,7 +117,7 @@ const Configuration = () => {
                 <HelpConfig />
 
             </div>
-            </FlowContextProvider>
+        </FlowContextProvider>
     );
 }
 
