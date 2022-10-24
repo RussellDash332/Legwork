@@ -11,8 +11,7 @@ const dbRef = ref(getDatabase())
 export const storeNewUser = (uid, email) => {
     const db = getDatabase();
     set(ref(db, 'users/' + uid), {
-        uid: uid,
-        floorplanURL: ""
+        uid: uid
     })
     .then(() => {
         console.log("user stored in db successfully")
@@ -63,6 +62,7 @@ export const getUserNodes = (uid, success) => {
         console.log(error);
     })
 }
+
 
 
 

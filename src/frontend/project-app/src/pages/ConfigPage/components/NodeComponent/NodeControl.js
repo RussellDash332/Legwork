@@ -1,5 +1,5 @@
 import React from "react";
-import { IoIosArrowBack, IoIosSave, IoIosAdd, IoIosApps } from "react-icons/io"
+import { IoIosAdd, IoIosApps } from "react-icons/io"
 
 import AddNode from './AddNode';
 import AddPath from './AddPath';

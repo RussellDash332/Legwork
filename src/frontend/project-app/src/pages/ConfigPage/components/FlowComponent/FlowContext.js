@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { useNodesState, useEdgesState } from 'reactflow';
 import { getUserNodes } from "../../../../api/firebase-db";
+import { getFloorplanImage } from "../../../../api/firebase-storage";
 import { UserContext } from "../../../ProtectedRoute";
 import { FlowNodeObject, FlowEdgeObject } from "./FlowObjects";
 import { camera, image } from "./CustomFlowNode";
@@ -28,9 +29,10 @@ export const FlowContextProvider = ({children}) => {
     const [nextPosID, setNextPosID] = useState(1);
     const [gridBgToggle, setGridBgToggle] = useState(true);
     const [floorplanBgToggle, setFloorplanBgToggle] = useState(true);
-    const [floorplanImage, setFloorplanImage] = useState({});
+    const [floorplanImage, setFloorplanImage] = useState([]);
 
     useEffect(() => {
+        // Retrieve exisitng flow component state
         getUserNodes(user.uid,
         (nodeData) => {
             if (nodeData) {
@@ -46,7 +48,20 @@ export const FlowContextProvider = ({children}) => {
                     setEdges(edges);
                 }
             }
-        })              
+        })
+        
+        // Retrieve existing image
+        getFloorplanImage(user.uid,
+        (img_data) => {
+            // console.log("in flow context");
+            // console.log(img_data.hasOwnProperty('data_url'));
+
+            if (img_data.hasOwnProperty('data_url')) {
+                // console.log("image set to state");
+                const currentData = [img_data];
+                setFloorplanImage((prev) => prev.concat(currentData));
+            }
+        });
     }, [])
 
     const generateID = () => {
