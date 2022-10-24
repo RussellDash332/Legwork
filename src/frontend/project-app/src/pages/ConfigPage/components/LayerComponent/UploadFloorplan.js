@@ -7,15 +7,19 @@ import { storeFloorplanImage } from "../../../../api/firebase-storage";
 
 const UploadFloorplan = () => {
     const { user } = useContext(UserContext);
-    const { floorplanImage, setFloorplanImage } = useContext(FlowContext);
+    const { uploadImage, setUploadImage, setFloorplanImage } = useContext(FlowContext);
     const [submitToggle, setSubmitToggle] = useState(false);
 
     useEffect(() => {
         if (submitToggle) {
-            if (floorplanImage.length !== 0) {
+            if (uploadImage.length !== 0) {
                 storeFloorplanImage(user.uid,
-                    floorplanImage[0].data_url,
+                    uploadImage[0].data_url,
                     () => {
+                        setFloorplanImage(uploadImage);
+                        console.log("floorplan updated")
+                        setUploadImage([]);
+                        console.log("reset uploadImage")
                         setSubmitToggle(false);
                         document.getElementById("close-uploadFloorplan").click();
                     }
@@ -31,7 +35,7 @@ const UploadFloorplan = () => {
     const onUpload = (imageList, addUpdateIndex) => {
         console.log(imageList);
         console.log(imageList[0].file);
-        setFloorplanImage(imageList);
+        setUploadImage(imageList);
     }
 
     return (
@@ -52,7 +56,7 @@ const UploadFloorplan = () => {
             <div className="w-[500px]">
 
                 <ImageUploading
-                    value={floorplanImage}
+                    value={uploadImage}
                     onChange={onUpload}
                     multiple={false}
                     maxNumber={1}
@@ -67,10 +71,10 @@ const UploadFloorplan = () => {
                                 <div>
                                     <h2>Your file</h2>
                                 </div>
-                                <div className="upload__image-wrapper">
+                                <div>
                                     <button className="btn btn-primary mx-5"
                                         disabled={submitToggle}
-                                        onClick={(floorplanImage.length !== 0) ? () => onImageUpdate(0) : onImageUpload}>
+                                        onClick={(uploadImage.length !== 0) ? () => onImageUpdate(0) : onImageUpload}>
                                         Browse
                                     </button>
                                 </div>
@@ -85,10 +89,10 @@ const UploadFloorplan = () => {
                                 <div className="bg-base-300 aspect-[150/65] h-40 rounded-md flex justify-center items-center"
                                     // {...dragProps}
                                 >
-                                    {(floorplanImage.length === 0)
+                                    {(uploadImage.length === 0)
                                     ? <p>(No Image Uploaded)</p>
                                     : <div>
-                                        <img src={floorplanImage[0].data_url} className="object-contain aspect-[150/65] h-36" />
+                                        <img src={uploadImage[0].data_url} className="object-contain aspect-[150/65] h-36" />
                                     </div>}
                                     
                                     {/* {(isDragging)
@@ -97,10 +101,10 @@ const UploadFloorplan = () => {
                                         </div>} */}
                                 </div>
 
-                                {(floorplanImage.length !== 0) &&
+                                {(uploadImage.length !== 0) &&
                                 <div className="flex flex-col justify-between">
                                     <button className="btn btn-sm btn-circle btn-ghost" disabled={submitToggle} onClick={() => onImageRemove(0)}>✕</button>
-                                    <p className="text-xs text-ellipsis ml-2">({floorplanImage[0].file.size.toLocaleString()} kb)</p>
+                                    <p className="text-xs text-ellipsis ml-2">({uploadImage[0].file.size.toLocaleString()} kb)</p>
                                 </div>}
                                 
                             </div>

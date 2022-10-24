@@ -3,7 +3,9 @@ import { IoIosCloudUpload } from "react-icons/io";
 import FlowContext from "../FlowComponent/FlowContext";
 
 const LayerControl = (props) => {
-    const { gridBgToggle, setGridBgToggle, floorplanBgToggle, setFloorplanBgToggle, floorplanImage} = useContext(FlowContext);
+    const { gridBgToggle, setGridBgToggle,
+        floorplanBgToggle, setFloorplanBgToggle,
+        floorplanImage } = useContext(FlowContext);
 
     const toggleGrid = () => {
         setGridBgToggle(!gridBgToggle);

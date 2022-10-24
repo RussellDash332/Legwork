@@ -12,6 +12,7 @@ export class CameraNodeObject {
         this.position = { x: nodeX, y: nodeY };
         this.conntectable = false;
         this.type = 'camera';
+        this.zIndex = 2;
     };
 }
 
@@ -29,6 +30,7 @@ export class CameraTopNodeObject {
         this.position = { x: nodeX, y: nodeY };
         this.conntectable = false;
         this.type = 'cameraTop';
+        this.zIndex = 2;
     };
 }
 
@@ -46,6 +48,23 @@ export class CameraBottomNodeObject {
         this.position = { x: nodeX, y: nodeY };
         this.conntectable = false;
         this.type = 'cameraBottom';
+        this.zIndex = 2;
+    };
+}
+
+export class ImageNodeObject {
+    /**
+     * Flow Node Constructor
+     */
+    constructor(url) {
+        this.id = "floorplan";
+        this.data = { label: "floorplan", data_url: url};
+        this.position = { x: 0, y: 0 };
+        this.conntectable = false;
+        this.selectable = false;
+        this.draggable = false;
+        this.type = 'image';
+        this.zIndex = 1;
     };
 }
 
@@ -60,5 +79,6 @@ export class FlowEdgeObject {
         this.source = source;
         this.target = target;
         this.type = 'straight';
+        this.zIndex = 2;
     }
 }
