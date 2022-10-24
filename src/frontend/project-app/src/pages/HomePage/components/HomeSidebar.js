@@ -50,7 +50,7 @@ const HomeSidebar = () => {
     return (
         <div className="fixed top-0 left-0 h-screen w-16 z-20
                         flex flex-col
-                        bg-gray-700 text-white shadow-lg">
+                        bg-base-300 text-white shadow-lg">
 
             <div className="sidebar-icon group">
                 <IoMdContact className="h-8 w-8" />

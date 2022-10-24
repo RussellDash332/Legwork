@@ -35,7 +35,7 @@ const AddNode = () => {
                         <h2 className="card-title">Path</h2>
                         <p>Usually an aisle or walkway which requires 2 cameras to be monitored</p>
                         <div className="card-actions">
-                        <a href="#addPath" className="btn btn-primary">Create</a>
+                        <a href="#addPath" className="btn btn-primary text-white">Create</a>
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@ const AddNode = () => {
                         <h2 className="card-title">Spot</h2>
                         <p>A single area or location which requires 1 camera to be monitored</p>
                         <div className="card-actions">
-                        <a href="#addSpot" className="btn btn-primary">Create</a>
+                        <a href="#addSpot" className="btn btn-primary text-white">Create</a>
                         </div>
                     </div>
 

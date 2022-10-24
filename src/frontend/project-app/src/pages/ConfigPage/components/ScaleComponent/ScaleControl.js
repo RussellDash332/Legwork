@@ -4,7 +4,7 @@ import FlowContext from "../FlowComponent/FlowContext";
 const ScaleControl = () => {
     const { scale, setScale } = useContext(FlowContext);
     return (
-        <div className="form-control w-full max-w-xs rounded-md shadow-2xl absolute bottom-4 left-14 z-10 bg-base-100 px-3">
+        <div className="form-control w-full max-w-xs rounded-md shadow-2xl absolute bottom-4 left-14 z-10 bg-base-300 px-3">
 
             {/* Range Labels */}
             <label className="label">

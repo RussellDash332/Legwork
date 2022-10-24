@@ -106,7 +106,7 @@ const AddSpot = () => {
             </div>
 
             <div className="flex justify-center pt-5">
-            <button className={(saveToggle) ? "btn btn-primary loading" : "btn btn-primary"} onClick={clickSave}>Create & Add</button>
+            <button className={(saveToggle) ? "btn btn-primary loading" : "btn btn-primary text-white"} onClick={clickSave}>Create & Add</button>
             </div>
         </div>
         </div>

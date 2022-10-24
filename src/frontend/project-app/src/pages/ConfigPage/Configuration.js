@@ -14,7 +14,7 @@ import Flow from './components/FlowComponent/Flow';
 const Configuration = () => {
     return (
         <FlowContextProvider>
-            <div className="h-screen bg-base-200 flex flex-col">
+            <div className="h-screen flex flex-col">
 
                 {/* Nav Bar */}
                 <ConfigNavbar />

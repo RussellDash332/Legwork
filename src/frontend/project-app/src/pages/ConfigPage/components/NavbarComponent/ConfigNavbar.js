@@ -2,12 +2,9 @@ import React, { useContext, useEffect, useState }from "react";
 import { useNavigate } from "react-router-dom";
 import { storeUserNodes, updateNodeScale } from "../../../../api/firebase-db";
 import { AiFillQuestionCircle } from "react-icons/ai";
-import { IoIosArrowBack, IoIosSave } from "react-icons/io"
+import { IoMdExit, IoIosSave } from "react-icons/io"
 import FlowContext from "../FlowComponent/FlowContext";
 import { UserContext } from "../../../ProtectedRoute";
-
-
-import HelpConfig from "../HelpComponent/HelpConfig";
 
 const ConfigNavbar = () => {
 
@@ -48,37 +45,16 @@ const ConfigNavbar = () => {
 
             updateNodeScale(user.uid, scale);
 
-            
-
-            // setTimeout(() => {
-            //     setSaveToggle(false);
-
-            //         if (quitToggle) {
-            //             setQuitToggle(false);
-            //             navigate("/home")
-            //         }
-            // }, 2000)
-
         }
     }, [saveToggle])
 
     return (
-        <div className="navbar bg-gray-700 text-white">
+        <div className="fixed top-0 w-screen h-16 z-10
+            flex justify-between bg-base-300">
+
             {/* Left Components */}
-            <div className="flex-1 place-items-center">
-
-                {/* <div className="sidebar-icon group">
-                    <IoIosArrowBack className="h-8 w-8" />
-                    <span className="sidebar-tooltip group-hover:scale-100">
-                        Profile
-                    </span>
-                </div> */}
-
-                <div className="px-2">
-                    <IoIosArrowBack className="text-2xl"/>
-                </div>
-
-                <a className="normal-case text-2xl font-bold">
+            <div className="flex place-items-center">
+                <a className="normal-case text-2xl font-bold pl-5">
                     Configuration
                 </a>
 
@@ -90,8 +66,8 @@ const ConfigNavbar = () => {
             </div>
 
             {/* Right Components */}
-            <div className="flex-none">
-                <button className={(saveToggle && !quitToggle) ? "btn btn-primary btn-outline btn-sm mx-2 loading" : "btn btn-primary btn-outline btn-sm mx-2"} 
+            <div className="flex w-32 mr-2">
+                {/* <button className={(saveToggle && !quitToggle) ? "btn btn-primary btn-outline btn-sm mx-2 loading" : "btn btn-primary btn-outline btn-sm mx-2"} 
                     onClick={clickSave}
                     disabled={quitToggle}>
                     <IoIosSave className="h-6 w-6"/>
@@ -103,7 +79,21 @@ const ConfigNavbar = () => {
                     disabled={(saveToggle && !quitToggle)}>
                     <IoIosSave className="h-6 w-6"/>
                     Save & Quit
-                </button>
+                </button> */}
+
+                <div className="sidebar-icon group" onClick={clickSave} disabled={quitToggle}>
+                    <IoIosSave className="h-8 w-8" />
+                    <span className="sidebar-tooltip2 group-hover:scale-100">
+                        Save
+                    </span>
+                </div>
+
+                <div className="sidebar-icon group" onClick={clickSaveQuit} disabled={(saveToggle && !quitToggle)}>
+                    <IoMdExit className="h-8 w-8" />
+                    <span className="sidebar-tooltip2 group-hover:scale-100">
+                        Save & Quit
+                    </span>
+                </div>
 
             </div>
 

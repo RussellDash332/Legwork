@@ -14,7 +14,7 @@ const LayerControl = (props) => {
     }
 
     return (
-        <div className="form-control w-48 rounded-md shadow-xl absolute top-20 right-4 z-10 bg-base-100 px-3">
+        <div className="form-control w-48 rounded-md shadow-xl absolute top-20 right-4 z-[5] bg-base-300 px-3">
             <div className="mt-2">
                 <span className="label-text font-bold text-primary text-base">Layers</span>
             </div>
