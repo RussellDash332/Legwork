@@ -82,7 +82,7 @@ const AnalyticsHeatmap = () => {
             style={{ height: '100vh', width: '100%' }}
             crs={L.CRS.Simple}
         >
-            <HeatmapLayer
+            {/* <HeatmapLayer
                 points={dataPoints}
                 fitBoundsOnLoad
                 fitBoundsOnUpdate
@@ -90,7 +90,7 @@ const AnalyticsHeatmap = () => {
                 latitudeExtractor={(m) => m.coordinates[0]}
                 longitudeExtractor={(m) => m.coordinates[1]}
                 intensityExtractor={(m) => m.intensity}
-            />
+            /> */}
             <LayersControl position="topright">
                 {renderFloorPlan()}
             </LayersControl>
