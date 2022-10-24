@@ -8,15 +8,15 @@ const ScaleControl = () => {
 
             {/* Range Labels */}
             <label className="label">
-                <span className="label-text-alt font-bold">10%</span>
+                <span className="label-text-alt font-bold">25%</span>
                 <span className="label-text-alt font-bold">50%</span>
-                <span className="label-text-alt font-bold">100%</span>
+                <span className="label-text-alt font-bold">75%</span>
             </label>
 
             {/* Range Slider */}
             <div className="form-control mb-2 mx-2 items-center">
                 <input type="range" 
-                    min={10} max={100}
+                    min={25} max={75}
                     value={scale} 
                     onChange={(e) => setScale(e.currentTarget.value)} 
                     className="range range-xs range-primary" /> 

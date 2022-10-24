@@ -1,97 +1,126 @@
-import React, { memo, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import { Handle } from "reactflow";
 import { BsCameraVideoFill } from "react-icons/bs"
+import FlowContext from "./FlowContext";
 
 import "./CustomNodeStyle.css";
 
-export const arrow = memo(({data, isConnectable}) => {
+export const Camera = memo(({data}) => {
+    const { scale } = useContext(FlowContext);
     return (
         <>
-            <Handle
-                type="target"
-                position="left"
-                onConnect={(params) => console.log('handle onConnect', params)}
-                isConnectable={isConnectable}
-            />
+            <div style={{
+                    width: 50 * (scale / 50),
+                    aspectRatio: 1 / 1,
+                    backgroundColor: 'red',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: '4px',
+                    backgroundColor: 'hsl(var(--b3))'
+                }}>
+                <BsCameraVideoFill
+                    style={{
+                        width: '80%',
+                        aspectRatio: 1 / 1
+                    }}/>
+            </div>
 
-            <div className="arrow-pointer">
-
+            <div className="labelContainer"
+                style={{
+                    width: 50 * (scale / 50),
+                }}>
+                <p className="nodeLabel">{data.label}</p>
             </div>
         </>
     );
 })
 
-
-export const camera = memo(({data, isConnectable}) => {
-    return (
-        <>
-            <div>
-                <div className="square">
-                    <BsCameraVideoFill className="w-1/2"/>
-                    <p className="nodeLabel">{data.label}</p>
-                </div>
-            </div>
-        </>
-    );
-})
-
-export const cameraTop = memo(({data, isConnectable}) => {
+export const CameraTop = memo(({data}) => {
+    const { scale } = useContext(FlowContext);
     return (
         <>
             <Handle
                 type="target"
                 position="bottom"
-                onConnect={(params) => console.log('handle onConnect', params)}
-                isConnectable={isConnectable}
             />
             <Handle
                 type="source"
                 position="bottom"
-                onConnect={(params) => console.log('handle onConnect', params)}
-                isConnectable={isConnectable}
             />
 
-            <div>
-                <div className="square">
-                    <BsCameraVideoFill />
-                    <p className="nodeLabel">{data.label}</p>
-                </div>
+            <div style={{
+                    width: 50 * (scale / 50),
+                    aspectRatio: 1 / 1,
+                    backgroundColor: 'red',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: '4px',
+                    backgroundColor: 'hsl(var(--b3))'
+                }}>
+                <BsCameraVideoFill
+                    style={{
+                        width: '80%',
+                        aspectRatio: 1 / 1
+                    }}/>
+            </div>
+
+            <div className="labelContainer"
+                style={{
+                    width: 50 * (scale / 50),
+                }}>
+                <p className="nodeLabel">{data.label}</p>
             </div>
         </>
     );
 })
 
-export const cameraBottom = memo(({data, isConnectable}) => {
+export const CameraBottom = memo(({data}) => {
+    const { scale } = useContext(FlowContext);
     return (
         <>
             <Handle
                 type="target"
                 position="top"
-                onConnect={(params) => console.log('handle onConnect', params)}
-                isConnectable={isConnectable}
             />
             <Handle
                 type="source"
                 position="top"
-                onConnect={(params) => console.log('handle onConnect', params)}
-                isConnectable={isConnectable}
             />
 
-            <div>
-                <div className="square">
-                    <BsCameraVideoFill />
-                    <p className="nodeLabel">{data.label}</p>
-                </div>
+            <div style={{
+                    width: 50 * (scale / 50),
+                    aspectRatio: 1 / 1,
+                    backgroundColor: 'red',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: '4px',
+                    backgroundColor: 'hsl(var(--b3))'
+                }}>
+                <BsCameraVideoFill
+                    style={{
+                        width: '80%',
+                        aspectRatio: 1 / 1
+                    }}/>
+            </div>
+
+            <div className="labelContainer"
+                style={{
+                    width: 50 * (scale / 50),
+                }}>
+                <p className="nodeLabel">{data.label}</p>
             </div>
         </>
     );
 })
 
-export const image = memo(({data, isConnectable}) => {
+export const Floorplan = memo(({data}) => {
     return (
         <>
             <div>
-                {/* Image */}
+                <img src={data.data_url} className="object-contain aspect-[150/65] h-60"/>
             </div>
         </>
     );

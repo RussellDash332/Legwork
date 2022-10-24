@@ -76,10 +76,13 @@ const AddSpot = () => {
                     <h2 className="card-title font-bold">Camera 1</h2>
                     
                     <p className="label-text-alt text-end"> Camera Name </p>
-                    <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs"
+                    <input type="text" 
+                        placeholder="Type here (max. 12 characters)"
+                        className="input input-bordered w-full max-w-xs"
                         value={cameraName1} 
                         onChange={(e) => setCameraName1(e.currentTarget.value)}
-                        disabled={saveToggle} />
+                        disabled={saveToggle}
+                        maxLength={12} />
 
                     <p className="label-text-alt text-end"> Device ID </p>
                     <input type="text" placeholder="Type here" 

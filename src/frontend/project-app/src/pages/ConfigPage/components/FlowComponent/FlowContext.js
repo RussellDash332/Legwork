@@ -3,24 +3,20 @@ import { useNodesState, useEdgesState } from 'reactflow';
 import { getNodeScale, getUserNodes } from "../../../../api/firebase-db";
 import { getFloorplanImage } from "../../../../api/firebase-storage";
 import { UserContext } from "../../../ProtectedRoute";
-import { CameraNodeObject, CameraTopNodeObject, CameraBottomNodeObject, FlowEdgeObject } from "./FlowObjects";
-import { camera, cameraBottom, cameraTop, image } from "./CustomFlowNode";
+import { CameraNodeObject, CameraTopNodeObject, CameraBottomNodeObject, FlowEdgeObject, ImageNodeObject } from "./FlowObjects";
+import { Camera, CameraBottom, CameraTop, Floorplan } from "./CustomFlowNode";
 
 const FlowContext = createContext();
 
 // const initialNodes = [
-//     { id: '1', data: { label: 'Node 1' }, position: { x: 0, y: 0 } },
-//     { id: '2', data: { label: 'Node 2' }, position: { x: 1400, y: 600 } },
-//     new FlowNodeObject('3', 'node 3', 300, 300)
-//   ];
+//     { id: 'empty', position: { x: 0, y: 0 }, type: "empty", hidden: true, selectable: false, deletable: false }
+// ];
   
-//   const initialEdges = [{ id: 'e1-2', source: '1', target: '2' , type: 'step'}];
-
 const nodeTypes = {
-    camera: camera,
-    cameraTop: cameraTop,
-    cameraBottom: cameraBottom,
-    image: image
+    camera: Camera,
+    cameraTop: CameraTop,
+    cameraBottom: CameraBottom,
+    image: Floorplan
 };
 
 export const FlowContextProvider = ({children}) => {
@@ -30,6 +26,7 @@ export const FlowContextProvider = ({children}) => {
     const [nextPosID, setNextPosID] = useState(1);
     const [gridBgToggle, setGridBgToggle] = useState(true);
     const [floorplanBgToggle, setFloorplanBgToggle] = useState(true);
+    const [uploadImage, setUploadImage] = useState([]);
     const [floorplanImage, setFloorplanImage] = useState([]);
     const [scale, setScale] = useState(50);
 
@@ -61,7 +58,7 @@ export const FlowContextProvider = ({children}) => {
             if (img_data.hasOwnProperty('data_url')) {
                 // console.log("image set to state");
                 const currentData = [img_data];
-                setFloorplanImage((prev) => prev.concat(currentData));
+                setFloorplanImage(currentData);
             }
         });
 
@@ -72,6 +69,18 @@ export const FlowContextProvider = ({children}) => {
         })
 
     }, [])
+
+    useEffect(() => {
+        if (floorplanImage.length !== 0) {
+            if (floorplanBgToggle) {
+                console.log("useeffect:", floorplanImage)
+                generateFloorplanNode(floorplanImage[0].data_url);
+                console.log("image node generated")
+            } else {
+                removeFloorplanNode();
+            }
+        }
+    }, [floorplanImage, floorplanBgToggle])
 
     const generateID = () => {
         setNextPosID((prev) => prev + 1)
@@ -128,15 +137,37 @@ export const FlowContextProvider = ({children}) => {
         setNodes((nds) => nds.concat(newNode));
     }
 
-    useEffect(() => {
-        setNodes((nds) => 
-            nds.map((node) => {
-                node.style = {...node.style, width: 50 * (scale / 50), height: 50 * (scale / 50), background: 'green'};
+    const generateFloorplanNode = (url) => {
 
-                return node;
-            })
-        )
-    }, [scale, nodes])
+        // Check if an image node already exists
+        const ImageNodeIdx = nodes.findIndex((node) => {return node.type === "image"});
+        console.log(ImageNodeIdx);
+
+        const newNode = new ImageNodeObject(url);
+
+        if (ImageNodeIdx === -1) { // if image node does not exists
+
+            console.log("inserting new image node");
+            setNodes((nds) => nds.concat(newNode)); // Add new node
+
+        } else { // if image node exists
+
+            const arr = [...nodes]
+            arr.splice(ImageNodeIdx, 1, newNode);
+            setNodes(arr);
+        }
+    }
+
+    const removeFloorplanNode = () => {
+        const ImageNodeIdx = nodes.findIndex((node) => {return node.type === "image"});
+        const arr = [...nodes]
+
+        if (ImageNodeIdx !== -1) {
+            arr.splice(ImageNodeIdx, 1);
+        }
+
+        setNodes(arr);
+    }
 
     return (
         <FlowContext.Provider
@@ -157,6 +188,8 @@ export const FlowContextProvider = ({children}) => {
                 setFloorplanBgToggle,
                 floorplanImage, 
                 setFloorplanImage,
+                uploadImage,
+                setUploadImage,
                 scale,
                 setScale,
                 nextPosID

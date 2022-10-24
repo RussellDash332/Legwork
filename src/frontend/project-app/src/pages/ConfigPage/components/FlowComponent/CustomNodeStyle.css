@@ -1,20 +1,19 @@
-.square {
-    width: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: visible;
+.labelContainer {
+    margin-top: 4px;
+    background-color: hsl(var(--b3));
+    border-radius: 0.125rem; /* 6px */
 }
 
 .nodeLabel {
-    font-size: 50%;
+    font-size: 25%;
+    text-align: center;
+    word-break: break-word;
+    /* text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; */
 }
 
-.trapezoid {
-    border-bottom: 10px solid red;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    height: 0;
-    width: 40px;
+.cameraIcon {
+   width: 60%;
+   aspect-ratio: 1/1;
 }

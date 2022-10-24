@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState }from "react";
 import { useNavigate } from "react-router-dom";
 import { storeUserNodes, updateNodeScale } from "../../../../api/firebase-db";
-import { AiFillQuestionCircle } from "react-icons/ai";
+import { BsQuestion } from "react-icons/bs";
 import { IoMdExit, IoIosSave } from "react-icons/io"
 import FlowContext from "../FlowComponent/FlowContext";
 import { UserContext } from "../../../ProtectedRoute";
@@ -60,7 +60,7 @@ const ConfigNavbar = () => {
 
                 <div className="px-2">
                     <a href="#helpConfig">
-                        <AiFillQuestionCircle className="btn btn-circle btn-xs" />
+                        <BsQuestion className="btn btn-circle btn-xs" />
                     </a>
                 </div>
             </div>
