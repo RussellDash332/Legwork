@@ -5,11 +5,9 @@ mkdir -p ../models
 model_zoo='../setup/model_zoo.txt'
 cd ../models
 
-# One-liner download everything
-wget -i $model_zoo
-
-# Do a loop to extract the tar.gz files
+# Do a loop to download and extract the tar.gz files
 for url in $(grep . $model_zoo)
 do
+    curl -O $(echo $url | grep -oEi '(.*tar\.gz)')
     tar -xvf $(echo $url | grep -oEi '([^/]*tar\.gz)')
 done
