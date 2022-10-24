@@ -3,8 +3,7 @@ import { IoIosCloudUpload } from "react-icons/io";
 import FlowContext from "../FlowComponent/FlowContext";
 
 const LayerControl = (props) => {
-    const { gridBgToggle, setGridBgToggle, floorplanBgToggle, setFloorplanBgToggle } = useContext(FlowContext);
-    const [floorplan, setFloorplan] = useState(""); // Floorplan image link
+    const { gridBgToggle, setGridBgToggle, floorplanBgToggle, setFloorplanBgToggle, floorplanImage} = useContext(FlowContext);
 
     const toggleGrid = () => {
         setGridBgToggle(!gridBgToggle);
@@ -12,10 +11,6 @@ const LayerControl = (props) => {
 
     const toggleFloorplan = () => {
         setFloorplanBgToggle(!floorplanBgToggle);
-    }
-
-    const uploadFloorplan = () => {
-        setFloorplan("link");
     }
 
     return (
@@ -29,7 +24,7 @@ const LayerControl = (props) => {
                     <input type="checkbox"
                         className="checkbox checkbox-primary checkbox-xs"
                         checked={gridBgToggle} 
-                        onClick={toggleGrid} />
+                        onChange={toggleGrid} />
                     <span className="label-text font-bold ml-3">Gridlines</span> 
                 </label>
             </div>
@@ -39,8 +34,8 @@ const LayerControl = (props) => {
                     <input type="checkbox"
                         className="checkbox checkbox-primary checkbox-xs" 
                         checked={floorplanBgToggle}
-                        onClick={uploadFloorplan} 
-                        disabled={!(floorplan)} />
+                        onChange={toggleFloorplan} 
+                        disabled={floorplanImage.length === 0} />
                     <span className="label-text font-bold ml-3">Floorplan</span>                   
                 </label>
 

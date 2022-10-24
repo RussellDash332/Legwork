@@ -1,4 +1,4 @@
-import { ref, set, child, get, getDatabase } from "firebase/database";
+import { ref, set, child, get, getDatabase, update } from "firebase/database";
 // import { database } from "./firebase-config";
 
 const dbRef = ref(getDatabase())
@@ -11,7 +11,8 @@ const dbRef = ref(getDatabase())
 export const storeNewUser = (uid, email) => {
     const db = getDatabase();
     set(ref(db, 'users/' + uid), {
-        uid: uid
+        uid: uid,
+        nodeScale: 50
     })
     .then(() => {
         console.log("user stored in db successfully")
@@ -50,6 +51,35 @@ export const storeUserNodes = (uid, nodes, edges, success) => {
  */
 export const getUserNodes = (uid, success) => {
     get(child(dbRef, `users/${uid}/flow`))
+    .then((snapshot) => {
+
+        if (snapshot.exists()) {
+            console.log(snapshot.val());
+        }
+
+        return success(snapshot.val());
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
+
+/**
+ * Function to update node scale value in database under user
+ * @param {String} uid 
+ * @param {Integer} scale 
+ */
+export const updateNodeScale = (uid, scale) => {
+    const db = getDatabase();
+
+    update(ref(db, 'users/' + uid), {nodeScale: scale})
+    .then(() => {console.log("updated node scale successfully");})
+    .catch(() => {console.log("failed tp update node scale");})
+}
+
+
+export const getNodeScale = (uid, success) => {
+    get(child(dbRef, `users/${uid}/nodeScale`))
     .then((snapshot) => {
 
         if (snapshot.exists()) {

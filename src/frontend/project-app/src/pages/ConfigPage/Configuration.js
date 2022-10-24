@@ -12,9 +12,6 @@ import Flow from './components/FlowComponent/Flow';
 
 
 const Configuration = () => {
-    /* Scale Control */
-    const [scale, setScale] = useState(50);
-
     return (
         <FlowContextProvider>
             <div className="h-screen bg-base-200 flex flex-col">
@@ -26,7 +23,7 @@ const Configuration = () => {
                 {/* Flow diagram compoenent */}
                 <div className="h-full">
                     <ReactFlowProvider>
-                        <Flow scale={scale} />
+                        <Flow />
                     </ReactFlowProvider>
                 </div>
 
@@ -35,7 +32,7 @@ const Configuration = () => {
                     <UploadFloorplan />
 
                 {/* Component Scale */}
-                <ScaleControl scale={scale} setScale={setScale} />
+                <ScaleControl />
 
                 {/* Add & Components button */}
                 <NodeControl />

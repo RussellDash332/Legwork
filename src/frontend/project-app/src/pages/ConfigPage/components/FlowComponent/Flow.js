@@ -1,8 +1,7 @@
 import { useState, useCallback, useEffect, useContext } from 'react';
 import ReactFlow, {
     Controls,
-    Background,
-    useReactFlow
+    Background
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import FlowContext from './FlowContext';
@@ -29,6 +28,7 @@ const Flow = () => {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
+          fitView
         >
           {(gridBgToggle) && <Background variant="cross"/>}
           <Controls />

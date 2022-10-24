@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState }from "react";
 import { useNavigate } from "react-router-dom";
-import { storeUserNodes } from "../../../../api/firebase-db";
+import { storeUserNodes, updateNodeScale } from "../../../../api/firebase-db";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { IoIosArrowBack, IoIosSave } from "react-icons/io"
 import FlowContext from "../FlowComponent/FlowContext";
@@ -11,7 +11,7 @@ import HelpConfig from "../HelpComponent/HelpConfig";
 
 const ConfigNavbar = () => {
 
-    const { nodes, edges} = useContext(FlowContext);
+    const { nodes, edges, scale} = useContext(FlowContext);
     const { user } = useContext(UserContext);
 
     /* Navigation & Data */
@@ -45,6 +45,8 @@ const ConfigNavbar = () => {
                     }
                 }    
             )
+
+            updateNodeScale(user.uid, scale);
 
             
 

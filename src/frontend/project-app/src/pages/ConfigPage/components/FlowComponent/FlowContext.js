@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { useNodesState, useEdgesState } from 'reactflow';
-import { getUserNodes } from "../../../../api/firebase-db";
+import { getNodeScale, getUserNodes } from "../../../../api/firebase-db";
 import { getFloorplanImage } from "../../../../api/firebase-storage";
 import { UserContext } from "../../../ProtectedRoute";
-import { FlowNodeObject, FlowEdgeObject } from "./FlowObjects";
-import { camera, image } from "./CustomFlowNode";
+import { CameraNodeObject, CameraTopNodeObject, CameraBottomNodeObject, FlowEdgeObject } from "./FlowObjects";
+import { camera, cameraBottom, cameraTop, image } from "./CustomFlowNode";
 
 const FlowContext = createContext();
 
@@ -18,18 +18,20 @@ const FlowContext = createContext();
 
 const nodeTypes = {
     camera: camera,
+    cameraTop: cameraTop,
+    cameraBottom: cameraBottom,
     image: image
 };
 
 export const FlowContextProvider = ({children}) => {
     const { user } = useContext(UserContext);
-
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [nextPosID, setNextPosID] = useState(1);
     const [gridBgToggle, setGridBgToggle] = useState(true);
     const [floorplanBgToggle, setFloorplanBgToggle] = useState(true);
     const [floorplanImage, setFloorplanImage] = useState([]);
+    const [scale, setScale] = useState(50);
 
     useEffect(() => {
         // Retrieve exisitng flow component state
@@ -62,6 +64,13 @@ export const FlowContextProvider = ({children}) => {
                 setFloorplanImage((prev) => prev.concat(currentData));
             }
         });
+
+        // Retrieve node scaling
+        getNodeScale(user.uid,
+        (nodeScale) => {
+            setScale(nodeScale);
+        })
+
     }, [])
 
     const generateID = () => {
@@ -79,7 +88,7 @@ export const FlowContextProvider = ({children}) => {
         // console.log(node_posID);
     
         // Node 1
-        const newNode1 = new FlowNodeObject(
+        const newNode1 = new CameraTopNodeObject(
             id1,
             label1,
             node_posID * 100,
@@ -87,7 +96,7 @@ export const FlowContextProvider = ({children}) => {
         );
     
         // Node 2
-        const newNode2 = new FlowNodeObject(
+        const newNode2 = new CameraBottomNodeObject(
             id2,
             label2,
             node_posID * 100,
@@ -109,7 +118,7 @@ export const FlowContextProvider = ({children}) => {
         // console.log(node_posID);
     
         // Node
-        const newNode = new FlowNodeObject(
+        const newNode = new CameraNodeObject(
             id,
             label,
             node_posID * 100,
@@ -119,12 +128,24 @@ export const FlowContextProvider = ({children}) => {
         setNodes((nds) => nds.concat(newNode));
     }
 
+    useEffect(() => {
+        setNodes((nds) => 
+            nds.map((node) => {
+                node.style = {...node.style, width: 50 * (scale / 50), height: 50 * (scale / 50), background: 'green'};
+
+                return node;
+            })
+        )
+    }, [scale, nodes])
+
     return (
         <FlowContext.Provider
             value={{
                 nodes,
+                setNodes,
                 onNodesChange,
                 edges,
+                setEdges,
                 onEdgesChange,
                 nodeTypes,
                 generatePath,
@@ -136,6 +157,8 @@ export const FlowContextProvider = ({children}) => {
                 setFloorplanBgToggle,
                 floorplanImage, 
                 setFloorplanImage,
+                scale,
+                setScale,
                 nextPosID
             }}
         >

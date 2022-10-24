@@ -1,5 +1,6 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { Handle } from "reactflow";
+import { BsCameraVideoFill } from "react-icons/bs"
 
 import "./CustomNodeStyle.css";
 
@@ -24,6 +25,19 @@ export const arrow = memo(({data, isConnectable}) => {
 export const camera = memo(({data, isConnectable}) => {
     return (
         <>
+            <div>
+                <div className="square">
+                    <BsCameraVideoFill className="w-1/2"/>
+                    <p className="nodeLabel">{data.label}</p>
+                </div>
+            </div>
+        </>
+    );
+})
+
+export const cameraTop = memo(({data, isConnectable}) => {
+    return (
+        <>
             <Handle
                 type="target"
                 position="bottom"
@@ -39,9 +53,35 @@ export const camera = memo(({data, isConnectable}) => {
 
             <div>
                 <div className="square">
-                    <strong>{data.label}</strong>
+                    <BsCameraVideoFill />
+                    <p className="nodeLabel">{data.label}</p>
                 </div>
-                <div className="trapezoid"/>
+            </div>
+        </>
+    );
+})
+
+export const cameraBottom = memo(({data, isConnectable}) => {
+    return (
+        <>
+            <Handle
+                type="target"
+                position="top"
+                onConnect={(params) => console.log('handle onConnect', params)}
+                isConnectable={isConnectable}
+            />
+            <Handle
+                type="source"
+                position="top"
+                onConnect={(params) => console.log('handle onConnect', params)}
+                isConnectable={isConnectable}
+            />
+
+            <div>
+                <div className="square">
+                    <BsCameraVideoFill />
+                    <p className="nodeLabel">{data.label}</p>
+                </div>
             </div>
         </>
     );
