@@ -20,7 +20,7 @@ const HomeAnalytics = () => {
             {/* Tab bar */}
             <div className="tabs bg-gray-600">
                 <a className={(tabToggle == 0) 
-                    ? "tab tab-lg tab-lifted tab-active bg-red-300"
+                    ? "tab tab-lg tab-lifted tab-active style={{backgroundColor: 'DodgerBlue'}}"
                     : "tab tab-lg tab-lifted"} 
                     style={{marginLeft: 'auto'}}
                     onClick={clickLiveTab}>
@@ -28,7 +28,7 @@ const HomeAnalytics = () => {
                 </a> 
                 <a className={(tabToggle == 1) 
                     ? "tab tab-lg tab-lifted tab-active"
-                    : "tab tab-lg tab-lifted"} 
+                    : "tab tab-lg tab-lifted"}
                     onClick={clickAnalyticsTab}>
                         Analytics
                 </a> 
