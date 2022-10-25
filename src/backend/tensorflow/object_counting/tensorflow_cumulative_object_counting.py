@@ -3,7 +3,8 @@ import numpy as np
 import argparse
 import tensorflow as tf
 import dlib
-
+import json
+import datetime
 from object_detection.utils import label_map_util
 from object_detection.utils import ops as utils_ops
 
@@ -58,8 +59,8 @@ def run_inference_for_single_image(model, image):
     return output_dict
 
 
-def run_inference(model, category_index, cap, labels, roi_position=0.6, threshold=0.5, x_axis=True, skip_frames=20, save_path='', show=True):
-    counter = [0, 0, 0, 0]  # left, right, up, down
+def run_inference(model, category_index, cap, labels, roi_position=0.6, threshold=0.5, x_axis=True, skip_frames=20, save_path='', show=False, camid=''):
+    counter = [0, 0]  # left, right, up, down
     total_frames = 0
 
     ct = CentroidTracker(maxDisappeared=40, maxDistance=50)
@@ -132,17 +133,6 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                         counter[0] += 1
                         to.counted = True
 
-                elif not x_axis and not to.counted:
-                    y = [c[1] for c in to.centroids]
-                    direction = centroid[1] - np.mean(y)
-
-                    if centroid[1] > roi_position*height and direction > 0 and np.mean(y) < args.roi_position*height:
-                        counter[3] += 1
-                        to.counted = True
-                    elif centroid[1] < roi_position*height and direction < 0 and np.mean(y) > args.roi_position*height:
-                        counter[2] += 1
-                        to.counted = True
-
                 to.centroids.append(centroid)
 
             trackableObjects[objectID] = to
@@ -178,8 +168,20 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                 break
 
         if save_path:
-            out.write(image_np)
+            ## write JSON file: counter[0] = left, counter[1] = right
+            outputL = {"camera_id": camid}
+            outputL["count"] = counter[0]
+            outputL["direction"] = "left"
+            outputL["timestamp"] = str(datetime.datetime.now())
 
+            outputR = {"camera_id": camid}
+            outputR["count"] = counter[1]
+            outputR["direction"] = "right"
+            outputR["timestamp"] = str(datetime.datetime.now())
+            camera_log = {"log1": outputL}
+            camera_log["log2"] = outputR
+            with open("./output/camera_log.json","w") as f:
+                json.dump(camera_log,f)
         total_frames += 1
 
     cap.release()
@@ -205,12 +207,13 @@ if __name__ == '__main__':
                         help='Label names to detect (default="all-labels")')
     parser.add_argument('-a', '--axis', default=True, action="store_false",
                         help='Axis for cumulative counting (default=x axis)')
-    parser.add_argument('-s', '--skip_frames', type=int, default=20,
+    parser.add_argument('-s', '--skip_frames', type=int, default=7,
                         help='Number of frames to skip between using object detection model')
     parser.add_argument('-sh', '--show', default=True,
                         action="store_false", help='Show output')
-    parser.add_argument('-sp', '--save_path', type=str, default='',
+    parser.add_argument('-sp', '--save_path', type=str, default="./output/camera_log.json",
                         help='Path to save the output. If None output won\'t be saved')
+    parser.add_argument('-camid', type=str, default="1",help="ID of the camera taking the video")
     args = parser.parse_args()
 
     detection_model = load_model(args.model)
@@ -226,4 +229,4 @@ if __name__ == '__main__':
         print("Error opening video stream or file")
 
     run_inference(detection_model, category_index, cap, labels=args.labels, threshold=args.threshold,
-                  roi_position=args.roi_position, x_axis=args.axis, skip_frames=args.skip_frames, save_path=args.save_path, show=args.show)
+                  roi_position=args.roi_position, x_axis=args.axis, skip_frames=args.skip_frames, save_path=args.save_path, show=args.show,camid=args.camid)
