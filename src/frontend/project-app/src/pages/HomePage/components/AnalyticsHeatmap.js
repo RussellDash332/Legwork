@@ -13,7 +13,7 @@ const AnalyticsHeatmap = ({filterValue, toggle}) => {
     // 3. display using your external library/component
     
     return (
-        <div className="card w-96 h-2/5 shadow-xl bg-orange-400">
+        <div className="card w-11/12 h-2/5 shadow-xl bg-sky-600">
             AnalyticsHeatmap
             toggled by: {toggle}
             filter time start: {filterValue.start} time end: {filterValue.end}

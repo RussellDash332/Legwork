@@ -1,9 +1,10 @@
 import React from "react";
+import AnalyticsHeatmap from "./AnalyticsHeatmap";
 
 const LiveTab = () => {
     return (
-        <div className="flex w-full h-full border-black border-8">
-            LiveTab
+        <div className="flex flex-col justify-evenly items-center h-full w-full bg-gray-700 border-black border-8">
+            <AnalyticsHeatmap />
         </div>
     );
 }

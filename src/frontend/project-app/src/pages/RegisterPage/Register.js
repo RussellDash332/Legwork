@@ -20,7 +20,7 @@ const Register = () => {
             setCreateToggle(false);
         } else if (createToggle) {
             // Firebase Create account
-            createAccount(email, confirmPassword,
+            createAccount(username, email, confirmPassword,
                 () => {
                     console.log('register successful');
                     setCreateToggle(false);

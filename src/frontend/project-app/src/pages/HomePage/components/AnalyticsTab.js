@@ -42,8 +42,9 @@ const AnalyticsTab = () => {
 
 
     return (
-        <div className="flex flex-col justify-evenly items-center h-full w-full bg-slate-200 border-black border-8">
+        <div className="flex flex-col justify-evenly items-center h-full w-full bg-gray-700">
             {/* AnalyticsTab */}
+<<<<<<< HEAD
             <AnalyticsHeatmap 
                 filterValue = {filterValue} 
                 rangeValue = {range}
@@ -58,6 +59,11 @@ const AnalyticsTab = () => {
                 rangeValue = {range}
                 setRangeValue = {setRange} 
                 setToggle = {updateToggle} />
+=======
+            <AnalyticsHeatmap />
+            <br></br>
+            <AnalyticsLineGraph />
+>>>>>>> frontend
         </div>
     );
 }
