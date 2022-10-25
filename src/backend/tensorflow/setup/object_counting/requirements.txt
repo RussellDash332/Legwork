@@ -1,0 +1,6 @@
+scipy
+cmake
+tensorflow
+dlib
+opencv_python==4.5.2.52
+numpy
