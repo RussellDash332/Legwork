@@ -1,5 +1,3 @@
-/* sk edited but not working */
-/* add to css file */
 input.inputBox {
   font-size: 20px;
   padding: 5px 20px 10px 20px;
@@ -20,4 +18,22 @@ input.inputBox {
   top: 40px;
   border: 1px solid #ccc;
   z-index: 999;
+}
+
+.yearbutton {
+  background-color: white;
+  width: 1/3;
+  float: left;
+}
+
+.monthbutton {
+  background-color:white;
+  width: 1/3;
+  float: middle;
+}
+
+.daybutton {
+  background-color: white;
+  width: 1/3;
+  float: right;
 }

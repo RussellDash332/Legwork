@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-
 import AnalyticsHeatmap from "./AnalyticsHeatmap";
 import AnalyticsLineGraph from "./AnalyticsLineGraph";
 import FilterSidebar from "./FilterSidebar";
 
+import { addDays } from "date-fns";
+
+
 const AnalyticsTab = () => {
 
+    // to toggle 'year' if no existing filter or 
+    // untoggle 'year' if its filtered by year and to 
     const updateToggle = (value) => {
         if (toggle === value) {
             setToggle("");
@@ -15,6 +19,8 @@ const AnalyticsTab = () => {
         setToggle(value);
     }
 
+    // When setToggle is called, the toggle value will be passed into 
+    // Heatmap and LineGraph
     const [toggle, setToggle] = useState("");    
 
     const [filterValue, setFilterValue] = useState({
@@ -22,15 +28,36 @@ const AnalyticsTab = () => {
         end: "23:59"
     })
 
-    // put all the date range comp value handlers here
+    // Date range comp value handlers
+
+    // Date state
+    const [range, setRange] = useState([
+        {
+            startDate: new Date(),
+            endDate: addDays(new Date(), 7),
+            key: 'selection'
+
+        }
+    ]) 
 
 
     return (
         <div className="flex flex-col justify-evenly items-center h-full w-full bg-slate-200 border-black border-8">
             {/* AnalyticsTab */}
-            <AnalyticsHeatmap filterValue={filterValue} toggle={toggle} />
-            <AnalyticsLineGraph filterValue={filterValue} toggle={toggle} />
-            <FilterSidebar filterValue={filterValue} setFilterValue={setFilterValue} setToggle={updateToggle} />
+            <AnalyticsHeatmap 
+                filterValue = {filterValue} 
+                rangeValue = {range}
+                toggle = {toggle} />
+            <AnalyticsLineGraph 
+                filterValue = {filterValue} 
+                rangeValue = {range}
+                toggle = {toggle} />
+            <FilterSidebar 
+                filterValue = {filterValue} 
+                setFilterValue = {setFilterValue}
+                rangeValue = {range}
+                setRangeValue = {setRange} 
+                setToggle = {updateToggle} />
         </div>
     );
 }
