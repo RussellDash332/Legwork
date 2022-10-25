@@ -1,6 +1,6 @@
 .labelContainer {
     margin-top: 4px;
-    background-color: hsl(var(--b3));
+    background-color: hsl(var(--p));
     border-radius: 0.125rem; /* 6px */
 }
 
@@ -11,6 +11,17 @@
     /* text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; */
+    color: white;
+}
+
+.cameraContainer{
+    display: flex;
+    aspect-ratio: 1/1;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: hsl(var(--p));
+    color: white;
 }
 
 .cameraIcon {

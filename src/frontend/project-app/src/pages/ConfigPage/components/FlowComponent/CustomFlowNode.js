@@ -1,25 +1,20 @@
 import React, { memo, useContext, useState } from "react";
 import { Handle } from "reactflow";
-import { BsCameraVideoFill } from "react-icons/bs"
+import { BsCameraVideoFill } from "react-icons/bs";
+import { AiFillCamera } from "react-icons/ai"
 import FlowContext from "./FlowContext";
 
 import "./CustomNodeStyle.css";
+
+const basePx = 30;
 
 export const Camera = memo(({data}) => {
     const { scale } = useContext(FlowContext);
     return (
         <>
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))'
-                }}>
-                <BsCameraVideoFill
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
+                <AiFillCamera
                     style={{
                         width: '80%',
                         aspectRatio: 1 / 1
@@ -28,7 +23,7 @@ export const Camera = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -52,16 +47,8 @@ export const CameraTopRight = memo(({data}) => {
                 position="bottom"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))'
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -71,7 +58,7 @@ export const CameraTopRight = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -92,16 +79,8 @@ export const CameraBottomRight = memo(({data}) => {
                 position="top"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))'
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -111,7 +90,7 @@ export const CameraBottomRight = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -134,16 +113,8 @@ export const CameraTopLeft = memo(({data}) => {
                 position="bottom"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))',
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -154,7 +125,7 @@ export const CameraTopLeft = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -175,16 +146,8 @@ export const CameraBottomLeft = memo(({data}) => {
                 position="top"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))'
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -195,7 +158,7 @@ export const CameraBottomLeft = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -220,16 +183,8 @@ export const CameraRightUp = memo(({data}) => {
                 position="left"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))',
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -240,7 +195,7 @@ export const CameraRightUp = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -261,16 +216,8 @@ export const CameraLeftUp = memo(({data}) => {
                 position="right"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))'
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -281,7 +228,7 @@ export const CameraLeftUp = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -304,16 +251,8 @@ export const CameraRightDown = memo(({data}) => {
                 position="left"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))',
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -324,7 +263,7 @@ export const CameraRightDown = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -345,16 +284,8 @@ export const CameraLeftDown = memo(({data}) => {
                 position="right"
             />
 
-            <div style={{
-                    width: 50 * (scale / 50),
-                    aspectRatio: 1 / 1,
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                    backgroundColor: 'hsl(var(--b3))'
-                }}>
+            <div className="cameraContainer"
+                style={{ width: basePx * (scale / 50) }}>
                 <BsCameraVideoFill
                     style={{
                         width: '80%',
@@ -365,7 +296,7 @@ export const CameraLeftDown = memo(({data}) => {
 
             <div className="labelContainer"
                 style={{
-                    width: 50 * (scale / 50),
+                    width: basePx * (scale / 50),
                 }}>
                 <p className="nodeLabel">{data.label}</p>
             </div>
@@ -384,8 +315,8 @@ export const CameraLeftDown = memo(({data}) => {
 export const Floorplan = memo(({data}) => {
     return (
         <>
-            <div>
-                <img src={data.data_url} className="object-contain aspect-[150/65] h-60"/>
+            <div className="aspect-[150/65] w-[800px]">
+                <img src={data.data_url} className="object-contain"/>
             </div>
         </>
     );

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import ReactFlow, {
     Controls,
     Background
@@ -11,13 +11,6 @@ const Flow = () => {
     edges, setEdges, onEdgesChange,
     nodeTypes, edgeTypes,
     gridBgToggle } = useContext(FlowContext);
-
-  // const { fitView } = useReactFlow();
-
-  // useEffect(() => {
-  //   console.log("fit view")
-  //   fitView()
-  // }, [nodes.length])
 
   return (
     <div className="h-full w-full">
@@ -32,10 +25,6 @@ const Flow = () => {
         >
           {(gridBgToggle) && <Background variant="cross"/>}
           <Controls />
-          {/* <div>
-            <button className="btn absolute z-10 right-0 top-40" onClick={generatePath}>Add</button>
-            <button className='bth absolute z-10 right-0 top-60' onClick={removeFloorplanNode}>image</button>
-          </div> */}
         </ReactFlow>
     </div>
   );
