@@ -1,41 +1,19 @@
-.arrow-pointer {
-    width: 250px;
-    height: 50px;
-    background: #32557f;
-    position: relative;
+.labelContainer {
+    margin-top: 4px;
+    background-color: hsl(var(--b3));
+    border-radius: 0.125rem; /* 6px */
 }
 
-.arrow-pointer:after {
-    content: '';
-    position: absolute;
-    left: 0; bottom: 0; width: 0; height: 0;
-    border-left: 25px solid #7eb4e2;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
+.nodeLabel {
+    font-size: 25%;
+    text-align: center;
+    word-break: break-word;
+    /* text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; */
 }
 
-.arrow-pointer:before {
-    content: '';
-    position: absolute;
-    right: -25px;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-left: 25px solid #32557f;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-}
-
-.square {
-    width: 50px;
-    aspect-ratio: 1 / 1;
-    background: red;
-}
-
-.trapezoid {
-    border-bottom: 10px solid red;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    height: 0;
-    width: 40px;
+.cameraIcon {
+   width: 60%;
+   aspect-ratio: 1/1;
 }

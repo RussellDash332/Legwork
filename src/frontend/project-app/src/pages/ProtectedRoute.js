@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { checkUserState } from "../api/firebase-auth";
+
+export const UserContext = createContext();
 
 const ProtectedRoute = ({ children }) => {
     const [user, setUser] = useState({});
@@ -24,7 +26,15 @@ const ProtectedRoute = ({ children }) => {
         );
     }
 
-    return children;
+    return (
+        <UserContext.Provider
+            value={{
+                user
+            }}
+        >
+            {children}
+        </UserContext.Provider>
+    );
 }
 
 export default ProtectedRoute;

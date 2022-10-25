@@ -11,9 +11,11 @@ const AddNode = () => {
             <a href="#" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</a>
 
             {/* Title */}
-            <div className="form-control mb-4">
+            <div className="form-control mb-2">
                 <h3 className="font-bold text-2xl">Add New Component</h3>
             </div>
+
+            <hr className="h-1 text-primary bg-primary mb-4"/>
             
             {/* Content */}
             <div className="flex flex-col w-full lg:flex-row">
@@ -33,7 +35,7 @@ const AddNode = () => {
                         <h2 className="card-title">Path</h2>
                         <p>Usually an aisle or walkway which requires 2 cameras to be monitored</p>
                         <div className="card-actions">
-                        <a href="#addPath" className="btn btn-primary">Create</a>
+                        <a href="#addPath" className="btn btn-primary text-white">Create</a>
                         </div>
                     </div>
 
@@ -56,7 +58,7 @@ const AddNode = () => {
                         <h2 className="card-title">Spot</h2>
                         <p>A single area or location which requires 1 camera to be monitored</p>
                         <div className="card-actions">
-                        <a href="#addSpot" className="btn btn-primary">Create</a>
+                        <a href="#addSpot" className="btn btn-primary text-white">Create</a>
                         </div>
                     </div>
 

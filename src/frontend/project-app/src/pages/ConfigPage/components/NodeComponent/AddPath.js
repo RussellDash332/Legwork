@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import FlowContext from "../FlowComponent/FlowContext";
 
 const AddPath = () => {
-    const { generatePath, isUniqueID } = useContext(FlowContext);
+    const { generatePath, isUniqueID, scale, setScale } = useContext(FlowContext);
     const [cameraName1, setCameraName1] = useState("");
     const [cameraID1, setCameraID1] = useState("");
     const [cameraName2, setCameraName2] = useState("");
@@ -57,6 +57,7 @@ const AddPath = () => {
                 setSaveToggle(false);
             } else if (isUniqueID(cameraID1) && isUniqueID(cameraID2)) {
                 generatePath(cameraID1, cameraName1, cameraID2, cameraName2);
+                setScale(scale);
                 resetInputs();
                 setSaveToggle(false);
                 document.getElementById("close-addPath").click();
@@ -106,9 +107,11 @@ const AddPath = () => {
             <a href="#" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={resetInputs}>✕</a>
 
             {/* Title */}
-            <div className="form-control mb-4">
+            <div className="form-control mb-2">
                 <h3 className="font-bold text-2xl">Add New Path</h3>
             </div>
+
+            <hr className="h-1 text-primary bg-primary mb-4"/>
             
             {/* Content */}
             <div className="flex flex-col w-full lg:flex-row">
@@ -119,10 +122,13 @@ const AddPath = () => {
                     <h2 className="card-title font-bold">Camera 1</h2>
                     
                     <p className="label-text-alt  text-end"> Camera Name </p>
-                    <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs"
+                    <input type="text" 
+                        placeholder="Type here (max. 12 characters)" 
+                        className="input input-bordered w-full max-w-xs"
                         value={cameraName1} 
                         onChange={(e) => setCameraName1(e.currentTarget.value)}
-                        disabled={saveToggle} />
+                        disabled={saveToggle}
+                        maxLength={12} />
 
                     <p className="label-text-alt  text-end"> Device ID </p>
                     <input type="text" placeholder="Type here"
@@ -157,10 +163,13 @@ const AddPath = () => {
                     <h2 className="card-title  font-bold">Camera 2</h2>
                     
                     <p className="label-text-alt  text-end"> Camera Name </p>
-                    <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs"
+                    <input type="text" 
+                        placeholder="Type here (max. 12 characters)"
+                        className="input input-bordered w-full max-w-xs"
                         value={cameraName2} 
                         onChange={(e) => setCameraName2(e.currentTarget.value)}
-                        disabled={saveToggle} />
+                        disabled={saveToggle}
+                        maxLength={12} />
 
                     <p className="label-text-alt  text-end"> Device ID </p>
                     <input type="text" placeholder="Type here" 
@@ -190,7 +199,7 @@ const AddPath = () => {
             </div>
 
             <div className="flex justify-center pt-5">
-                <button className={(saveToggle) ? "btn btn-primary loading" : "btn btn-primary"} onClick={clickSave}>Create & Add</button>
+                <button className={(saveToggle) ? "btn btn-primary loading" : "btn btn-primary text-white"} onClick={clickSave}>Create & Add</button>
             </div>
         </div>
         </div>
