@@ -9,7 +9,7 @@ import FlowContext from './FlowContext';
 const Flow = () => {
   const { nodes, setNodes, onNodesChange,
     edges, setEdges, onEdgesChange,
-    nodeTypes,
+    nodeTypes, edgeTypes,
     gridBgToggle } = useContext(FlowContext);
 
   // const { fitView } = useReactFlow();
@@ -27,6 +27,7 @@ const Flow = () => {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
           fitView
         >
           {(gridBgToggle) && <Background variant="cross"/>}

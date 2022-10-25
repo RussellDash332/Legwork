@@ -29,7 +29,7 @@ export class CameraTopNodeObject {
         this.data = { label: nodeLabel };
         this.position = { x: nodeX, y: nodeY };
         this.conntectable = false;
-        this.type = 'cameraTop';
+        this.type = 'cameraTopRight';
         this.zIndex = 2;
     };
 }
@@ -47,7 +47,7 @@ export class CameraBottomNodeObject {
         this.data = { label: nodeLabel };
         this.position = { x: nodeX, y: nodeY };
         this.conntectable = false;
-        this.type = 'cameraBottom';
+        this.type = 'cameraBottomRight';
         this.zIndex = 2;
     };
 }
@@ -78,7 +78,7 @@ export class FlowEdgeObject {
         this.id = 'e' + source + '-' + target;
         this.source = source;
         this.target = target;
-        this.type = 'straight';
+        this.type = 'buttonEdge';
         this.zIndex = 2;
     }
 }
