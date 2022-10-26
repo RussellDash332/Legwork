@@ -20,7 +20,7 @@ const ScaleControl = () => {
                     value={scale} 
                     onChange={(e) => setScale(e.currentTarget.value)} 
                     className="range range-xs range-primary" /> 
-                <span className="label-text-alt font-bold mt-2 text-primary">Scale Components {scale}</span>
+                <span className="label-text-alt font-bold mt-2">Scale Components</span>
             </div>
         </div>
     );

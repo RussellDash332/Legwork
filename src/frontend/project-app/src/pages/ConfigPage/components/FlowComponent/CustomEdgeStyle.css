@@ -1,0 +1,27 @@
+.edgebutton {
+    width: 18px;
+    height: 18px;
+    background: hsl(var(--b3));
+    border: 1px solid #fff;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+  }
+  
+  .edgebutton:hover {
+    box-shadow: 0 0 1px 1px hsl(var(--p));
+    color: hsl(var(--p));
+  }
+  
+  .edgebutton-foreignobject body {
+    background: transparent;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40px;
+    /* background-color: aqua; */
+  }
+  
