@@ -2,14 +2,14 @@ import React, { useState, useEffect }from "react";
 import L from "leaflet";
 import { MapContainer, ImageOverlay, LayersControl, useMap,
          LayerGroup, FeatureGroup, Tooltip, Rectangle } from "react-leaflet";
-import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
+// import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
 import dataPoints from "../../../data/Heatmap";
 import { hoverData, thresholds, getColor } from "../../../data/HoverFloorplan";
 import Gridimage from "../../../assets/images/Gridlines.jpeg";
 import Floorplan from "../../../assets/images/Floorplan.png";
-
-
+import { db } from "../../../api/firebase-config";
+import { onValue, ref } from "firebase/database";
 
 const Legend = ({ liveCount }) => {
     const map = useMap();
@@ -49,8 +49,24 @@ const Legend = ({ liveCount }) => {
 
 const AnalyticsHeatmap = () => {
     const [liveCount, setLiveCount] = useState(100);
+    const [projects, setProjects] = useState([]);
     const bounds = [[0, 0],[602, 1033]];
     const center = [301, 500];
+
+    console.log("Projects:", projects);
+
+    useEffect(() => {
+        const query = ref(db, "users");
+        return onValue(query, (snapshot) => {
+          const data = snapshot.val();
+    
+          if (snapshot.exists()) {
+            Object.values(data).map((project) => {
+              setProjects((projects) => [...projects, project]);
+            });
+          }
+        });
+      }, []);
 
     const renderHoverData = () => (
         hoverData.map((data) => (
