@@ -3,7 +3,7 @@ import L from "leaflet";
 import { useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { hoverData, thresholds, getColor } from "../../../data/HoverFloorplan";
-import { db } from "../../../api/firebase-config";
+import { database } from "../../../api/firebase-config";
 import { onValue, ref } from "firebase/database";
 import Heatmap from "./Heatmap";
 
@@ -50,7 +50,7 @@ const AnalyticsHeatmap = () => {
     console.log("Projects:", projects);
 
     useEffect(() => {
-        const query = ref(db, "users");
+        const query = ref(database, "users");
         return onValue(query, (snapshot) => {
           const data = snapshot.val();
     

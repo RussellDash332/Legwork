@@ -1,11 +1,14 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { auth } from "./firebase-config";
+import { storeNewUser } from "./firebase-db";
 
-export const createAccount = (email, password, success, failure) => {
+export const createAccount = (username, email, password, success, failure) => {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
+      updateProfile(user, {displayName: username}); // Add username to profile
+      storeNewUser(user.uid, user.email); // Add user to database
       return success();
     })
     .catch((error) => {
