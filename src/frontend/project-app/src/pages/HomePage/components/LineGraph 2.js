@@ -2,6 +2,7 @@ import React, { Component} from "react";
 import Plot from 'react-plotly.js';
 import Papa from 'papaparse';
 
+// fetch data from json file
 
 export default function LineGraph() {
     const trace = {
