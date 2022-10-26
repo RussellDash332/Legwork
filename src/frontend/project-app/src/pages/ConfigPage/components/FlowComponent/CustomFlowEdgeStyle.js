@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { getStraightPath } from 'reactflow';
 import FlowContext from './FlowContext';
 import { AiOutlineSwap } from 'react-icons/ai';
-import { MdCropRotate } from 'react-icons/md';
+import { MdCropRotate, MdFlip } from 'react-icons/md';
 
 import './CustomEdgeStyle.css';
 
@@ -23,7 +23,7 @@ export const ButtonEdge = ({
     markerEnd,
 }) => {
 
-    const { swapNodes, rotatePath } = useContext(FlowContext);
+    const { swapNodes, rotatePath, flipNodes } = useContext(FlowContext);
 
     const [edgePath, labelX, labelY] = getStraightPath({
         sourceX,
@@ -53,13 +53,21 @@ export const ButtonEdge = ({
             requiredExtensions="http://www.w3.org/1999/xhtml"
         >
             <body>
-                <div className="flex w-full justify-around">
-                    <button className='edgebutton flex justify-center items-center' onClick={() => swapNodes(source, target)}>
-                        <AiOutlineSwap />
-                    </button>
-                    <button className='edgebutton flex justify-center items-center' onClick={() => rotatePath(source, target)}>
-                        <MdCropRotate />
-                    </button>
+                <div className="w-full h-full flex flex-col justify-around">
+                    <div className="flex w-full justify-center">
+                        <button className='edgebutton flex justify-center items-center' onClick={() => flipNodes(source, target)}>
+                            <MdFlip />
+                        </button>
+                    </div>
+
+                    <div className="flex w-full justify-around">
+                        <button className='edgebutton flex justify-center items-center' onClick={() => swapNodes(source, target)}>
+                            <AiOutlineSwap />
+                        </button>
+                        <button className='edgebutton flex justify-center items-center' onClick={() => rotatePath(source, target)}>
+                            <MdCropRotate />
+                        </button>
+                    </div>
                 </div>
             </body>
         </foreignObject>

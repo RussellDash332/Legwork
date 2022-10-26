@@ -276,6 +276,53 @@ export const FlowContextProvider = ({children}) => {
         }))
     }
 
+    const oppositeFlipTypes = (initialType) => {
+        /* Vertical-Right */
+        if (initialType === "cameraTopRight") {
+            return "cameraTopLeft";
+        }
+
+        if (initialType === "cameraBottomRight") {
+            return "cameraBottomLeft";
+        }
+
+        /* Vertical-Left */
+        if (initialType === "cameraTopLeft") {
+            return "cameraTopRight";
+        }
+
+        if (initialType === "cameraBottomLeft") {
+            return "cameraBottomRight";
+        }
+
+        /* Horizontal-Up */
+        if (initialType === "cameraRightUp") {
+            return "cameraRightDown";
+        }
+
+        if (initialType === "cameraLeftUp") {
+            return "cameraLeftDown";
+        }
+
+        /* Horizontal-Down */
+        if (initialType === "cameraRightDown") {
+            return "cameraRightUp";
+        }
+
+        if (initialType === "cameraLeftDown") {
+            return "cameraLeftUp";
+        }
+    }
+
+    const flipNodes = (sourceID, targetID) => {
+        setNodes((nds) => nds.map((node) => {
+            if (node.id === sourceID || node.id === targetID) {
+                node.type = oppositeFlipTypes(node.type);
+            }
+            return node;
+        }))
+    }
+
 
 
     return (
@@ -303,7 +350,8 @@ export const FlowContextProvider = ({children}) => {
                 scale,
                 setScale,
                 swapNodes,
-                rotatePath
+                rotatePath,
+                flipNodes
             }}
         >
             {children}
