@@ -47,7 +47,7 @@ const AnalyticsHeatmap = () => {
     const [liveCount, setLiveCount] = useState(100);
     const [projects, setProjects] = useState([]);
 
-    console.log("Projects:", projects);
+    // console.log("Projects:", projects);
 
     useEffect(() => {
         const query = ref(database, "users");
