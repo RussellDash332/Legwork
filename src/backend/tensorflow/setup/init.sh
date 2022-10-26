@@ -8,7 +8,7 @@ sh setup/protobuf.sh
 
 # Setup object_detection
 cd setup/object_detection
-python -m pip install .
+python3 -m pip install .
 cd ../..
 python3 setup/object_detection/setup.py install
 python3 object_detection/builders/model_builder_tf2_test.py
