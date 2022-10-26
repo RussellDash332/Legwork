@@ -11,5 +11,5 @@ do
     curl -O $(echo $url | grep -oEi '(.*tar\.gz)')
     model_zip=$(echo $url | grep -oEi '([^/]*tar\.gz)')
     tar -xvf $model_zip
-    python ../update_config.py $model_zip
+    python3 ../update_config.py $model_zip
 done

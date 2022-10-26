@@ -10,13 +10,13 @@ do
     cp models/$model_name/checkpoint_old/checkpoint models/$model_name
     # Train
     echo $(echo "Train $model_name")
-    python object_detection/model_main_tf2.py \
+    python3 object_detection/model_main_tf2.py \
         --model_dir=models/$model_name \
         --pipeline_config_path=models/$model_name/pipeline.config \
         --num_train_steps=200
     # Evaluate
     echo $(echo "Eval $model_name")
-    python object_detection/model_main_tf2.py \
+    python3 object_detection/model_main_tf2.py \
         --model_dir=models/$model_name \
         --pipeline_config_path=models/$model_name/pipeline.config \
         --checkpoint_dir=models/$model_name \
