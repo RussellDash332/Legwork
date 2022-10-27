@@ -15,10 +15,10 @@ const ProtectedRoute = ({ children }) => {
         return unsubscribe();
     }, [])
     
-    useEffect(() => {
-        console.log("protected route user:")
-        console.log(user);
-    }, [user])
+    // useEffect(() => {
+    //     console.log("protected route user:")
+    //     console.log(user);
+    // }, [user])
 
     if (!user) {
         return (
