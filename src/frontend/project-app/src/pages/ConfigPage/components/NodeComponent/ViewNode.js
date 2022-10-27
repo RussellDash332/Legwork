@@ -55,9 +55,11 @@ const ViewNode = () => {
 
             const vertNodes = ['cameraTopRight', 'cameraBottomRight', 'cameraTopLeft', 'cameraBottomLeft'];
             const orientation = (vertNodes.includes(id1Data.type)) ? "vertical" : "horizontal";
+            const pathID = currEdge.id;
 
             const pathObj = {
                 pathName: pathName,
+                pathID: pathID,
                 orientation: orientation,
                 id1: id1,
                 label1: label1,
@@ -105,11 +107,14 @@ const ViewNode = () => {
                             if (pathObj.hasOwnProperty("pathName")) {
                                 return (<ViewPath 
                                         pathName={pathObj.pathName}
+                                        pathID={pathObj.pathID}
                                         orientation = {pathObj.orientation}
                                         id1 = {pathObj.id1}
                                         label1 = {pathObj.label1}
+                                        direction1 = {pathObj.direction1}
                                         id2 = {pathObj.id2}
                                         label2 = {pathObj.label2}
+                                        direction2 = {pathObj.direction2}
                                     />);
                             }
                         })}

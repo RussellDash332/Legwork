@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import FlowContext from "../FlowComponent/FlowContext";
 
 // const spotData = {
 //     id: node.id,
@@ -6,24 +7,42 @@ import React, { useState, useEffect } from "react";
 //     position: node.position,               
 // };
 
-const ViewSpot = (props) => {
-    useEffect(() => {
-        console.log("inside", props.pathName)
-    }, [])
-    
-
+const ViewSpot = ({id, label}) => {
+    const { deleteSpot } = useContext(FlowContext);
 
     return (
         <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 rounded-box my-2">
             <input type="checkbox" /> 
             <div className="collapse-title text-base font-medium">
-                {props.id}
+                {id}
             </div>
             <div className="collapse-content"> 
-                <p>tabIndex={0} attribute is necessary to make the div focusable</p>
-                <p>tabIndex={0} attribute is necessary to make the div focusable</p>
-                <p>tabIndex={0} attribute is necessary to make the div focusable</p>
-                <p>tabIndex={0} attribute is necessary to make the div focusable</p>
+                {/* Content */}
+
+                <div className="flex w-full justify-center mb-4">
+                    <div className="font-bold text-lg">Spot</div>
+                </div>
+                
+
+                <div className="stats shadow w-full">
+  
+                    <div className="stat">
+                        <div className="stat-desc overflow-hidden text-ellipsis text-center">Device Name</div>
+                        <div className="stat-value text-primary text-xl overflow-hidden text-ellipsis text-center">{label}</div>
+                        <div className="stat-desc overflow-hidden text-ellipsis text-center">Device ID: {id}</div>
+                    </div>
+
+                </div>
+
+                <div className="flex w-full justify-center mt-4">
+                    <div className="flex justify-evenly pl-4 w-2/6">
+                        <button className="btn btn-sm btn-outline">Edit</button>
+                        <button className="btn btn-sm btn-error" onClick={() => {deleteSpot(id)}}>Delete</button>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
     );

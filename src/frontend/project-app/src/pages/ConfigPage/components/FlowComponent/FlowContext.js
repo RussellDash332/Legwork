@@ -276,6 +276,7 @@ export const FlowContextProvider = ({children}) => {
         }))
     }
 
+    /* Flip Path */
     const oppositeFlipTypes = (initialType) => {
         /* Vertical-Right */
         if (initialType === "cameraTopRight") {
@@ -323,6 +324,32 @@ export const FlowContextProvider = ({children}) => {
         }))
     }
 
+    /* Deletion */
+    const deletePath = (edgeID, nodeID1, nodeID2) => {
+        // console.log("attempt to delete path")
+        const tempNodes = nodes.filter((node) => {
+            return node.id !== nodeID1 
+                && node.id !== nodeID2;
+        });
+        // console.log(tempNodes);
+
+        let tempEdges = edges.filter((edge) => {return edge.id !== edgeID});
+        // console.log(tempEdges);
+        
+        setNodes(tempNodes);
+        setEdges(tempEdges);
+    }
+
+    const deleteSpot = (id) => {
+        const tempNodes = nodes.filter((node) => {
+            return node.id !== id;
+        });
+
+        setNodes(tempNodes);
+    }
+
+
+
 
 
     return (
@@ -351,7 +378,9 @@ export const FlowContextProvider = ({children}) => {
                 setScale,
                 swapNodes,
                 rotatePath,
-                flipNodes
+                flipNodes,
+                deletePath,
+                deleteSpot
             }}
         >
             {children}
