@@ -1,0 +1,1 @@
+python3 object_counting/tensorflow_cumulative_object_counting.py -m ./models/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/saved_model -l ./data/train/human-lower-limb_label_map.pbtxt -v ./video/test.mp4 -camid "123"
