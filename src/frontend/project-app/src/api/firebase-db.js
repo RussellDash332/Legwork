@@ -1,4 +1,4 @@
-import { ref, set, child, get, getDatabase, update } from "firebase/database";
+import { ref, set, child, get, getDatabase, update, onValue, off } from "firebase/database";
 // import { database } from "./firebase-config";
 
 const dbRef = ref(getDatabase())
@@ -12,7 +12,8 @@ export const storeNewUser = (uid, email) => {
     const db = getDatabase();
     set(ref(db, 'users/' + uid), {
         uid: uid,
-        nodeScale: 50
+        nodeScale: 50,
+        availability: false
     })
     .then(() => {
         console.log("user stored in db successfully")
@@ -93,6 +94,34 @@ export const getNodeScale = (uid, success) => {
     })
 }
 
+export const subscribeCameraLog = (success) => {
+    const db = getDatabase();
+    const cameraLogRef = ref(db, 'cameraLog');
+
+    onValue(cameraLogRef, (snapshot) => {
+        const logData = snapshot.val();
+        success(logData);
+    })
+
+    return off(cameraLogRef); // return unsub function;
+}
+
+
+
+export const getUserAvailability = (uid, success) => {
+    get(child(dbRef, `users/${uid}/availability`))
+    .then((snapshot) => {
+
+        if (snapshot.exists()) {
+            console.log(snapshot.val());
+        }
+
+        return success(snapshot.val());
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
 
 
 
