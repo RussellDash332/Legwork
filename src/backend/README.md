@@ -48,7 +48,9 @@ This will produce a zip file with this particular directory structure. Copy it t
 1. Run `setup/init.sh`.
 
 ## Firebase Setup Guide
-TBC.
+After training the model, we can run the object counter to produce the desired output which can be seen in the `output` directory.
+1. Run `pip install -r firebase/requirements.txt`
+1. Run `python firebase/firebase_test.py` <!-- TODO -->
 
 ## Common Issues
 - AttributeError: partially initialized module 'cv2' has no attribute 'gapi_wip_gst_GStreamerPipeline' (most likely due to a circular import)
