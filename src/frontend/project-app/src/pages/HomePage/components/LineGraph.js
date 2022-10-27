@@ -1,52 +1,67 @@
 import React, { Component} from "react";
 import Plot from 'react-plotly.js';
-import Papa from 'papaparse';
 
-// fetch data from json file
+
+
 
 export default function LineGraph() {
-    const trace = {
-        x: ['1/01/22','2/01/22','3/01/22', '4/01/22', '5/01/22','6/01/22','7/01/22', '8/01/22', '9/01/22','10/01/22','11/01/22', '12/01/22'],
-        y: [200,140,312,222,132,321,231,111,67,99, 111, 278],
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: "path 1",
+
+    const data = {
+        
+        "id1": {
+                  "2020": 30,
+                  "2021": 51
+              },
+        "id2": {
+                  "2020": 41,
+                  "2021": 57
+              }
+        
     };
 
-    const trace2 = {
-        x: ['1/01/22','2/01/22','3/01/22', '4/01/22', '5/01/22','6/01/22','7/01/22', '8/01/22', '9/01/22','10/01/22','11/01/22', '12/01/22'],
-        y: [134,322,356,121,211,421,111,92,333,291,78,100],
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: "path 2",
+
+    const generateTraces = () => {
+        var traces = [];
+        let lines = Object.keys(data);
+        const innerValues = Object.values(data);
+        let len = lines.length;
+        for (let step = 0; step < len; step++) {
+            let lineid = lines[step];
+            let x_axis = Object.keys(innerValues[step]);
+            let y_axis = Object.values(innerValues[step]);
+            const trace = {
+                x: x_axis,
+                y: y_axis,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: lineid,
+            };
+            traces.push(trace);
+
+        };
+
+        return traces;
+
     };
 
-    const trace3 = {
-        x: ['1/01/22','2/01/22','3/01/22', '4/01/22', '5/01/22','6/01/22','7/01/22', '8/01/22', '9/01/22','10/01/22','11/01/22', '12/01/22'],
-        y: [43,55,63,78,72,70,33,32,83,50,43,12],
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: "spot 1",
-    };
+    console.log(generateTraces);
 
-    const data = [trace, trace2, trace3];
+
+
     return (
         <div>
             <Plot
-                data = {data}
+                data = {generateTraces()}
                 layout={{
-                    autosize: true, height: 370, legend: {"orientation": "h", y:2}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: 250, legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler
                 className="w-full h-full"
-                config={{ scrollZoom: true, displayModeBar: true, responsive: true}}
-                
+                config={{ scrollZoom: true,  responsive: true}}
+                // displayModeBar: true,
             />
         </div>
 
     );
 }
-
-
-
