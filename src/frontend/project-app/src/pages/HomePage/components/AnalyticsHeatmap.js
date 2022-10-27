@@ -7,7 +7,7 @@ const AnalyticsHeatmap = () => {
         <div className="card w-11/12 h-45 shadow-xl bg-sky-600">
             <div>
                 {/* <Heatmap /> */}
-                Heatmap
+                heatmap
             </div>
         </div>
     );

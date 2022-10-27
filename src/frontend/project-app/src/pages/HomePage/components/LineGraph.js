@@ -16,6 +16,7 @@ export default function LineGraph() {
                   "2020": 41,
                   "2021": 57
               }
+        
     };
 
 
