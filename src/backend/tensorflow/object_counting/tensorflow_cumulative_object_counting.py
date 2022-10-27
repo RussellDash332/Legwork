@@ -180,7 +180,7 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
             outputR["timestamp"] = str(datetime.datetime.now())
             camera_log = {"log1": outputL}
             camera_log["log2"] = outputR
-            with open("./output/camera_log.json","w") as f:
+            with open("../output/camera_log.json","w") as f:
                 json.dump(camera_log,f)
         total_frames += 1
 
