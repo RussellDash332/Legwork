@@ -1,4 +1,3 @@
-import os
 import sys
 import tensorflow as tf
 from object_detection.utils import config_util
@@ -17,7 +16,14 @@ with tf.io.gfile.GFile(PIPELINE_CONFIG, "r") as f:
     proto_str = f.read()
     text_format.Merge(proto_str, pipeline_config)
 
-pipeline_config.model.ssd.num_classes = 1
+# Defensive programming
+assert 'centernet' in MODEL_NAME, "Model used must be a CenterNet model"
+pipeline_config.model.center_net.num_classes = 1
+# Hyperparameter tuning
+pipeline_config.model.center_net.object_center_params.classification_loss.penalty_reduced_logistic_focal_loss.alpha = 1
+pipeline_config.model.center_net.object_center_params.classification_loss.penalty_reduced_logistic_focal_loss.beta = 2
+pipeline_config.train_config.optimizer.adam_optimizer.learning_rate.cosine_decay_learning_rate.learning_rate_base = 1e-3
+
 pipeline_config.train_config.batch_size = 4
 pipeline_config.train_config.fine_tune_checkpoint = CHECKPOINT_PATH
 pipeline_config.train_config.fine_tune_checkpoint_type = "detection"
