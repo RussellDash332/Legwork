@@ -67,19 +67,6 @@ const ConfigNavbar = () => {
 
             {/* Right Components */}
             <div className="flex w-32 mr-2">
-                {/* <button className={(saveToggle && !quitToggle) ? "btn btn-primary btn-outline btn-sm mx-2 loading" : "btn btn-primary btn-outline btn-sm mx-2"} 
-                    onClick={clickSave}
-                    disabled={quitToggle}>
-                    <IoIosSave className="h-6 w-6"/>
-                    Save
-                </button>
-
-                <button className={(saveToggle && quitToggle) ? "btn btn-primary btn-sm gap-2 loading" :"btn btn-primary btn-sm gap-2"}
-                    onClick={clickSaveQuit}
-                    disabled={(saveToggle && !quitToggle)}>
-                    <IoIosSave className="h-6 w-6"/>
-                    Save & Quit
-                </button> */}
 
                 <div className="sidebar-icon group" onClick={clickSave} disabled={quitToggle}>
                     <IoIosSave className="h-8 w-8" />
