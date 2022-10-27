@@ -12,10 +12,7 @@ const ViewNode = () => {
 
     useEffect(() => {
         setPathArray(getPaths(nodes, edges));
-        setSpotArray(getSpots(nodes));
-        console.log("pathsArray", getPaths(nodes, edges));
-        console.log("spotsArray", getSpots(nodes));
-        
+        setSpotArray(getSpots(nodes));       
     }, [nodes, edges])
 
     const getSpots = (nodes) => {

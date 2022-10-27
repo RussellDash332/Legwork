@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState }from "react";
 import { useNavigate } from "react-router-dom";
-import { storeUserNodes, updateNodeScale } from "../../../../api/firebase-db";
+import { storeUserNodes, updateNodeScale, setUserAvailability } from "../../../../api/firebase-db";
 import { BsQuestion } from "react-icons/bs";
 import { IoMdExit, IoIosSave } from "react-icons/io"
 import FlowContext from "../FlowComponent/FlowContext";
@@ -44,6 +44,12 @@ const ConfigNavbar = () => {
             )
 
             updateNodeScale(user.uid, scale);
+
+            if (nodes.length !== 0) {
+                setUserAvailability(user.uid, true);
+            } else {
+                setUserAvailability(user.uid, false);
+            }
 
         }
     }, [saveToggle])

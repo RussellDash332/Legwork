@@ -1,7 +1,7 @@
 import { ref, set, child, get, getDatabase, update, onValue, off } from "firebase/database";
 // import { database } from "./firebase-config";
 
-const dbRef = ref(getDatabase())
+const dbRef = ref(getDatabase());
 
 /**
  * Function to initialise a new user in the database
@@ -78,7 +78,11 @@ export const updateNodeScale = (uid, scale) => {
     .catch(() => {console.log("failed tp update node scale");})
 }
 
-
+/**
+ * Function to get node scale value in database under user
+ * @param {String} uid 
+ * @param {Function} scale 
+ */
 export const getNodeScale = (uid, success) => {
     get(child(dbRef, `users/${uid}/nodeScale`))
     .then((snapshot) => {
@@ -95,32 +99,52 @@ export const getNodeScale = (uid, success) => {
 }
 
 export const subscribeCameraLog = (success) => {
+
     const db = getDatabase();
     const cameraLogRef = ref(db, 'cameraLog');
 
     onValue(cameraLogRef, (snapshot) => {
         const logData = snapshot.val();
+
+        console.log("data from db", logData);
+        
         success(logData);
     })
 
-    return off(cameraLogRef); // return unsub function;
+    return () => off(cameraLogRef); // return unsub function;
 }
 
+/**
+ * Function to set user's project availability
+ * @param {String} uid 
+ * @param {boolean} availability 
+ */
+export const setUserAvailability = (uid, availability) => {
+    const db = getDatabase();
 
+    update(ref(db, 'users/' + uid), {availability: availability})
+    .then(() => {console.log("updated node scale successfully");})
+    .catch(() => {console.log("failed tp update node scale");})
+}
 
-export const getUserAvailability = (uid, success) => {
-    get(child(dbRef, `users/${uid}/availability`))
-    .then((snapshot) => {
+/**
+ * Function that listens to user's project availability
+ * @param {String} uid 
+ * @param {Function} success 
+ * @returns 
+ */
+export const subscribeUserAvailability = (uid, success) => {
 
-        if (snapshot.exists()) {
-            console.log(snapshot.val());
-        }
+    const db = getDatabase();
+    const cameraLogRef = ref(db, `users/${uid}/availability`);
 
-        return success(snapshot.val());
+    onValue(cameraLogRef, (snapshot) => {
+        const avail = snapshot.val();
+        console.log("user availability changing")
+        success(avail);
     })
-    .catch((error) => {
-        console.log(error);
-    })
+
+    return () => off(cameraLogRef); // return unsub function;
 }
 
 
