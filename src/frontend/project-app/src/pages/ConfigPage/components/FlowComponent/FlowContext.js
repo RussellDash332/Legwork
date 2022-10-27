@@ -125,7 +125,7 @@ export const FlowContextProvider = ({children}) => {
         const newNode1 = new CameraTopNodeObject(
             id1,
             label1,
-            node_posID * 100,
+            node_posID * 50,
             100
         );
     
@@ -133,7 +133,7 @@ export const FlowContextProvider = ({children}) => {
         const newNode2 = new CameraBottomNodeObject(
             id2,
             label2,
-            node_posID * 100,
+            node_posID * 50,
             300
         );
     
@@ -155,7 +155,7 @@ export const FlowContextProvider = ({children}) => {
         const newNode = new CameraNodeObject(
             id,
             label,
-            node_posID * 100,
+            node_posID * 50,
             200
         );
     
