@@ -1,0 +1,1 @@
+FIREBASE_URL = 'https://dsa3101-project-default-rtdb.asia-southeast1.firebasedatabase.app'

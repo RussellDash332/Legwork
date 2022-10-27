@@ -50,8 +50,9 @@ This will produce a zip file with this particular directory structure. Copy it t
 
 ## Firebase Setup Guide
 After training the model, we can run the object counter to produce the desired output which can be seen in the `output` directory.
-1. Run `pip install -r firebase/requirements.txt`
-1. Run `python firebase/firebase_test.py` <!-- TODO -->
+1. Run `pip install -r firebase/requirements.txt`.
+1. Setup Firebase database URL manually at `tensorflow/object_counting/env.py`.
+1. The code in `tensorflow/object_counting/tensorflow_cumulative_object_counting.py` will send the object counting result straight to the provided Firebase real database. This is similar to the one we can see at `firebase/firebase_test_util.py`, where it tries to send a POST request to the database for a new data outputted.
 
 ## Common Issues
 - AttributeError: partially initialized module 'cv2' has no attribute 'gapi_wip_gst_GStreamerPipeline' (most likely due to a circular import)
