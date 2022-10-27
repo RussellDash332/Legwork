@@ -44,6 +44,7 @@ This will produce a zip file with this particular directory structure. Copy it t
     . tf2env/bin/activate
     ```
 1. Setup the URL for the pre-trained models at `model_zoo.txt`, one model URL per line.
+    > Make sure the models are from CenterNet!
 1. Set the number of training steps (currently 200) at `setup/train_model.sh` as you see fit.
 1. Run `setup/init.sh`.
 
