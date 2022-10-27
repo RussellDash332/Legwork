@@ -75,7 +75,7 @@ export const updateNodeScale = (uid, scale) => {
 
     update(ref(db, 'users/' + uid), {nodeScale: scale})
     .then(() => {console.log("updated node scale successfully");})
-    .catch(() => {console.log("failed tp update node scale");})
+    .catch(() => {console.log("failed to update node scale");})
 }
 
 /**
@@ -100,18 +100,18 @@ export const getNodeScale = (uid, success) => {
 
 export const subscribeCameraLog = (success) => {
 
+    // console.log("listen to camera log");
+
     const db = getDatabase();
-    const cameraLogRef = ref(db, 'cameraLog');
+    const cameraLogRef = ref(db, 'camera_log');
 
     onValue(cameraLogRef, (snapshot) => {
         const logData = snapshot.val();
 
         console.log("data from db", logData);
-        
+
         success(logData);
     })
-
-    return () => off(cameraLogRef); // return unsub function;
 }
 
 /**
@@ -123,8 +123,8 @@ export const setUserAvailability = (uid, availability) => {
     const db = getDatabase();
 
     update(ref(db, 'users/' + uid), {availability: availability})
-    .then(() => {console.log("updated node scale successfully");})
-    .catch(() => {console.log("failed tp update node scale");})
+    .then(() => {console.log("updated availability successfully");})
+    .catch(() => {console.log("failed to update availability");})
 }
 
 /**
@@ -136,15 +136,12 @@ export const setUserAvailability = (uid, availability) => {
 export const subscribeUserAvailability = (uid, success) => {
 
     const db = getDatabase();
-    const cameraLogRef = ref(db, `users/${uid}/availability`);
+    const availabilityRef = ref(db, `users/${uid}/availability`);
 
-    onValue(cameraLogRef, (snapshot) => {
+    onValue(availabilityRef, (snapshot) => {
         const avail = snapshot.val();
-        console.log("user availability changing")
         success(avail);
     })
-
-    return () => off(cameraLogRef); // return unsub function;
 }
 
 

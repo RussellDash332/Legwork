@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { subscribeCameraLog } from "../../../api/firebase-db";
+import { off } from "firebase/database";
 
 const CameraDataContext = createContext();
 export default CameraDataContext;
@@ -24,13 +25,11 @@ export const CameraDataContextProvider = ({children}) => {
 
     // Initial Listener on data
     useEffect(() => {
-        const unsubscribe = subscribeCameraLog((logData) => {
-            console.log(logData);
+        subscribeCameraLog((logData) => {
+            // console.log(logData);
             setData(logData);
             // Cannot put find smallest date here because this would be triggered everytime there is new data in the database
         })
-
-        return unsubscribe();
     }, [])
 
 
@@ -123,7 +122,6 @@ export const CameraDataContextProvider = ({children}) => {
     const processData = (data) => {
 
         console.log("raw data")
-        console.log(Data.hasOwnProperty("cameraLog"))
         // flatten data into entries
         let flattened_data = []
         // Object.values(data).forEach(user => {

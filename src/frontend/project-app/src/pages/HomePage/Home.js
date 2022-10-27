@@ -15,7 +15,7 @@ const Home = () => {
 
     useEffect(() => {
         subscribeUserAvailability(user.uid, (availability) => {
-            console.log("home availaibility", availability);
+            // console.log("home availaibility", availability);
             setAvailability(availability);
         })
 
