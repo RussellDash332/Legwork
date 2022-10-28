@@ -1,0 +1,48 @@
+input.inputBox {
+    font-size: 20px;
+    padding: 5px 20px 10px 20px;
+    border-radius: 10px;
+    border: 4px solid #666;
+    width: 300px;
+    justify-items: center;
+    position: relative;
+
+  }
+  
+  .calendarWrap {
+    display: inline-block;
+    padding: 5px 20px;
+    background-color: hsl(var(--b2));
+    /* position: relative;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--rounded-box, 1rem); */
+
+  }
+  
+  .calendarElement {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 40px;
+    border: 1px solid #ccc;
+    z-index: 999;
+  }
+  
+  .yearbutton {
+    background-color: white;
+    width: 1/3;
+    float: left;
+  }
+  
+  .monthbutton {
+    background-color:white;
+    width: 1/3;
+    float: middle;
+  }
+  
+  .daybutton {
+    background-color: white;
+    width: 1/3;
+    float: right;
+  }

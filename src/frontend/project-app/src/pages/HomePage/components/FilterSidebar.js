@@ -1,128 +1,144 @@
-import React from "react";
+import React, { useContext } from "react";
+import TimeRangeSlider from "react-time-range-slider";
+import { useEffect, useRef, useState } from "react";
+import { DateRange } from "react-date-range";
+import format from "date-fns/format";
+// import { FiFilter } from "react-icons/fi";
 
+import Data from "./Data.js";
+import "./Filter.css";
+
+import 'react-date-range/dist/styles.css'; 
+import 'react-date-range/dist/theme/default.css'; 
+
+import CameraDataContext from "./CameraDataContext.js";
 
 const FilterSidebar = () => {
+    const {
+        filteredData,
+        dateRange, setRange,
+        timeRange, setTimeRange,
+        filterGroupToggle, setFilterGroupToggle
+    } = useContext(CameraDataContext);
+
+    const changeStartHandler = (time) => {
+        console.log("Start Handler Called", time);
+    }
+
+    const timeChangeHandler = (time) => {
+        setTimeRange(time);
+    }
+
+    const changeCompleteHandler = (time) => {
+        console.log("Complete Handler Called", time);
+    }
+
+    //open close
+    const [open, setOpen] = useState(false);
+
+    //get the target element to toggle
+    const refOne = useRef(null);
+
+    const hideOnEscape = (e) => {
+        console.log(e.key)
+        if( e.key === "Escape"){
+            setOpen(false)
+        }
+    };
+
+    const hideOnClickOutside = (e) => {
+        if( refOne.current && !refOne.current.contains(e.target) ){
+            setOpen(false)
+        }
+    };
+
+    // to toggle 'year' if no existing filter or 
+    // untoggle 'year' if its filtered by year and to 
+    const updateFilterToggle = (value) => {
+        setFilterGroupToggle(value);
+    };
+
+    useEffect(() => {
+        // set current date on component load
+        
+        document.addEventListener("keydown", hideOnEscape, true)
+        document.addEventListener("click", hideOnClickOutside, true)
+    },[]);
+
     return (
         
         <div className="drawer drawer-end">
-        <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
-            
-            <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary">Filter</label>
-        </div> 
-        <div className="drawer-side">
-            <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-            <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
-            
-            <li><a><div className="dropdown">
-                    <label tabIndex={0} className="btn m-1">Year</label>
-                    <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><div className="form-control">
-                            <label className="label cursor-pointer">
-                            <span className="label-text">2019</span> 
-                            <input type="checkbox" checked className="checkbox checkbox-primary" />
-                            </label>
-                    </div></li>
-                    <li><div className="form-control">
-                            <label className="label cursor-pointer">
-                            <span className="label-text">2020</span> 
-                            <input type="checkbox" checked className="checkbox checkbox-primary" />
-                            </label>
-                    </div></li>
-                    </ul>
-            </div></a></li>
-
-            <li><a><div className="dropdown">
-                    <label tabIndex={0} className="btn m-1">Month</label>
-                    <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><div className="form-control">
-                            <label className="label cursor-pointer">
-                            <span className="label-text">January</span> 
-                            <input type="checkbox" checked className="checkbox checkbox-primary" />
-                            </label>
-                    </div></li>
-                    <li><div className="form-control">
-                            <label className="label cursor-pointer">
-                            <span className="label-text">February</span> 
-                            <input type="checkbox" checked className="checkbox checkbox-primary" />
-                            </label>
-                    </div></li>
-                    </ul>
-            </div></a></li>
-
-            <li><a><div className="dropdown">
-                    <label tabIndex={0} className="btn m-1">Day</label>
-                    <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><div className="form-control">
-                            <label className="label cursor-pointer">
-                            <span className="label-text">Monday</span> 
-                            <input type="checkbox" checked className="checkbox checkbox-primary" />
-                            </label>
-                    </div></li>
-                    <li><div className="form-control">
-                            <label className="label cursor-pointer">
-                            <span className="label-text">Tuesday</span> 
-                            <input type="checkbox" checked className="checkbox checkbox-primary" />
-                            </label>
-                    </div></li>
-                    </ul>
-            </div></a></li>
-
-            
-            <div date-rangepicker="" class="flex items-center">
-                <div class="relative">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                    </div>
-                    <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date start"/>
-                </div>
-                <span class="mx-4 text-gray-500">to</span>
-                <div class="relative">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                    </div>
-                    <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date end"/>
-                </div>  
+            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+                <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary">Filter</label>
             </div>
 
-            {/* <div>
-            const [start, startRef] = React.useState(null);
-            const [end, endRef] = React.useState(null);
-                            
-            <Datepicker
-                controls={['datetime']}
-                select="range"
-                startInput={start}
-                endInput={end}
-                touchUi={true}
-                />
-            <Input
-                ref={startRef}
-                placeholder="Please Select...">Start
-                </Input>
-            <Input
-                ref={endRef}
-                placeholder="Please Select...">End
-            </Input>
-            </div> */}
+            <div className="drawer-side absolute top-0 right-70 w-1/4 h-screen" >
+                <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+                <ul className="menu p-4 w-full bg-base-100 text-base-content content-center">
+                    <div className="text-5xl underline underline-offset-8 top-0"><p> Filters </p>
+                    </div>
+                    <br /><br />
+                    
+                    <div className="calendarWrap">
+                        <h4>Date Range</h4>
+                        <input
+                            value = {` ${format(dateRange[0].startDate, "MM/dd/yyyy")} to ${format(dateRange[0].endDate, "MM/dd/yyyy")} ` }
+                            readOnly
+                            className = "inputBox"
+                            onClick={ () => setOpen(open => !open) }
+                        />    
+
+                        <div ref={refOne}>
+                        {open &&
+                        <DateRange
+                            onChange = {item => {
+                                setRange(prevState => [item.selection]);
+                                console.log(item.selection)
+
+                            }}
+                            editableDateInputs = {true}
+                            moveRangeOnFirstSelection = {false}
+                            ranges = {dateRange}
+                            months = {2}
+                            direction = "vertical"
+                            className = "calendarElement"
+                            />
+                        }
+                        </div>
+
+                        <br /><br />
+                    </div>
+                    <br /><br />
+                    {/* <br /><br /> */}
 
 
-            {/* <div>
-            <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+                    <div className="TimeRangeSlider card w-full px-7 py-5 bg-base-200 flex flex-col space-y-4 ">
+                        <h4>Time Range</h4>
+                        <TimeRangeSlider
+                            disabled={false}
+                            format={24}
+                            maxValue={"23:59"}
+                            minValue={"00:00"}
+                            name={"time_range"}
+                            onChangeStart={changeStartHandler}
+                            onChangeComplete={changeCompleteHandler}
+                            onChange={timeChangeHandler}
+                            step={10}
+                            value={timeRange}/>
+                        <div>Start Time: {timeRange.start}   End Time: {timeRange.end}</div>
+                    
+                    </div>
+                    <br /><br />
+                    {/* <br /><br /> */}
 
-            
-            (function() {
-                ('input[name="daterange"]').daterangepicker({
-                    opens: 'left'
-                    }, function(start, end, label) {
-                        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                        })
-                });
-            
-            </div> */}
-            </ul>
-        </div>
-
+                    <div className="btn-group btn-group-horizontal justify-center w-full flex space-x-4 card px-7 py-5 bg-base-200 ">
+                        <input type="radio" name="options" data-title="year" className="btn" onClick={() => updateFilterToggle("year")} />
+                        <input type="radio" name="options" data-title="month" className="btn" onClick={() => updateFilterToggle("month_year")} />
+                        <input type="radio" name="options" data-title="day" className="btn" onClick={() => updateFilterToggle("day_month_year")}/>
+                    </div>
+                </ul>     
+            </div>
         </div>
     );
 }
