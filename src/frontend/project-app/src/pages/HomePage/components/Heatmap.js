@@ -11,6 +11,17 @@ import { hoverData, getColor } from "../../../data/HoverFloorplan";
 import { UserContext } from "../../ProtectedRoute";
 import Gridimage from "../../../assets/images/Gridlines.jpeg";
 import Floorplan from "../../../assets/images/Floorplan.png";
+import { 
+    Mode,
+    getSpots,
+    getPaths,
+    populateSpotObjsWithCountLive,
+    populateSpotObjsWithCountAnalytics,
+    populatePathObjsWithCountLive,
+    populatePathObjsWithCountAnalytics,
+    getBoundingBox,
+    getAdjustedSpotCenter
+} from "../utils/HeatmapUtils"
 
 const samplePathObjs = [
 {
@@ -69,6 +80,37 @@ const samplePathObjs = [
 },
 ];
 
+const sampleAnalyticsData = {
+    "1234": {
+        "2021": 30000,
+        "2022": 5100
+    },
+    "2345": {
+        "2021": 6200,
+        "2022": 3400
+    },
+    "24344": {
+        "2021": 5900,
+        "2022": 1300
+    },
+    "34435": {
+        "2021": 3400,
+        "2022": 6900
+    },
+    "214234234": {
+        "2021": 4700,
+        "2022": 2300
+    },
+    "433434": {
+        "2021": 7100,
+        "2022": 1200
+    },
+    "35534634": {
+        "2021": 3200,
+        "2022": 3100
+    }
+};
+
 const sampleSpotObjs = [
 {
     spotName: "spot-1",
@@ -81,143 +123,47 @@ const sampleSpotObjs = [
 }
 ];
 
-const flipYCoordinate = (currY, maxY) => maxY - currY;
-
-const getSpots = (nodes) => {
-    let spotsArray = nodes.filter((node) => node.type === "camera");
-
-    spotsArray = spotsArray.map(node => {
-
-        const spotData = {
-            id: node.id,
-            label: node.data.label,
-            position: node.position,               
-        };
-
-        return spotData;
-    })
-    
-    return spotsArray;
-};
-
-const getPaths = (nodes, edges) => {
-    let pathsArray = [];
-
-    for (let i = 0; i < edges.length; i++) {
-        const currEdge = edges[i];
-
-        const id1 = currEdge.source;
-        const id1Data = nodes.find((node) => node.id === id1);
-        const label1 = id1Data.data.label;
-        const position1 = id1Data.position;
-        const leftDirection = ['cameraTopLeft', 'cameraBottomRight', 'cameraRightUp', 'cameraLeftDown'];
-        const direction1 = (leftDirection.includes(id1Data.type)) ? 0 : 1; //0 is left, 1 is right
-
-        const id2 = currEdge.target;
-        const id2Data = nodes.find((node) => node.id === id2);
-        const label2 = id2Data.data.label;
-        const position2 = id2Data.position;
-        const direction2 = (leftDirection.includes(id2Data.type)) ? 0 : 1; //0 is left, 1 is right
-
-        const pathName = `[${label1}]-[${label2}]`;
-        
-        const vertNodes = ['cameraTopRight', 'cameraBottomRight', 'cameraTopLeft', 'cameraBottomLeft'];
-        const orientation = (vertNodes.includes(id1Data.type)) ? "vertical" : "horizontal";
-
-        const pathObj = {
-            pathName: pathName,
-            orientation: orientation,
-            id1: id1,
-            label1: label1,
-            direction1: direction1,
-            position1: position1,
-            id2: id2,
-            label2: label2,
-            direction2: direction2,
-            position2: position2
-        }
-
-        pathsArray = [...pathsArray, pathObj];
-    }
-
-    return pathsArray;
-};
-
-// Top Right & Bottom Left
-const getBoundingBox = (pathObj, scale, maxY) => {
-    const shift = (30 * (scale / 50));
-    const position1 = pathObj.position1;
-    const position2 = pathObj.position2;
-    let topRightX;
-    let topRightY;
-    let bottomLeftX;
-    let bottomLeftY;
-
-    // Check if vertical or Horizontal
-    if (pathObj.orientation == "vertical") {
-        // Check if node1 or node2 is top
-        if (position1.y <= position2.y) { // node1 is on top
-            topRightX = position1.x + shift;
-            topRightY = position1.y;
-            bottomLeftX = position2.x;
-            bottomLeftY = position2.y + shift;
-
-        } else { // node2 is on top
-            topRightX = position2.x + shift;
-            topRightY = position2.y;
-            bottomLeftX = position1.x;
-            bottomLeftY = position1.y + shift;
-        }
-
-    } else { // Horizontal
-        // Check if node1 or node2 is left
-        if (position1.x <= position2.x) { // node1 is left
-            topRightX = position2.x + shift;
-            topRightY = position2.y;
-            bottomLeftX = position1.x;
-            bottomLeftY = position1.y + shift;
-
-        } else { // node2 is on left
-            topRightX = position1.x + shift;
-            topRightY = position1.y;
-            bottomLeftX = position2.x;
-            bottomLeftY = position2.y + shift;
-        }
-    }
-    return [[flipYCoordinate(bottomLeftY, maxY), bottomLeftX], 
-            [flipYCoordinate(topRightY, maxY), topRightX]];
-}
-
-const getAdjustedSpotCenter = (spotObj, scale, maxY) => {
-    const shift = (30 * (scale / 50)) / 2;
-    const adjustedX = spotObj.position.x + shift;
-    const adjustedY = flipYCoordinate(spotObj.position.y + shift, maxY);
-    return [adjustedY, adjustedX];
-};
-
-const getTotalCount = (pathObjs, spotObjs) => (
-    (pathObjs.reduce((acc, currPathObj) => acc + currPathObj.count, 0)) +
-    (spotObjs.reduce((acc, currPathObj) => acc + currPathObj.count, 0))
-);
-
-const Heatmap = ({ liveCount }) => {
+const Heatmap = ({ mode }) => {
     const { user } = useContext(UserContext);
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
     const [floorplanImage, setFloorplanImage] = useState([]);
     const [scale, setScale] = useState(50);
-   
+
+    const filterMode = "year";
 
     const img = new Image();
     img.src = floorplanImage ? Floorplan : floorplanImage[0].data_url;
 
-    console.log('width ' + img.naturalWidth)
-    console.log('height '+ img.naturalHeight)
+    console.log('width', img.naturalWidth);
+    console.log('height', img.naturalHeight);
 
     const leafletHeight = (img.naturalHeight/img.naturalWidth) * 800;
     const bounds = [[0, 0], [leafletHeight, 800]];
     const center = [leafletHeight / 2, 800 / 2];
-    const liveCountz = getTotalCount(samplePathObjs, sampleSpotObjs);
+
+    // Get paths
+    const paths = getPaths(nodes, edges);
+    let pathsWithCounts;
+    if (mode === Mode.Live) {
+        pathsWithCounts = populatePathObjsWithCountLive(paths);
+    } else { // Analytics
+        pathsWithCounts = populatePathObjsWithCountAnalytics(paths, sampleAnalyticsData, filterMode);
+    }
+
+    // Get spots
+    const spots = getSpots(nodes);
+    let spotsWithCounts;
+    if (mode === Mode.Live) {
+        spotsWithCounts = populateSpotObjsWithCountLive(spots);
+    } else { // Analytics
+        spotsWithCounts = populateSpotObjsWithCountAnalytics(spots, sampleAnalyticsData, filterMode);
+    }
+
+    // Set live count
+    const liveCount = 
+        (pathsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0)) +
+        (spotsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0));
 
     useEffect(() => {
         // Retrieve existing flow component state
@@ -252,35 +198,29 @@ const Heatmap = ({ liveCount }) => {
             });
     }, []);
 
-    const renderPaths = () => {
-        const paths = getPaths(nodes, edges);
-        return (
-            paths.map((data) => (
-                <FeatureGroup pathOptions={{ color: getColor(data.count, liveCountz) }}>
-                    <Rectangle bounds={getBoundingBox(data, scale, leafletHeight)} fill fillOpacity={0.8}>
-                        <Tooltip>
-                            {`Path: ${data.pathName}`} <br/>
-                            {`Live Count: ${data.count}`}
-                        </Tooltip>
-                    </Rectangle>
-                </FeatureGroup>
-        )));
-    };
-
-    const renderSpots = () => {
-        const spots = getSpots(nodes);
-        return (
-            spots.map((data) => (
-            <FeatureGroup pathOptions={{ color: getColor(data.count, liveCountz) }}>
-                <Circle center={getAdjustedSpotCenter(data, scale, leafletHeight)} radius={30 * scale/100} fill fillOpacity={0.8}>
+    const renderPaths = () => (
+        pathsWithCounts.map((data) => (
+            <FeatureGroup pathOptions={{ color: getColor(data.count, liveCount) }}>
+                <Rectangle bounds={getBoundingBox(data, scale, leafletHeight)} fill fillOpacity={0.8}>
                     <Tooltip>
-                        {`Spot: ${data.label}`} <br/>
-                        {`Live Count: TODO`}
+                        {`Path: ${data.pathName}`} <br/>
+                        {`Live Count: ${data.count}`}
                     </Tooltip>
-                </Circle>
+                </Rectangle>
             </FeatureGroup>
-        )));
-    };
+    )));
+
+    const renderSpots = () => (
+        spotsWithCounts.map((data) => (
+        <FeatureGroup pathOptions={{ color: getColor(data.count, liveCount) }}>
+            <Circle center={getAdjustedSpotCenter(data, scale, leafletHeight)} radius={30 * scale/100} fill fillOpacity={0.8}>
+                <Tooltip>
+                    {`Spot: ${data.label}`} <br/>
+                    {`Live Count: ${data.count}`}
+                </Tooltip>
+            </Circle>
+        </FeatureGroup>
+    )));
 
     const renderFloorPlan = () => (
         <LayersControl.BaseLayer checked name="Floorplan">

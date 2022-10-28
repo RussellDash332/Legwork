@@ -44,7 +44,6 @@ const Legend = ({ liveCount }) => {
 }
 
 const AnalyticsHeatmap = () => {
-    const [liveCount, setLiveCount] = useState(100);
     const [projects, setProjects] = useState([]);
 
     // console.log("Projects:", projects);
@@ -63,7 +62,7 @@ const AnalyticsHeatmap = () => {
     }, []);
 
     return (
-        <Heatmap liveCount={liveCount} />
+        <Heatmap mode="analytics" />
     );
 };
 

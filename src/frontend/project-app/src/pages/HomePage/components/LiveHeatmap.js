@@ -4,7 +4,6 @@ import { onValue, ref } from "firebase/database";
 import Heatmap from "./Heatmap";
 
 const LiveHeatmap = () => {
-    const [liveCount, setLiveCount] = useState(100);
     const [projects, setProjects] = useState([]);
 
     // console.log("Projects:", projects);
@@ -23,7 +22,7 @@ const LiveHeatmap = () => {
       }, []);
 
     return (
-        <Heatmap liveCount={liveCount} />
+        <Heatmap mode="live" />
     );
 }
 
