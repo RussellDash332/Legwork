@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import L from "leaflet";
+import L, { imageOverlay } from "leaflet";
 import { MapContainer, ImageOverlay, LayersControl, LayerGroup, 
          FeatureGroup, Tooltip, Rectangle, Circle } from "react-leaflet";
 // import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
@@ -145,7 +145,7 @@ const getPaths = (nodes, edges) => {
 
 // Top Right & Bottom Left
 const getBoundingBox = (pathObj, scale, maxY) => {
-    const shift = (50 * (scale / 50));
+    const shift = (30 * (scale / 50));
     const position1 = pathObj.position1;
     const position2 = pathObj.position2;
     let topRightX;
@@ -188,6 +188,13 @@ const getBoundingBox = (pathObj, scale, maxY) => {
             [flipYCoordinate(topRightY, maxY), topRightX]];
 }
 
+const getAdjustedSpotCenter = (spotObj, scale, maxY) => {
+    const shift = (30 * (scale / 50)) / 2;
+    const adjustedX = spotObj.position.x + shift;
+    const adjustedY = flipYCoordinate(spotObj.position.y + shift, maxY);
+    return [adjustedY, adjustedX];
+};
+
 const getTotalCount = (pathObjs, spotObjs) => (
     (pathObjs.reduce((acc, currPathObj) => acc + currPathObj.count, 0)) +
     (spotObjs.reduce((acc, currPathObj) => acc + currPathObj.count, 0))
@@ -200,15 +207,20 @@ const Heatmap = ({ liveCount }) => {
     const [floorplanImage, setFloorplanImage] = useState([]);
     const [scale, setScale] = useState(50);
    
+
     const img = new Image();
     img.src = floorplanImage ? Floorplan : floorplanImage[0].data_url;
 
-    const bounds = [[0, 0], [img.naturalHeight, img.naturalWidth]];
-    const center = [img.naturalHeight / 2, img.naturalWidth / 2];
+    console.log('width ' + img.naturalWidth)
+    console.log('height '+ img.naturalHeight)
+
+    const leafletHeight = (img.naturalHeight/img.naturalWidth) * 800;
+    const bounds = [[0, 0], [leafletHeight, 800]];
+    const center = [leafletHeight / 2, 800 / 2];
     const liveCountz = getTotalCount(samplePathObjs, sampleSpotObjs);
 
     useEffect(() => {
-        // Retrieve exisitng flow component state
+        // Retrieve existing flow component state
         getUserNodes(user.uid,
             (nodeData) => {
                 if (nodeData) {
@@ -245,7 +257,7 @@ const Heatmap = ({ liveCount }) => {
         return (
             paths.map((data) => (
                 <FeatureGroup pathOptions={{ color: getColor(data.count, liveCountz) }}>
-                    <Rectangle bounds={getBoundingBox(data, scale, img.naturalHeight)} fill fillOpacity={0.8}>
+                    <Rectangle bounds={getBoundingBox(data, scale, leafletHeight)} fill fillOpacity={0.8}>
                         <Tooltip>
                             {`Path: ${data.pathName}`} <br/>
                             {`Live Count: ${data.count}`}
@@ -260,10 +272,10 @@ const Heatmap = ({ liveCount }) => {
         return (
             spots.map((data) => (
             <FeatureGroup pathOptions={{ color: getColor(data.count, liveCountz) }}>
-                <Circle center={[flipYCoordinate(data.position.y, img.naturalHeight), data.position.x]} radius={20} fill fillOpacity={0.8}>
+                <Circle center={getAdjustedSpotCenter(data, scale, leafletHeight)} radius={30 * scale/100} fill fillOpacity={0.8}>
                     <Tooltip>
                         {`Spot: ${data.label}`} <br/>
-                        {`Live Count: ${data.count}`}
+                        {`Live Count: TODO`}
                     </Tooltip>
                 </Circle>
             </FeatureGroup>
@@ -273,9 +285,9 @@ const Heatmap = ({ liveCount }) => {
     const renderFloorPlan = () => (
         <LayersControl.BaseLayer checked name="Floorplan">
             <LayerGroup>
-                {/* <div style={{ width: '400px' }}> */}
+                {/* <div className="w-[800px]"> */}
                 <ImageOverlay 
-                    // className="object-fit"
+                    // className="object-contain"
                     attribution="&copy; Developed by LegWork Inc." 
                     url={img.src} 
                     bounds={bounds} 
