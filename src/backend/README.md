@@ -4,13 +4,19 @@
 Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 ### Stage 1: (ESP32-camera setup)
 1. Install [PlatformIO](https://platformio.org/) extension on VScode and restart the application.
-1. Open the `esp32cam folder` in a new window such that `esp32cam` is the root directory.
-1. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might take some time).
+2. Open the `esp32cam folder` in a new window such that `esp32cam` is the root directory.
+3. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might take some time).
+
 ![Set up for esp32](assets/status_bar.PNG)
-1. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP**
+
+4. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP**
+
 ![Set up for esp32](assets/wifi_setting.PNG)
-1. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
-1. A configuration screen will appear if connecting for the first time. 
+
+5. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
+
+6. A configuration screen will appear if connecting for the first time. 
+
 ![Set up for esp32](assets/configuration.PNG)
 
 Configure at least:
@@ -20,14 +26,19 @@ Configure at least:
 
 7. After the initial configuration, or automatically this screen should appear
 ![Set up for esp32](assets/index_2.PNG)
+
 8. RTSP stream can be found at [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1). User can open this link in **VLC media player**
 
 ### Stage 2: (RTSP-live stream)
-1. Once esp32 camera is setup, open **VLC media player** and go to the *Media* dropdown to select *Open network Stream*
+1. Once esp32 camera is setup, open **VLC media player**, go to the *Media* dropdown to select **Open network Stream**
+
 ![Set up for stream](assets/VLC_selection.PNG)
-1. Insert the RTSP link [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1) into the textbox
+
+2. Insert the RTSP link [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1) into the textbox
+
 ![Set up for stream](assets/VLC_input_rtsp_link.PNG)
-1. Press convert.... (TBC)
+
+3. Press convert.... (TBC)
 
 
 
