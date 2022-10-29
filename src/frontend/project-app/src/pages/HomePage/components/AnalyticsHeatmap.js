@@ -1,13 +1,13 @@
 import React from "react";
 
-// import Heatmap from "./Heatmap";
+import Heatmap from "./Heatmap";
 
 const AnalyticsHeatmap = () => {
     return (
-        <div className="card w-11/12 h-45 shadow-xl bg-sky-600">
+        <div className="card w-10/12 min-h-half shadow-xl bg-base-200">
             <div>
-                {/* <Heatmap /> */}
-                heatmap
+                <Heatmap />
+                {/* heatmap */}
             </div>
         </div>
     );

@@ -4,20 +4,22 @@ import Plot from 'react-plotly.js';
 
 
 
-export default function LineGraph() {
+export default function Heatmap() {
 
     const data = {
         
         "id1": {
-                  "2020": 30,
-                  "2021": 51,
-                  "2022": 89
+                  "9/2022": 111,
+                  "10/2022": 134
               },
         "id2": {
-                  "2020": 41,
-                  "2021": 57,
-                  "2022": 78
-              }
+                  "9/2022": 97,
+                  "10/2022": 123
+              },
+        "id3": {
+                "9/2022": 163,
+                "10/2022": 242
+            }
         
     };
 
@@ -55,7 +57,7 @@ export default function LineGraph() {
             <Plot
                 data = {generateTraces()}
                 layout={{
-                    autosize: true, height: 250, legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: 250, legend: {"orientation": "v", y:1}, title: 'HEATMAP HERE', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler
