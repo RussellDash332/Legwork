@@ -8,10 +8,12 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 1. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might take some time).
 ![Set up for esp32 camera](assets/status_bar.png)
 1. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP**
+
 ![Set up for esp32 camera](assets/wifi_setting.png)
-1. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
-1. A configuration screen will appear if connecting for the first time. 
-![Set up for esp32 camera](assets/configuration.png)
+
+4. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
+1. A configuration screen will appear if connecting for the first time.<br> 
+![Set up for esp32 camera](assets/Configuration.png)
 <br>Configure at least:
 <br>-The access point to connect to. No dropdown is present to show available networks!<br>-A password for accessing the Access point (AP) when starting. (required)<br>-Type of the ESP32-CAM board
 1. After the initial configuration, or automatically this screen should appear
