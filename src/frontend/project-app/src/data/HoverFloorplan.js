@@ -49,19 +49,42 @@ const hoverData = Array.of(h1, h2, h3, h4, h5, h6,
                            v8, v9, v10, v11, v12, v13,
                            s1, s2, s3);
 
-const thresholds = [0, 20, 40, 60, 80, 100];
+const thresholds = [0, 2.5, 5, 7.5, 10, 12.5, 15, 20, 25];
 
 const getColor = (indivLiveCount, totalLiveCount) => {
     const percentage = indivLiveCount / totalLiveCount * 100;
-    return percentage >= thresholds[4]
+    return percentage >= thresholds[8]
         ? "#800026"
-        : percentage >= thresholds[3]
-        ? "#E31A1C"
-        : percentage >= thresholds[2]
+        : percentage >= thresholds[7]
         ? "#FD8D3C"
-        : percentage >= thresholds[1]
+        : percentage >= thresholds[6]
         ? "#FEB24C"
-        : "#FED976"
+        : percentage >= thresholds[5]
+        ? "#FED976"
+        : percentage >= thresholds[4]
+        ? "#20a819"
+        : percentage >= thresholds[3]
+        ? "#aeeb34"
+        : percentage >= thresholds[2]
+        ? "#66d188"
+        : percentage >= thresholds[1]
+        ? "#66d1cc"
+        : "#0051ff"
 };
+
+// Python: 3 if 1 == 2 else 4
+const foo = () => {
+    return 1 == 2
+    ? 3
+    : 4;
+}
+
+const foo2 = () => {
+    if (1 == 2) {
+        return 3;
+    } else {
+        return 4;
+    }
+}
 
 export { hoverData, thresholds, getColor };

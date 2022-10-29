@@ -81,33 +81,145 @@ const samplePathObjs = [
 ];
 
 const sampleAnalyticsData = {
-    "1234": {
+    "1": {
         "2021": 30000,
-        "2022": 5100
+        "2022": 51000
     },
-    "2345": {
-        "2021": 6200,
+    "2": {
+        "2021": 5000,
         "2022": 3400
     },
-    "24344": {
+    "3": {
         "2021": 5900,
         "2022": 1300
     },
-    "34435": {
-        "2021": 3400,
+    "4": {
+        "2021": 7900,
         "2022": 6900
     },
-    "214234234": {
+    "5": {
         "2021": 4700,
         "2022": 2300
     },
-    "433434": {
-        "2021": 7100,
+    "6": {
+        "2021": 71000,
         "2022": 1200
     },
-    "35534634": {
+    "7": {
         "2021": 3200,
+        "2022": 310
+    },
+    "8": {
+        "2021": 3235,
+        "2022": 90
+    },
+    "9": {
+        "2021": 7800,
+        "2022": 4200
+    },
+    "10": {
+        "2021": 100,
+        "2022": 300
+    },
+    "11": {
+        "2021": 6800,
+        "2022": 2400
+    },
+    "12": {
+        "2021": 7900,
+        "2022": 1000
+    },
+    "13": {
+        "2021": 5400,
+        "2022": 5348
+    },
+    "14": {
+        "2021": 9846,
+        "2022": 9475
+    },
+    "15": {
+        "2021":14568,
+        "2022": 14736
+    },
+    "16": {
+        "2021": 12800,
+        "2022": 13100
+    },
+    "17": {
+        "2021": 15600,
+        "2022": 12100
+    },
+    "18": {
+        "2021": 4570,
+        "2022": 8574
+    },
+    "19": {
+        "2021": 3200,
+        "2022": 2304
+    },
+    "20": {
+        "2021": 3400,
+        "2022": 4200
+    },
+    "21": {
+        "2021": 4509,
+        "2022": 4588
+    },
+    "22": {
+        "2021": 22000,
+        "2022": 2300
+    },
+    "23": {
+        "2021": 45000,
+        "2022": 1300
+    },
+    "24": {
+        "2021": 7500,
+        "2022": 6500
+    },
+    "25": {
+        "2021": 5670,
+        "2022": 5300
+    },
+    "26": {
+        "2021": 3900,
         "2022": 3100
+    },
+    "27": {
+        "2021": 8700,
+        "2022": 7270
+    },
+    "28": {
+        "2021": 100,
+        "2022": 200
+    },
+    "29": {
+        "2021": 2900,
+        "2022": 3200
+    },
+    "30": {
+        "2021": 8440,
+        "2022": 3400
+    },
+    "31": {
+        "2021": 2900,
+        "2022": 3200
+    },
+    "32": {
+        "2021": 2900,
+        "2022": 3200
+    },
+    "33": {
+        "2021": 2900,
+        "2022": 3200
+    },
+    "34": {
+        "2021": 2900,
+        "2022": 3200
+    },
+    "35": {
+        "2021": 29000,
+        "2022": 3200
     }
 };
 
@@ -138,7 +250,8 @@ const Heatmap = ({ mode }) => {
     console.log('width', img.naturalWidth);
     console.log('height', img.naturalHeight);
 
-    const leafletHeight = (img.naturalHeight/img.naturalWidth) * 800;
+    //const leafletHeight = (img.naturalHeight/img.naturalWidth) * 800;
+    const leafletHeight = (602/1033) * 800;
     const bounds = [[0, 0], [leafletHeight, 800]];
     const center = [leafletHeight / 2, 800 / 2];
 
@@ -198,13 +311,15 @@ const Heatmap = ({ mode }) => {
             });
     }, []);
 
+    console.log("Live Count: " + liveCount)
+
     const renderPaths = () => (
         pathsWithCounts.map((data) => (
             <FeatureGroup pathOptions={{ color: getColor(data.count, liveCount) }}>
                 <Rectangle bounds={getBoundingBox(data, scale, leafletHeight)} fill fillOpacity={0.8}>
                     <Tooltip>
                         {`Path: ${data.pathName}`} <br/>
-                        {`Live Count: ${data.count}`}
+                        {`Count: ${data.count}`}
                     </Tooltip>
                 </Rectangle>
             </FeatureGroup>
@@ -216,7 +331,7 @@ const Heatmap = ({ mode }) => {
             <Circle center={getAdjustedSpotCenter(data, scale, leafletHeight)} radius={30 * scale/100} fill fillOpacity={0.8}>
                 <Tooltip>
                     {`Spot: ${data.label}`} <br/>
-                    {`Live Count: ${data.count}`}
+                    {`Count: ${data.count}`}
                 </Tooltip>
             </Circle>
         </FeatureGroup>

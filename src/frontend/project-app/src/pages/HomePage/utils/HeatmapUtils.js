@@ -59,7 +59,7 @@ const getPaths = (nodes, edges) => {
             position2: position2
         }
 
-        pathsArray = [...pathsArray, pathObj];
+        pathsArray.push(pathObj);
     }
 
     return pathsArray;
