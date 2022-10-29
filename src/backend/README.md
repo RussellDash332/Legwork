@@ -3,9 +3,9 @@
 ## Camera Setup Guide
 Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 ### Stage 1: (ESP32-camera setup)
-1. Install [PlatformIO](https://platformio.org/) extension on VScode and restart the application 
-1. Open the `esp32cam folder` in a new window such that `esp32cam` is the root directory
-1. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might tak seme time)
+1. Install [PlatformIO](https://platformio.org/) extension on VScode and restart the application.
+1. Open the `esp32cam folder` in a new window such that `esp32cam` is the root directory.
+1. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might take some time).
 ![Set up for esp32 camera](esp32cam/assets/status_bar.PNG)
 1. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP**
 ![Set up for esp32 camera](esp32cam/assets/wifi_setting.PNG)
@@ -14,6 +14,7 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 ![Set up for esp32 camera](esp32cam/assets/configuration.PNG)
 <br>Configure at least:
 <br>-The access point to connect to. No dropdown is present to show available networks!<br>-A password for accessing the Access point (AP) when starting. (required)<br>-Type of the ESP32-CAM board
+
 1. After the initial configuration, or automatically this screen should appear
 ![Set up for esp32 camera](esp32cam/assets/index_2.PNG)
 1. RTSP stream can be found at [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1). User can open this link in **VLC media player**
