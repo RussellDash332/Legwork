@@ -30,14 +30,14 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 1. After the initial configuration, or automatically this screen should appear
     <img src="assets/index_2.png" width=50%>
 
-1. RTSP stream can be found at [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1).
+1. RTSP stream can be found at rtsp://esp32cam-rtsp.local:554/mjpeg/1.
 
-### Stage 2: Testing
-After stage 1, users can use **VLC media player** to test whether the setup is working by doing these steps below:
+### (Optional) Stage 2: Testing with VLC media player
+After stage 1, users can use **VLC media player** to test whether the setup is working by doing these steps below. This stage is optional.
 
 1. Once esp32 camera setup is complete, open **VLC media player**, go to the *Media* dropdown to select *Open network Stream*.
 
-    <img src="assets/VLC_selection.png" width=50%>
+    <img src="assets/VLC_selection.png" width=30%>
 
 1. Insert the RTSP link [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1) into the textbox.
 
@@ -53,7 +53,7 @@ Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-
 
 1. Go to Roboflow and create a new project to store the datasets and annotations.
 
-    <img src="assets/new_project.png" width=50%>
+    <img src="assets/new_project.png" width=30%>
 
 1. Upload the images and annotations.
 
