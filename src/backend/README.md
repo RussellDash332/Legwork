@@ -79,6 +79,8 @@ This will produce a zip file with this particular directory structure. Copy it t
 1. To activate the counting script 
    ```
    usage: python tensorflow_cumulative_object_counting.py -m [MODEL] -l LABELMAP -v [VIDEOPATH] -camid [CAMERAID]
+
+   
    arguments:
    -m MODEL, --model MODEL
                         model path
