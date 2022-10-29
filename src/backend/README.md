@@ -1,7 +1,32 @@
 # Backend
 
 ## Camera Setup Guide
-TBC.
+Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
+### Stage 1: (ESP32-camera setup)
+1. Install [PlatformIO](https://platformio.org/) extension on VScode and restart the application.
+1. Open the `esp32cam folder` in a new window such that `esp32cam` is the root directory.
+1. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might take some time).
+![Set up for esp32 camera](assets/status_bar.png)
+1. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP** <br>
+![Set up for esp32 camera](assets/wifi_setting.png)
+
+4. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
+1. A configuration screen will appear if connecting for the first time.<br> 
+![Set up for esp32 camera](assets/Configuration.png)
+<br>Configure at least:
+<br>-The access point to connect to. No dropdown is present to show available networks!<br>-A password for accessing the Access point (AP) when starting. (required)<br>-Type of the ESP32-CAM board
+1. After the initial configuration, or automatically this screen should appear
+![Set up for esp32 camera](assets/index_2.png)
+1. RTSP stream can be found at [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1). User can open this link in **VLC media player**
+
+### Stage 2: (RTSP-live stream)
+1. Once esp32 camera setup is complete, open **VLC media player**, go to the *Media* dropdown to select *Open network Stream*
+![Set up for esp32 camera](assets/VLC_selection.PNG)
+1. Insert the RTSP link [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1) into the textbox
+![Set up for esp32 camera](assets/VLC_input_rtsp_link.PNG)
+1. Press convert.... (TBC)
+
+
 
 ## Model Setup Guide
 Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-using-tensorflow-object-detection-api
@@ -47,6 +72,7 @@ This will produce a zip file with this particular directory structure. Copy it t
     > Make sure the models are from CenterNet!
 1. Set the number of training steps (currently 200) at `setup/train_model.sh` as you see fit.
 1. Run `setup/init.sh`.
+1. To track and visualize model metrics like *Loss/Precision/Recall*, run the Tensorboard code  `setup/model_tensorboard.sh` <br>and fill in credentials when prompted. Link to tensorboard browser will then appear.
 
 ## Firebase Setup Guide
 After training the model, we can run the object counter to produce the desired output which can be seen in the `output` directory.
