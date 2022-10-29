@@ -10,14 +10,6 @@ protoc/
 # Sandbox folders
 sandbox/
 
-# CocoAPI
-PythonAPI/pycocotools/__init__.pyc
-PythonAPI/pycocotools/_mask.c
-PythonAPI/pycocotools/_mask.so
-PythonAPI/pycocotools/coco.pyc
-PythonAPI/pycocotools/cocoeval.pyc
-PythonAPI/pycocotools/mask.pyc
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
