@@ -7,8 +7,7 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 1. Open the `esp32cam folder` in a new window such that `esp32cam` is the root directory.
 1. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might take some time).
 ![Set up for esp32 camera](assets/status_bar.png)
-1. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP**
-
+1. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP** <br>
 ![Set up for esp32 camera](assets/wifi_setting.png)
 
 4. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
