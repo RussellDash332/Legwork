@@ -10,6 +10,11 @@ from object_detection.utils import ops as utils_ops
 
 from trackable_object import TrackableObject
 from centroidtracker import CentroidTracker
+from firebase import firebase
+from env import FIREBASE_URL
+
+# Create firebase app
+fb_app = firebase.FirebaseApplication(FIREBASE_URL, None)
 
 # patch tf1 into `utils.ops`
 utils_ops.tf = tf.compat.v1
@@ -178,10 +183,13 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
             outputR["count"] = counter[1]
             outputR["direction"] = "right"
             outputR["timestamp"] = str(datetime.datetime.now())
-            camera_log = {"log1": outputL}
-            camera_log["log2"] = outputR
-            with open("../output/camera_log.json","w") as f:
-                json.dump(camera_log,f)
+            camera_log = {"log1": outputL, "log2": outputR}
+
+            # with open("../output/camera_log.json","w") as f: json.dump(camera_log, f)
+            for name, log in camera_log.items():
+                result = fb_app.post(f"/camera_log/{datetime.datetime.now().strftime('%Y%m%d')}", log, {'print': 'pretty'})
+                print(f"Successfully uploaded {name} to Firebase with log ID {result['name']}")
+
         total_frames += 1
 
     cap.release()
