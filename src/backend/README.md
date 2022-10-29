@@ -24,7 +24,7 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 ![Set up for esp32 camera](assets/VLC_selection.PNG)
 1. Insert the RTSP link [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1) into the textbox
 ![Set up for esp32 camera](assets/VLC_input_rtsp_link.PNG)
-1. Press convert.... (TBC)
+1. Save the RTSP link for use later
 
 
 
@@ -73,6 +73,28 @@ This will produce a zip file with this particular directory structure. Copy it t
 1. Set the number of training steps (currently 200) at `setup/train_model.sh` as you see fit.
 1. Run `setup/init.sh`.
 1. To track and visualize model metrics like *Loss/Precision/Recall*, run the Tensorboard code  `setup/model_tensorboard.sh` <br>and fill in credentials when prompted. Link to tensorboard browser will then appear.
+  
+### Counting 
+1. To activate the counting script 
+   ```
+   usage: python tensorflow_cumulative_object_counting.py -m [MODEL] -l LABELMAP -v [VIDEOPATH] -camid [CAMERAID]
+
+   
+   arguments:
+   -m MODEL, --model MODEL
+                        model path
+                          
+   -l LABELMAP, --labelmap LABELMAP
+                        Path to Labelmap
+   -v VIDEO_PATH, --video_path VIDEO_PATH
+                        Insert RTSP link for livestream counting. 
+                        OR
+                        Path to desired .mp4 file 
+                        OR 
+                        Default webcamera if no input
+   -camid CAMERAID 
+                  string value of the desired camera id
+   ```
 
 ## Firebase Setup Guide
 After training the model, we can run the object counter to produce the desired output which can be seen in the `output` directory.
