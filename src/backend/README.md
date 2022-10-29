@@ -30,7 +30,7 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 1. After the initial configuration, or automatically this screen should appear
     <img src="assets/index_2.png" width=50%>
 
-1. RTSP stream can be found at rtsp://esp32cam-rtsp.local:554/mjpeg/1.
+1. RTSP stream can be found at `rtsp://esp32cam-rtsp.local:554/mjpeg/1`.
 
 ### (Optional) Stage 2: Testing with VLC media player
 After stage 1, users can use **VLC media player** to test whether the setup is working by doing these steps below. This stage is optional.
@@ -70,7 +70,6 @@ Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-
 1. Finally, we can export the final generation as TFrecord as shown below.
 
     <img src="assets/export_tfrecord.png" width=50%>
-
 
     This will produce a zip file with this particular directory structure. Copy it to the `data` folder as shown below.
     ```

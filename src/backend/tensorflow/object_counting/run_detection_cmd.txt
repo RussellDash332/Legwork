@@ -1,1 +1,0 @@
-python tensorflow_cumulative_object_counting.py -m ./saved_model/ -l ../data/train/human-lower-limb_label_map.pbtxt -v ./video/test.mp4 -camid "1"
