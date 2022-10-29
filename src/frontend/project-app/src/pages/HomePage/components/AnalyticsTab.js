@@ -11,9 +11,9 @@ const AnalyticsTab = () => {
     return (
         <div className="flex flex-col justify-evenly items-center h-full w-full bg-base-200 ">
             
-            {/* <br></br> */}
+            <br></br>
             <AnalyticsHeatmap />
-            {/* <br></br> */}
+            <br></br>
             <AnalyticsLineGraph />
             <br></br>
             {/* <FilterSidebar /> */}
