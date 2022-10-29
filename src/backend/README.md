@@ -12,12 +12,15 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 1. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
 1. A configuration screen will appear if connecting for the first time. 
 ![Set up for esp32 camera](esp32cam/assets/configuration.PNG)
-<br>Configure at least:
-<br>-The access point to connect to. No dropdown is present to show available networks!<br>-A password for accessing the Access point (AP) when starting. (required)<br>-Type of the ESP32-CAM board
 
-1. After the initial configuration, or automatically this screen should appear
+Configure at least:
+* The access point to connect to. No dropdown is present to show available networks!
+* A password for accessing the Access point (AP) when starting. (required)
+* Type of the ESP32-CAM board
+
+7. After the initial configuration, or automatically this screen should appear
 ![Set up for esp32 camera](esp32cam/assets/index_2.PNG)
-1. RTSP stream can be found at [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1). User can open this link in **VLC media player**
+8. RTSP stream can be found at [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1). User can open this link in **VLC media player**
 
 ### Stage 2: (RTSP-live stream)
 1. Once esp32 camera is setup, open **VLC media player** and go to the *Media* dropdown to select *Open network Stream*
