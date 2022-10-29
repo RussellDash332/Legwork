@@ -28,6 +28,7 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
     - Type of the ESP32-CAM board
 
 1. After the initial configuration, or automatically this screen should appear
+
     <img src="assets/index_2.png" width=50%>
 
 1. RTSP stream can be found at `rtsp://esp32cam-rtsp.local:554/mjpeg/1`.
@@ -43,7 +44,7 @@ After stage 1, users can use **VLC media player** to test whether the setup is w
 
     <img src="assets/VLC_input_rtsp_link.png" width=50%>
 
-1. Press convert.... (TBC)
+1. Save the RTSP link for use later.
 
 ## Model Setup Guide
 Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-using-tensorflow-object-detection-api
@@ -84,10 +85,12 @@ Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-
 
 ### Stage 2: Training the model
 1. Go to the `tensorflow` directory.
+
 1. Create a virtual environment, in this guide we will call it `tf2env`.
     ```sh
     python -m virtualenv tf2env
     ```
+
 1. Activate the virtual environment.
     ```
     tf2env\Scripts\activate
@@ -96,11 +99,39 @@ Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-
     ```sh
     . tf2env/bin/activate
     ```
+
 1. Setup the URL for the pre-trained models at `model_zoo.txt`, one model URL per line.
     > Make sure the models are from CenterNet!
+
 1. Set the number of training steps (currently 200) at `setup/train_model.sh` as you see fit.
+
 1. Run `setup/init.sh`.
+
 1. To track and visualize model metrics like *Loss/Precision/Recall*, run the Tensorboard code  `setup/model_tensorboard.sh` and fill in credentials when prompted. The link to the Tensorboard browser will then appear.
+
+### Counting 
+1. Run the following command to activate the counting script by referring to the guide below.
+   ```
+   usage: python tensorflow_cumulative_object_counting.py -m [MODEL] -l LABELMAP -v [VIDEOPATH] -camid [CAMERAID]
+
+   arguments:
+   -m MODEL, --model MODEL
+                        Model path
+   -l LABELMAP, --labelmap LABELMAP
+                        Path to Labelmap
+   -v VIDEO_PATH, --video_path VIDEO_PATH
+                        Insert RTSP link for livestream counting
+                        OR
+                        Path to desired .mp4 file
+                        OR 
+                        Default web camera if no input
+   -camid CAMERAID
+                        String value of the desired camera ID
+   ```
+   An example is given below.
+   ```
+   python tensorflow_cumulative_object_counting.py -m ./saved_model/ -l ../data/train/human-lower-limb_label_map.pbtxt -v ../video/<video_name.mp4> -camid <cam_id>`
+   ```
 
 ## Firebase Setup Guide
 After training the model, we can run the object counter to produce the desired output which can be seen in the `output` directory.
