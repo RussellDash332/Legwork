@@ -83,7 +83,7 @@ const Login = () => {
                     <img src={require('../../resources/LegWork_Logo.png')} className="object-fit"/>
                 </div>
                 <h1 className="text-5xl font-bold">Welcome to LegWork!</h1>
-                <p className="py-6">Start your retail journey on the right foot.</p>
+                <p className="py-6">Start your supermarket journey on the right foot.</p>
             </div>
 
             {/* Card */}
