@@ -107,7 +107,9 @@ Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-
 
 1. Run `setup/init.sh`.
 
-1. To track and visualize model metrics like *Loss/Precision/Recall*, run the Tensorboard code  `setup/model_tensorboard.sh` and fill in credentials when prompted. The link to the Tensorboard browser will then appear.
+1. To monitor and visualize model metrics like *Loss/Precision/Recall*, run the Tensorboard code `setup/model_tensorboard.sh` and fill in credentials when prompted. The link to the Tensorboard browser will then appear. An example of how it looks is provided below.
+
+    <img src="assets/tensorboard_model_monitoring.png" width=80%>
 
 ### Counting 
 1. Run the following command to activate the counting script by referring to the guide below.
