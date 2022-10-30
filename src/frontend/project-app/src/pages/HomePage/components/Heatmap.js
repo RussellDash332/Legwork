@@ -57,7 +57,7 @@ export default function Heatmap() {
             <Plot
                 data = {generateTraces()}
                 layout={{
-                    autosize: true, height: 250, legend: {"orientation": "v", y:1}, title: 'HEATMAP HERE', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: "40vh", legend: {"orientation": "v", y:1}, title: 'HEATMAP HERE', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler
