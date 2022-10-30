@@ -24,10 +24,3 @@ const AnalyticsTab = () => {
 
 export default AnalyticsTab;
 
-// div className="drawer-content ">
-            
-//                 <label htmlFor="my-drawer-4">
-//                     <FiFilter className="drawer-button btn btn-circle btn-primary btn-md flex flex-row w-28 absolute bottom-4 right-4 justify-between z-10 shadow-xl text-white"/>
-//                 </label>
-            
-//             </div>

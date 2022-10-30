@@ -2,19 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import L, { imageOverlay } from "leaflet";
 import { MapContainer, ImageOverlay, LayersControl, LayerGroup, 
          FeatureGroup, Tooltip, Rectangle, Circle } from "react-leaflet";
-// import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
-// import dataPoints from "../../../data/Heatmap";
-import { getFloorplanImage } from "../../../api/firebase-storage";
-import { getNodeScale, getUserNodes } from "../../../api/firebase-db";
 import { hoverData, getColor } from "../../../data/HoverFloorplan";
-import { UserContext } from "../../ProtectedRoute";
 import Gridimage from "../../../assets/images/Gridlines.jpeg";
 import Floorplan from "../../../assets/images/Floorplan.png";
+import CameraDataContext from "./CameraDataContext.js";
 import { 
     Mode,
-    getSpots,
-    getPaths,
     populateSpotObjsWithCountLive,
     populateSpotObjsWithCountAnalytics,
     populatePathObjsWithCountLive,
@@ -82,36 +76,36 @@ const samplePathObjs = [
 
 const sampleAnalyticsData = {
     "1": {
-        "2021": 30000,
-        "2022": 51000
+        "2021": 1500,
+        "2022": 510
     },
     "2": {
-        "2021": 5000,
-        "2022": 3400
+        "2021": 3400,
+        "2022": 2100
     },
     "3": {
         "2021": 5900,
         "2022": 1300
     },
     "4": {
-        "2021": 7900,
-        "2022": 6900
+        "2021": 54,
+        "2022": 21
     },
     "5": {
-        "2021": 4700,
-        "2022": 2300
+        "2021": 1000,
+        "2022": 250
     },
     "6": {
         "2021": 71000,
-        "2022": 1200
+        "2022": 12000
     },
     "7": {
         "2021": 3200,
         "2022": 310
     },
     "8": {
-        "2021": 3235,
-        "2022": 90
+        "2021": 323,
+        "2022": 900
     },
     "9": {
         "2021": 7800,
@@ -122,40 +116,40 @@ const sampleAnalyticsData = {
         "2022": 300
     },
     "11": {
-        "2021": 6800,
-        "2022": 2400
+        "2021": 680,
+        "2022": 240
     },
     "12": {
         "2021": 7900,
-        "2022": 1000
+        "2022": 100
     },
     "13": {
-        "2021": 5400,
-        "2022": 5348
+        "2021": 540,
+        "2022": 534
     },
     "14": {
-        "2021": 9846,
-        "2022": 9475
+        "2021": 984,
+        "2022": 947
     },
     "15": {
-        "2021":14568,
-        "2022": 14736
+        "2021":1456,
+        "2022": 1473
     },
     "16": {
-        "2021": 12800,
-        "2022": 13100
+        "2021": 1280,
+        "2022": 1310
     },
     "17": {
-        "2021": 15600,
-        "2022": 12100
+        "2021": 1560,
+        "2022": 1210
     },
     "18": {
         "2021": 4570,
-        "2022": 8574
+        "2022": 857
     },
     "19": {
         "2021": 3200,
-        "2022": 2304
+        "2022": 230
     },
     "20": {
         "2021": 3400,
@@ -166,15 +160,15 @@ const sampleAnalyticsData = {
         "2022": 4588
     },
     "22": {
-        "2021": 22000,
+        "2021": 2200,
         "2022": 2300
     },
     "23": {
-        "2021": 45000,
+        "2021": 4500,
         "2022": 1300
     },
     "24": {
-        "2021": 7500,
+        "2021": 750,
         "2022": 6500
     },
     "25": {
@@ -186,7 +180,7 @@ const sampleAnalyticsData = {
         "2022": 3100
     },
     "27": {
-        "2021": 8700,
+        "2021": 87,
         "2022": 7270
     },
     "28": {
@@ -194,11 +188,11 @@ const sampleAnalyticsData = {
         "2022": 200
     },
     "29": {
-        "2021": 2900,
+        "2021": 290,
         "2022": 3200
     },
     "30": {
-        "2021": 8440,
+        "2021": 84,
         "2022": 3400
     },
     "31": {
@@ -211,14 +205,14 @@ const sampleAnalyticsData = {
     },
     "33": {
         "2021": 2900,
-        "2022": 3200
+        "2022": 320
     },
     "34": {
         "2021": 2900,
-        "2022": 3200
+        "2022": 320
     },
     "35": {
-        "2021": 29000,
+        "2021": 2900,
         "2022": 3200
     }
 };
@@ -236,12 +230,9 @@ const sampleSpotObjs = [
 ];
 
 const Heatmap = ({ mode }) => {
-    const { user } = useContext(UserContext);
-    const [nodes, setNodes] = useState([]);
-    const [edges, setEdges] = useState([]);
-    const [floorplanImage, setFloorplanImage] = useState([]);
-    const [scale, setScale] = useState(50);
-
+    const {
+        paths, spots, floorplanImage, scale, filteredData
+    } = useContext(CameraDataContext);
     const filterMode = "year";
 
     const img = new Image();
@@ -256,7 +247,6 @@ const Heatmap = ({ mode }) => {
     const center = [leafletHeight / 2, 800 / 2];
 
     // Get paths
-    const paths = getPaths(nodes, edges);
     let pathsWithCounts;
     if (mode === Mode.Live) {
         pathsWithCounts = populatePathObjsWithCountLive(paths);
@@ -265,7 +255,6 @@ const Heatmap = ({ mode }) => {
     }
 
     // Get spots
-    const spots = getSpots(nodes);
     let spotsWithCounts;
     if (mode === Mode.Live) {
         spotsWithCounts = populateSpotObjsWithCountLive(spots);
@@ -277,39 +266,6 @@ const Heatmap = ({ mode }) => {
     const liveCount = 
         (pathsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0)) +
         (spotsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0));
-
-    useEffect(() => {
-        // Retrieve existing flow component state
-        getUserNodes(user.uid,
-            (nodeData) => {
-                if (nodeData) {
-                    if (nodeData.nodes) {
-                        const nodes = nodeData.nodes;
-                        setNodes(nodes);
-                    }
-        
-                    if (nodeData.edges) {
-                        const edges = nodeData.edges;
-                        setEdges(edges);
-                    }
-                }
-            });
-
-        // Retrieve existing image
-        getFloorplanImage(user.uid,
-            (img_data) => {
-                if (img_data.hasOwnProperty('data_url')) {
-                    const currentData = [img_data];
-                    setFloorplanImage(currentData);
-                }
-            });
-
-        // Retrieve node scaling
-        getNodeScale(user.uid,
-            (nodeScale) => {
-                setScale(nodeScale);
-            });
-    }, []);
 
     console.log("Live Count: " + liveCount)
 
