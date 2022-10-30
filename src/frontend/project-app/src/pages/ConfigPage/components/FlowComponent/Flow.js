@@ -7,10 +7,12 @@ import 'reactflow/dist/style.css';
 import FlowContext from './FlowContext';
 
 const Flow = () => {
-  const { nodes, setNodes, onNodesChange,
+  const { 
+    nodes, setNodes, onNodesChange,
     edges, setEdges, onEdgesChange,
     nodeTypes, edgeTypes,
-    gridBgToggle } = useContext(FlowContext);
+    gridBgToggle 
+  } = useContext(FlowContext);
 
   return (
     <div className="h-full w-full">

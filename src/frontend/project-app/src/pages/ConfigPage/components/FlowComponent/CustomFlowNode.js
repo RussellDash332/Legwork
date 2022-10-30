@@ -315,7 +315,7 @@ export const CameraLeftDown = memo(({data}) => {
 export const Floorplan = memo(({data}) => {
     return (
         <>
-            <div className="aspect-[150/65] w-[800px]">
+            <div className="w-[800px]">
                 <img src={data.data_url} className="object-contain"/>
             </div>
         </>

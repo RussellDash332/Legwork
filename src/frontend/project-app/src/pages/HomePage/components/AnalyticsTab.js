@@ -9,7 +9,11 @@ const AnalyticsTab = () => {
  
 
     return (
+<<<<<<< HEAD
         <div className="flex flex-col justify-evenly items-center no-scrollbar h-full w-full bg-base-200 overflow-y-scroll ">
+=======
+        <div className="flex flex-col justify-evenly items-center h-3/4 w-full bg-base-200">
+>>>>>>> frontend
             
             <br></br>
             <AnalyticsHeatmap />

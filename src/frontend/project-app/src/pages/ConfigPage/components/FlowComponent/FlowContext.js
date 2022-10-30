@@ -12,19 +12,19 @@ import { ButtonEdge } from "./CustomFlowEdgeStyle";
 
 const FlowContext = createContext();
 
-const initialNodes = [
-    { id: 'ewb-1', position: { x: 0, y: 0 }, data: {label: "1"}, type: "cameraRightUp" },
-    { id: 'ewb-2', position: { x: 50, y: 50 }, data: {label: "2"}, type: "cameraLeftUp"}
-];
+// const initialNodes = [
+//     { id: 'ewb-1', position: { x: 0, y: 0 }, data: {label: "1"}, type: "cameraRightUp" },
+//     { id: 'ewb-2', position: { x: 50, y: 50 }, data: {label: "2"}, type: "cameraLeftUp"}
+// ];
 
-const initialEdges = [
-    {
-      id: 'edge-1-2',
-      source: 'ewb-1',
-      target: 'ewb-2',
-      type: 'buttonEdge',
-    },
-  ];
+// const initialEdges = [
+//     {
+//       id: 'edge-1-2',
+//       source: 'ewb-1',
+//       target: 'ewb-2',
+//       type: 'buttonEdge',
+//     },
+//   ];
   
 const nodeTypes = {
     camera: Camera,
