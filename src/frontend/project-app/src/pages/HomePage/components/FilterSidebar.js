@@ -3,7 +3,7 @@ import TimeRangeSlider from "react-time-range-slider";
 import { useEffect, useRef, useState } from "react";
 import { DateRange } from "react-date-range";
 import format from "date-fns/format";
-// import { FiFilter } from "react-icons/fi";
+import { FiFilter } from "react-icons/fi";
 
 import Data from "./Data.js";
 import "./Filter.css";
@@ -69,14 +69,21 @@ const FilterSidebar = () => {
         
         <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
+            {/* <div className="drawer-content">
                 <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary">Filter</label>
+            </div> */}
+            
+            <div className="drawer-content ">
+                 <label htmlFor="my-drawer-4" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-4 text-white">
+                  {/* flex flex-row w-28 absolute bottom-4 right-4 justify-between z-10 shadow-xl */}
+                     <FiFilter />
+                </label>
             </div>
 
             <div className="drawer-side absolute top-0 right-70 w-1/4 h-screen" >
                 <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-full bg-base-100 text-base-content content-center">
-                    <div className="text-5xl underline underline-offset-8 top-0"><p> Filters </p>
+                    <div className="text-4xl underline underline-offset-8 top-0"><p> Filters </p>
                     </div>
                     <br /><br />
                     
