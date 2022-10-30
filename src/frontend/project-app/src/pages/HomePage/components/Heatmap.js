@@ -2,19 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import L, { imageOverlay } from "leaflet";
 import { MapContainer, ImageOverlay, LayersControl, LayerGroup, 
          FeatureGroup, Tooltip, Rectangle, Circle } from "react-leaflet";
-// import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
-// import dataPoints from "../../../data/Heatmap";
-import { getFloorplanImage } from "../../../api/firebase-storage";
-import { getNodeScale, getUserNodes } from "../../../api/firebase-db";
 import { hoverData, getColor } from "../../../data/HoverFloorplan";
-import { UserContext } from "../../ProtectedRoute";
 import Gridimage from "../../../assets/images/Gridlines.jpeg";
 import Floorplan from "../../../assets/images/Floorplan.png";
+import CameraDataContext from "./CameraDataContext.js";
 import { 
     Mode,
-    getSpots,
-    getPaths,
     populateSpotObjsWithCountLive,
     populateSpotObjsWithCountAnalytics,
     populatePathObjsWithCountLive,
@@ -236,12 +230,9 @@ const sampleSpotObjs = [
 ];
 
 const Heatmap = ({ mode }) => {
-    const { user } = useContext(UserContext);
-    const [nodes, setNodes] = useState([]);
-    const [edges, setEdges] = useState([]);
-    const [floorplanImage, setFloorplanImage] = useState([]);
-    const [scale, setScale] = useState(50);
-
+    const {
+        paths, spots, floorplanImage, scale, filteredData
+    } = useContext(CameraDataContext);
     const filterMode = "year";
 
     const img = new Image();
@@ -256,7 +247,6 @@ const Heatmap = ({ mode }) => {
     const center = [leafletHeight / 2, 800 / 2];
 
     // Get paths
-    const paths = getPaths(nodes, edges);
     let pathsWithCounts;
     if (mode === Mode.Live) {
         pathsWithCounts = populatePathObjsWithCountLive(paths);
@@ -265,7 +255,6 @@ const Heatmap = ({ mode }) => {
     }
 
     // Get spots
-    const spots = getSpots(nodes);
     let spotsWithCounts;
     if (mode === Mode.Live) {
         spotsWithCounts = populateSpotObjsWithCountLive(spots);
@@ -277,39 +266,6 @@ const Heatmap = ({ mode }) => {
     const liveCount = 
         (pathsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0)) +
         (spotsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0));
-
-    useEffect(() => {
-        // Retrieve existing flow component state
-        getUserNodes(user.uid,
-            (nodeData) => {
-                if (nodeData) {
-                    if (nodeData.nodes) {
-                        const nodes = nodeData.nodes;
-                        setNodes(nodes);
-                    }
-        
-                    if (nodeData.edges) {
-                        const edges = nodeData.edges;
-                        setEdges(edges);
-                    }
-                }
-            });
-
-        // Retrieve existing image
-        getFloorplanImage(user.uid,
-            (img_data) => {
-                if (img_data.hasOwnProperty('data_url')) {
-                    const currentData = [img_data];
-                    setFloorplanImage(currentData);
-                }
-            });
-
-        // Retrieve node scaling
-        getNodeScale(user.uid,
-            (nodeScale) => {
-                setScale(nodeScale);
-            });
-    }, []);
 
     console.log("Live Count: " + liveCount)
 
