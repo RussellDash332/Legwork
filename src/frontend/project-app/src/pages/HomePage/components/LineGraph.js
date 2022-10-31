@@ -1,35 +1,38 @@
-import React, { Component} from "react";
+import React, { Component, useContext} from "react";
 import Plot from 'react-plotly.js';
-// import CameraDataContext from "./CameraDataContext.js";
+import CameraDataContext from "./CameraDataContext.js";
+import { populateSpotObjsWithCountAnalytics, populatePathObjsWithCountAnalytics } from "../utils/HeatmapUtils.js";
+
 
 
 
 
 export default function LineGraph() {
 
-    // const {
-    //     data,
-    //     filteredData,
-    //     setFilteredData
-    //     } = useContext(CameraDataContext);
+    const {
+        filteredData,
+        setFilteredData,
+        paths,
+        spots
+        } = useContext(CameraDataContext);
 
     const data = {
         
         "id1": 
         {
-            "2020": 30,
-            "2021": 51,
-            "2022": 89,
-            "2019": 101,
-            "2018": 91
+            "10/10/2022": 30,
+            "10/15/2022": 51,
+            "10/16/2022": 89,
+            "10/18/2022": 101,
+            "10/28/2022": 91
         },
         "id2": 
         {
-            "2020": 41,
-            "2021": 57,
-            "2022": 78,
-            "2019": 121,
-            "2018": 67
+            "10/10/2022": 41,
+            "10/15/2022": 57,
+            "10/16/2022": 78,
+            "10/18/2022": 121,
+            "10/28/2022": 67
         }
     };
 
@@ -70,7 +73,7 @@ export default function LineGraph() {
             <Plot
                 data = {generateTraces()}
                 layout={{
-                    autosize: true, height: "30vh", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: "400", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler

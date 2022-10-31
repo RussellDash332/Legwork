@@ -12,7 +12,8 @@ const AnalyticsTab = () => {
         <div className="flex flex-col justify-evenly items-center no-scrollbar h-full w-full bg-base-200 overflow-y-scroll ">
             
             <br></br>
-            <AnalyticsHeatmap />
+            {/* <AnalyticsHeatmap /> */}
+            <AnalyticsLineGraph />
             <br></br>
             <AnalyticsLineGraph />
             <br></br>
