@@ -4,7 +4,7 @@ import LineGraph from "./LineGraph"
 
 const AnalyticsLineGraph = () => {
     return (
-        <div className="card w-10/12 min-h-half shadow-xl bg-base-200">
+        <div className="card w-10/12 h-full shadow-xl bg-base-200">
             
             <div>
                 <LineGraph />

@@ -16,23 +16,22 @@ export default function LineGraph() {
         spots
         } = useContext(CameraDataContext);
 
+    
+    
+
     const data = {
         
         "id1": 
         {
-            "10/10/2022": 30,
-            "10/15/2022": 51,
-            "10/16/2022": 89,
-            "10/18/2022": 101,
-            "10/28/2022": 91
+            "2022/11/21": 30,
+            "2022/12/30": 51,
+            
         },
         "id2": 
         {
-            "10/10/2022": 41,
-            "10/15/2022": 57,
-            "10/16/2022": 78,
-            "10/18/2022": 121,
-            "10/28/2022": 67
+            "2022/11/21": 41,
+            "2022/12/30": 57,
+            
         }
     };
 
@@ -73,7 +72,7 @@ export default function LineGraph() {
             <Plot
                 data = {generateTraces()}
                 layout={{
-                    autosize: true, height: "400", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: "450", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler
