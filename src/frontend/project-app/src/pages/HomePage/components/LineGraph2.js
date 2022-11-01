@@ -2,6 +2,7 @@ import React, { Component, useContext} from "react";
 import Plot from 'react-plotly.js';
 import CameraDataContext from "./CameraDataContext.js";
 import { populateSpotObjsWithCountAnalytics, populatePathObjsWithCountAnalytics } from "../utils/HeatmapUtils.js";
+import { ca } from "date-fns/locale";
 
 
 
@@ -26,8 +27,8 @@ export default function LineGraph2() {
                 },
                 "right": 
                 {
-                    "2022": 5,
-                    "2023": 10
+                    "2022": 7,
+                    "2023": 14
                 }
         },
                 
@@ -59,38 +60,47 @@ export default function LineGraph2() {
 
 
 const spots = [{id: "camera_id_3", label: "spot1label", position: "spot1pos"}];
-const paths = [{pathName: "path1", id1: "camera_id_1", id2: "camera_id_2"}];
+const paths = [
+    {
+    pathName: "path1",
+    id1: "camera_id_1",
+    label1: "cam1label",
+    direction1: 0, //left
+    id2: "camera_id_2",
+    label2: "cam2label",
+    direction2: 0 //left
+    }
+
+];
+
+
 var value1;
 var value2;
 var valuefinal;
+let cam1used;
+let cam2used;
 
-const combinepath = (cam1, cam2) => {
+const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
     const cam1data = cam1;
-    const cam1data_no_dir = Object.values(cam1data);
-    // cam1data_no_dir -> [{2022:5, 2023:10}, {2022:5, 2023:10}]
-    const dates1 = Object.keys(cam1data_no_dir[0]);
-    const combinedcam1 = {};
-    for (let i=0; i < dates1.length; i++) {
-  	    value1 = cam1data_no_dir[0][dates1[i]] + cam1data_no_dir[1][dates1[i]];
-        combinedcam1[dates1[i]] = value1;
-        // combinedcam1 = {2022:10, 2023:20}
-    };
-
-    const combinedcam2 = {};
+    // cam1data = { left: { 2022: 5, 2023: 10 }, right: { 2022: 5, 2023: 10 } }
+    if (direction1 === 0) {
+        cam1used = cam1data.right; // if cam facing left, use right dat
+    }
+    else {cam1used = cam1data.left}// eg. cam1used -> { 2022: 7, 2023: 14 }
+   
     const cam2data = cam2;
-    const cam2data_no_dir = Object.values(cam2data);
-    const dates2 = Object.keys(cam2data_no_dir[0]);
-    for (let j=0; j < dates2.length; j++) {
-        value2 = cam2data_no_dir[0][dates2[j]] + cam2data_no_dir[1][dates2[j]];
-        combinedcam2[dates2[j]] = value2;
-    };
+    if (direction2 === 0) {
+        cam2used = cam2data.right; // if cam facing left, use right data
+    }
+    else {cam2used = cam2data.left} // eg. cam2used -> { 2022: 5, 2023: 10 }
+  
 
-    const datecombine = Object.keys(combinedcam1);
+    const datecombine = Object.keys(cam1used);
     const combinedfinal = {};
     for (let k=0; k < datecombine.length; k++) {
-        valuefinal = combinedcam1[datecombine[k]] + combinedcam2[datecombine[k]];
+        valuefinal = cam1used[datecombine[k]] + cam2used[datecombine[k]];
         combinedfinal[datecombine[k]] = valuefinal;
-        // combinedfinal = {2022:20, 2023:40}                                                         
+        // combinedfinal = {2022:12, 2023:24}                                                         
     };
   
   
@@ -133,6 +143,8 @@ const combinepath = (cam1, cam2) => {
     let otherid;
     let combinedfinal;
     let camdataused;
+    let dir1;
+    let dir2;
     let dataid = Object.keys(filteredData);
     let datalength = dataid.length;
     const newdata = {};
@@ -157,7 +169,9 @@ const combinepath = (cam1, cam2) => {
                         }
                         else {otherid = paths[i].id1}
                         checkid.push(otherid)
-                        combinedfinal = combinepath(filteredData[dataid[step]], filteredData[otherid]);
+                        dir1 = paths[i].direction1;
+                        dir2 = paths[i].direction2;
+                        combinedfinal = combinepath(filteredData[dataid[step]], dataid[step], dir1, filteredData[otherid], otherid.at, dir2);
                         newdata[paths[i].pathName] = combinedfinal;
                         // combine data of both id
                         // combinefinal = combinepath(filterData[dataid[step]], filteredData[otherid]) -> return combinedfinal = {2022:20, 2023:40}
