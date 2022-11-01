@@ -23,14 +23,16 @@ export default function LineGraph() {
         
         "id1": 
         {
-            "2022/11/21": 30,
-            "2022/12/30": 51,
+            "2022/07/21": 30,
+            "2022/10/15": 51,
+            "2022/12/31": 81
             
         },
         "id2": 
         {
-            "2022/11/21": 41,
-            "2022/12/30": 57,
+            "2022/01/21": 41,
+            "2022/06/06": 57,
+            "2022/12/15": 61
             
         }
     };
@@ -72,7 +74,7 @@ export default function LineGraph() {
             <Plot
                 data = {generateTraces()}
                 layout={{
-                    autosize: true, height: "450", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: "450", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date', categoryorder: 'category ascending'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler
