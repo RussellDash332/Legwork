@@ -35,8 +35,8 @@ export default function LineGraph2() {
         "camera_id_2":{
                 "left": 
                 {
-                    "2022": 5,
-                    "2023": 10
+                    "2022": 6,
+                    "2023": 67
                 },
                 "right": 
                 {
@@ -55,18 +55,41 @@ export default function LineGraph2() {
                     "2022": 5,
                     "2023": 10
                 }
+        },
+        "camera_id_4":{
+                "left": 
+                {
+                    "2022": 23,
+                    "2023": 24
+                },
+                "right": 
+                {
+                    "2022": 23,
+                    "2023": 24
+                }
         }
   };
 
 
-const spots = [{id: "camera_id_3", label: "spot1label", position: "spot1pos"}];
+const spots = [
+    {
+    id: "camera_id_3",
+    label: "spot1label",
+    position: "spot1pos"
+    },
+    {
+    id: "camera_id_2",
+    label: "spot2label",
+    position: "spot2pos"
+    }
+];
 const paths = [
     {
     pathName: "path1",
     id1: "camera_id_1",
     label1: "cam1label",
     direction1: 0, //left
-    id2: "camera_id_2",
+    id2: "camera_id_4",
     label2: "cam2label",
     direction2: 0 //left
     }
@@ -74,8 +97,7 @@ const paths = [
 ];
 
 
-var value1;
-var value2;
+
 var valuefinal;
 let cam1used;
 let cam2used;
@@ -139,7 +161,7 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
 
 
 
-    let checkid = []
+    let checkid = [];
     let otherid;
     let combinedfinal;
     let camdataused;
