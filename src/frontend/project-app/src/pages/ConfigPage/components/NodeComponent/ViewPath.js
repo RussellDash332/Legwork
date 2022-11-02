@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import FlowContext from "../FlowComponent/FlowContext";
 
+import ViewPathEdit from "./ViewPathEdit";
+
 // const pathObj = {
 //     pathName: pathName,
 //     orientation: orientation,
@@ -27,17 +29,20 @@ const ViewPath = ({
     direction2
  }) => {
     const { deletePath } = useContext(FlowContext);
+    const [editToggle, setEditToggle] = useState(false);
+    
+    const clickEdit = () => {
+        setEditToggle(!editToggle);
+    }
 
-    // const [deleteToggle, setDeleteToggle] = useState(false);
-
-    // const clickDelete = () => {
-    //     setDeleteToggle(true);
-    // }
+    const collapseContainer = () => {
+        setEditToggle(false);
+    }
 
     return (
         <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 rounded-box my-2">
             
-            <input type="checkbox" /> 
+            <input type="checkbox" onChange={collapseContainer}/> 
             <div className="collapse-title text-base font-medium">
                 {pathName}
             </div>
@@ -67,10 +72,20 @@ const ViewPath = ({
 
                 <div className="flex w-full justify-center mt-4">
                     <div className="flex justify-evenly pl-4 w-2/6">
-                        <button className="btn btn-sm btn-outline">Edit</button>
+                        <button className="btn btn-sm btn-outline" onClick={clickEdit}>Edit</button>
                         <button className="btn btn-sm btn-error" onClick={() => {deletePath(pathID, id1, id2)}}>Delete</button>
                     </div>
                 </div>
+
+                {(editToggle) 
+                && <ViewPathEdit
+                    pathID={pathID}
+                    id1 = {id1}
+                    label1 = {label1}
+                    id2 = {id2}
+                    label2 = {label2}
+                    setEditToggle={setEditToggle}
+                />}
 
 
                 {/* {(deleteToggle) &&

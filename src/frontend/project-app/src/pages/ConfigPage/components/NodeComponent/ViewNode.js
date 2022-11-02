@@ -80,7 +80,7 @@ const ViewNode = () => {
 
     return (
         <div className="modal" id="viewNode">
-        <div className="modal-box max-w-min no-scrollbar">
+        <div className="modal-box max-w-fit overflow-hidden">
 
             {/* Close button */}
             <a id="close-viewNode" href="#"/>
@@ -93,8 +93,8 @@ const ViewNode = () => {
 
             {/* Content */}
             <div className="flex flex-col w-full lg:flex-row">
-                <div className="card bg-base-300 shadow-xl h-[450px] min-w-[600px] overflow-scroll no-scrollbar">
-                <div className="card-body py-5">
+                <div className="card shadow-xl h-[70vh] w-[80vw] overflow-scroll no-scrollbar">
+                <div className="card-body py-4">
 
                 {/* Path Collapse  */}
                 <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">

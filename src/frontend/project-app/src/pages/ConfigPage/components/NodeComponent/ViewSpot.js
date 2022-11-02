@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import FlowContext from "../FlowComponent/FlowContext";
 
+import ViewSpotEdit from "./ViewSpotEdit";
+
 // const spotData = {
 //     id: node.id,
 //     label: node.data.label,
@@ -9,10 +11,19 @@ import FlowContext from "../FlowComponent/FlowContext";
 
 const ViewSpot = ({id, label}) => {
     const { deleteSpot } = useContext(FlowContext);
+    const [editToggle, setEditToggle] = useState(false);
+
+    const clickEdit = () => {
+        setEditToggle(!editToggle);
+    }
+
+    const collapseContainer = () => {
+        setEditToggle(false);
+    }
 
     return (
         <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 rounded-box my-2">
-            <input type="checkbox" /> 
+            <input type="checkbox" onChange={collapseContainer} /> 
             <div className="collapse-title text-base font-medium">
                 {id}
             </div>
@@ -36,11 +47,17 @@ const ViewSpot = ({id, label}) => {
 
                 <div className="flex w-full justify-center mt-4">
                     <div className="flex justify-evenly pl-4 w-2/6">
-                        <button className="btn btn-sm btn-outline">Edit</button>
+                        <button className="btn btn-sm btn-outline" onClick={clickEdit}>Edit</button>
                         <button className="btn btn-sm btn-error" onClick={() => {deleteSpot(id)}}>Delete</button>
                     </div>
                 </div>
 
+                {(editToggle) 
+                && <ViewSpotEdit
+                    id = {id}
+                    label = {label}
+                    setEditToggle={setEditToggle}
+                />}
 
 
             </div>

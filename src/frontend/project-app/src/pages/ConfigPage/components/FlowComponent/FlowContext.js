@@ -348,6 +348,51 @@ export const FlowContextProvider = ({children}) => {
         setNodes(tempNodes);
     }
 
+    /* Editing information */
+    const editPath = (
+        edgeID,
+        id1, newid1, newlabel1,
+        id2, newid2, newlabel2,
+        ) => {
+            // edit nodes
+            setNodes((nds) => nds.map((node) => {
+                if (node.id === id1) {
+                    node.id = newid1;
+                    node.data.label = newlabel1;
+                }
+
+                if (node.id === id2) {
+                    node.id = newid2;
+                    node.data.label = newlabel2;
+                }
+
+                return node;
+            }))
+
+            // edit edges
+            const newEdgeID = newid1 + "-" + newid2;
+            setEdges((edgs) => edgs.map((edge) => {
+
+                if (edge.id === edgeID) {
+                    edge.id = newEdgeID;
+                    edge.source = newid1;
+                    edge.target = newid2;
+                }
+
+                return edge;
+            }))
+    }
+
+    const editSpot = (id, newID, newLabel) => {
+        setNodes((nds) => nds.map((node) => {
+            if (node.id === id) {
+                node.id = newID;
+                node.data.label = newLabel;
+            }
+            return node;
+        }))
+
+    }
 
 
 
@@ -380,7 +425,9 @@ export const FlowContextProvider = ({children}) => {
                 rotatePath,
                 flipNodes,
                 deletePath,
-                deleteSpot
+                deleteSpot,
+                editPath,
+                editSpot
             }}
         >
             {children}
