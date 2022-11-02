@@ -125,7 +125,7 @@ export const FlowContextProvider = ({children}) => {
         const newNode1 = new CameraTopNodeObject(
             id1,
             label1,
-            node_posID * 100,
+            node_posID * 50,
             100
         );
     
@@ -133,7 +133,7 @@ export const FlowContextProvider = ({children}) => {
         const newNode2 = new CameraBottomNodeObject(
             id2,
             label2,
-            node_posID * 100,
+            node_posID * 50,
             300
         );
     
@@ -155,7 +155,7 @@ export const FlowContextProvider = ({children}) => {
         const newNode = new CameraNodeObject(
             id,
             label,
-            node_posID * 100,
+            node_posID * 50,
             200
         );
     
@@ -276,6 +276,7 @@ export const FlowContextProvider = ({children}) => {
         }))
     }
 
+    /* Flip Path */
     const oppositeFlipTypes = (initialType) => {
         /* Vertical-Right */
         if (initialType === "cameraTopRight") {
@@ -323,6 +324,77 @@ export const FlowContextProvider = ({children}) => {
         }))
     }
 
+    /* Deletion */
+    const deletePath = (edgeID, nodeID1, nodeID2) => {
+        // console.log("attempt to delete path")
+        const tempNodes = nodes.filter((node) => {
+            return node.id !== nodeID1 
+                && node.id !== nodeID2;
+        });
+        // console.log(tempNodes);
+
+        let tempEdges = edges.filter((edge) => {return edge.id !== edgeID});
+        // console.log(tempEdges);
+        
+        setNodes(tempNodes);
+        setEdges(tempEdges);
+    }
+
+    const deleteSpot = (id) => {
+        const tempNodes = nodes.filter((node) => {
+            return node.id !== id;
+        });
+
+        setNodes(tempNodes);
+    }
+
+    /* Editing information */
+    const editPath = (
+        edgeID,
+        id1, newid1, newlabel1,
+        id2, newid2, newlabel2,
+        ) => {
+            // edit nodes
+            setNodes((nds) => nds.map((node) => {
+                if (node.id === id1) {
+                    node.id = newid1;
+                    node.data.label = newlabel1;
+                }
+
+                if (node.id === id2) {
+                    node.id = newid2;
+                    node.data.label = newlabel2;
+                }
+
+                return node;
+            }))
+
+            // edit edges
+            const newEdgeID = newid1 + "-" + newid2;
+            setEdges((edgs) => edgs.map((edge) => {
+
+                if (edge.id === edgeID) {
+                    edge.id = newEdgeID;
+                    edge.source = newid1;
+                    edge.target = newid2;
+                }
+
+                return edge;
+            }))
+    }
+
+    const editSpot = (id, newID, newLabel) => {
+        setNodes((nds) => nds.map((node) => {
+            if (node.id === id) {
+                node.id = newID;
+                node.data.label = newLabel;
+            }
+            return node;
+        }))
+
+    }
+
+
 
 
     return (
@@ -351,7 +423,11 @@ export const FlowContextProvider = ({children}) => {
                 setScale,
                 swapNodes,
                 rotatePath,
-                flipNodes
+                flipNodes,
+                deletePath,
+                deleteSpot,
+                editPath,
+                editSpot
             }}
         >
             {children}
