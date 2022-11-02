@@ -13,6 +13,8 @@ const AddPath = () => {
     const [missingIDError1, setMissingIDError1] = useState(false);
     const [missingIDError2, setMissingIDError2] = useState(false);
     const [matchingIDError, setMatchingIDError] = useState(false);
+    const [missingNameError1, setMissingNameError1] = useState(false);
+    const [missingNameError2, setMissingNameError2] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
     
 
@@ -30,6 +32,8 @@ const AddPath = () => {
         setMissingIDError1(false);
         setMissingIDError2(false);
         setMatchingIDError(false);
+        setMissingNameError1(false);
+        setMissingNameError2(false);
     }
 
     const isEmptyString = (str) => {
@@ -42,13 +46,21 @@ const AddPath = () => {
 
     useEffect(() => {
         if (saveToggle) {
-            if (isEmptyString(cameraID1) || isEmptyString(cameraID2)) {
+            if (isEmptyString(cameraID1) || isEmptyString(cameraID2) || isEmptyString(cameraName1) || isEmptyString(cameraName2)) {
                 if (isEmptyString(cameraID1)) {
                     setMissingIDError1(true);
                 }
-
+    
                 if (isEmptyString(cameraID2)) {
                     setMissingIDError2(true);
+                }
+
+                if (isEmptyString(cameraName1)) {
+                    setMissingNameError1(true);
+                }
+
+                if (isEmptyString(cameraName2)) {
+                    setMissingNameError2(true);
                 }
 
                 setSaveToggle(false);
@@ -84,6 +96,12 @@ const AddPath = () => {
     }, [cameraID1])
 
     useEffect(() => {
+        if (!isEmptyString(cameraName1)) {
+            setMissingNameError1(false);
+        }
+    }, [cameraName1])
+
+    useEffect(() => {
         if (!isUniqueID(cameraID2)) {
             setUniqueIDError2(true);
         } else {
@@ -98,6 +116,12 @@ const AddPath = () => {
             setMatchingIDError(false);
         }
     }, [cameraID2])
+
+    useEffect(() => {
+        if (!isEmptyString(cameraName2)) {
+            setMissingNameError2(false);
+        }
+    }, [cameraName2])
 
     return (
         <div className="modal" id="addPath">
@@ -117,7 +141,7 @@ const AddPath = () => {
             <div className="flex flex-col w-full lg:flex-row">
 
                 {/* Left Card */}
-                <div className="card w-96 bg-base-300 shadow-xl h-64">
+                <div className="card w-96 bg-base-300 shadow-xl">
                 <div className="card-body py-5">
                     <h2 className="card-title font-bold">Camera 1</h2>
                     
@@ -129,8 +153,17 @@ const AddPath = () => {
                         onChange={(e) => setCameraName1(e.currentTarget.value)}
                         disabled={saveToggle}
                         maxLength={12} />
+                    <div className="h-2">
+                        {(missingNameError1) 
+                            && <label className="label p-0">
+                                    <span className="label-text-alt text-red-400">
+                                        Device Name cannot be empty
+                                    </span>
+                                </label>
+                        }
+                    </div>                    
 
-                    <p className="label-text-alt  text-end"> Device ID </p>
+                    <p className="label-text-alt text-end"> Device ID </p>
                     <input type="text" placeholder="Type here"
                         className={(uniqueIDError1 || missingIDError1 || matchingIDError) 
                             ? "input input-bordered w-full max-w-xs input-error" 
@@ -170,8 +203,17 @@ const AddPath = () => {
                         onChange={(e) => setCameraName2(e.currentTarget.value)}
                         disabled={saveToggle}
                         maxLength={12} />
+                    <div className="h-2">
+                        {(missingNameError2) 
+                            && <label className="label p-0">
+                                    <span className="label-text-alt text-red-400">
+                                        Device Name cannot be empty
+                                    </span>
+                                </label>
+                        }
+                    </div> 
 
-                    <p className="label-text-alt  text-end"> Device ID </p>
+                    <p className="label-text-alt text-end"> Device ID </p>
                     <input type="text" placeholder="Type here" 
                         className={(uniqueIDError2 || missingIDError2 || matchingIDError) 
                             ? "input input-bordered w-full max-w-xs input-error" 
