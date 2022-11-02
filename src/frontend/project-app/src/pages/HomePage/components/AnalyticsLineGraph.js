@@ -6,7 +6,7 @@ import LineGraph from "./LineGraph";
 
 const AnalyticsLineGraph = () => {
     return (
-        <div className="card w-11/12 h-45 shadow-xl bg-sky-600">
+        <div className="card w-10/12 h-full shadow-xl bg-base-200">
             
             <div>
             {/* w-full h-full className="p-4" */}

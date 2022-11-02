@@ -15,28 +15,28 @@ import CameraDataContext from "./CameraDataContext.js";
 
 const FilterSidebar = () => {
 
-    const Mode = {
-        Year: "year",
-        Month: "month",
-        Day: "day"
-    };
+    // const Mode = {
+    //     Year: "year",
+    //     Month: "month",
+    //     Day: "day"
+    // };
     
-    //select month, return "month"
-    //select year, return "year"
-    //select day, return "day"
+    // //select month, return "month"
+    // //select year, return "year"
+    // //select day, return "day"
 
-    useEffect(() => {
-        if(filterGroupToggle == "year_month_day"){
-            return "day";
-        }
-        if(filterGroupToggle == "year_month"){
-            return "month";
-        }
-        if(filterGroupToggle == "year"){
-            return "year";
-        }    
+    // useEffect(() => {
+    //     if(filterGroupToggle == "year_month_day"){
+    //         return "day";
+    //     }
+    //     if(filterGroupToggle == "year_month"){
+    //         return "month";
+    //     }
+    //     if(filterGroupToggle == "year"){
+    //         return "year";
+    //     }    
             
-    }, [filterGroupToggle]);
+    // }, [filterGroupToggle]);
     
 
 
