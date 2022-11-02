@@ -10,7 +10,7 @@ const AnalyticsTab = () => {
  
 
     return (
-        <div className="flex flex-col justify-evenly items-center h-full w-full bg-base-200">
+        <div className="flex flex-col justify-evenly items-center h-3/4 w-full bg-base-200">
             
             
             <div className="drawer drawer-end">
@@ -21,7 +21,7 @@ const AnalyticsTab = () => {
             
             <div className="drawer-content ">
             <AnalyticsHeatmap />
-                {/* <br></br> */}
+            <br></br>
             <AnalyticsLineGraph />
                  <label htmlFor="my-drawer-4" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-3 text-white">
                   {/* flex flex-row w-28 absolute bottom-4 right-4 justify-between z-10 shadow-xl */}
