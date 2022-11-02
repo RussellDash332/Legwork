@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { subscribeCameraLog } from "../../../api/firebase-db";
 import { off } from "firebase/database";
+import Data from "./NewData";
 
 const CameraDataContext = createContext();
 export default CameraDataContext;
@@ -16,6 +17,8 @@ export const CameraDataContextProvider = ({children}) => {
             setData(logData);
             // Cannot put find smallest date here because this would be triggered everytime there is new data in the database
         })
+        // if want use local data
+        // setData(Data["camera_log"])
     }, [])
 
     
