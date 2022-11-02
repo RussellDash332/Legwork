@@ -14,7 +14,7 @@ How to run application on your computer via code
     - To install all packages, run `npm install`
     - You might face installation error for 2 packages. Run the codes provided on top of the previous npm install to bypass the error
       - **react-time-range-slider**. Run `npm install react-time-range-slider --legacy-peer-deps`
-      - **react-leaflet-heatmap-layer-v3**. Run `npm i react-leaflet-heatmap-layer-v3`
+      - **react-leaflet-heatmap-layer-v3**. Run `npm i react-leaflet-heatmap-layer-v3 --legacy-peer-deps`
       
 5. Run web application
 ```
