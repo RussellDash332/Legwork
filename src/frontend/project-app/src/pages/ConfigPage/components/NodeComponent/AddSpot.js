@@ -8,6 +8,7 @@ const AddSpot = () => {
 
     const [uniqueIDError, setUniqueIDError] = useState(false);
     const [missingIDError, setMissingIDError] = useState(false);
+    const [missingNameError1, setMissingNameError1] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
 
     const clickSave = () => {
@@ -19,6 +20,7 @@ const AddSpot = () => {
         setCameraID1("");
         setUniqueIDError(false);
         setMissingIDError(false);
+        setMissingNameError1(false);
     }
 
     const isEmptyString = (str) => {
@@ -27,8 +29,14 @@ const AddSpot = () => {
 
     useEffect(() => {
         if (saveToggle) {
-            if (isEmptyString(cameraID1)) {
-                setMissingIDError(true);
+            if (isEmptyString(cameraID1) || isEmptyString(cameraName1)) {
+                if (isEmptyString(cameraID1)) {
+                    setMissingIDError(true);
+                }
+
+                if (isEmptyString(cameraName1)) {
+                    setMissingNameError1(true);
+                }
                 setSaveToggle(false);
             } else if (isUniqueID(cameraID1)) {
                 generateSpot(cameraID1, cameraName1);
@@ -52,6 +60,12 @@ const AddSpot = () => {
             setMissingIDError(false);
         }
     }, [cameraID1])
+
+    useEffect(() => {
+        if (!isEmptyString(cameraName1)) {
+            setMissingNameError1(false);
+        }
+    }, [cameraName1])
 
     return (
         <div className="modal" id="addSpot">
@@ -83,6 +97,15 @@ const AddSpot = () => {
                         onChange={(e) => setCameraName1(e.currentTarget.value)}
                         disabled={saveToggle}
                         maxLength={12} />
+                    <div className="h-2">
+                        {(missingNameError1) 
+                            && <label className="label p-0">
+                                    <span className="label-text-alt text-red-400">
+                                        Device Name cannot be empty
+                                    </span>
+                                </label>
+                        }
+                    </div> 
 
                     <p className="label-text-alt text-end"> Device ID </p>
                     <input type="text" placeholder="Type here" 

@@ -55,9 +55,11 @@ const ViewNode = () => {
 
             const vertNodes = ['cameraTopRight', 'cameraBottomRight', 'cameraTopLeft', 'cameraBottomLeft'];
             const orientation = (vertNodes.includes(id1Data.type)) ? "vertical" : "horizontal";
+            const pathID = currEdge.id;
 
             const pathObj = {
                 pathName: pathName,
+                pathID: pathID,
                 orientation: orientation,
                 id1: id1,
                 label1: label1,
@@ -78,7 +80,7 @@ const ViewNode = () => {
 
     return (
         <div className="modal" id="viewNode">
-        <div className="modal-box max-w-min no-scrollbar">
+        <div className="modal-box max-w-fit overflow-hidden">
 
             {/* Close button */}
             <a id="close-viewNode" href="#"/>
@@ -91,8 +93,8 @@ const ViewNode = () => {
 
             {/* Content */}
             <div className="flex flex-col w-full lg:flex-row">
-                <div className="card bg-base-300 shadow-xl h-[450px] min-w-[600px] overflow-scroll no-scrollbar">
-                <div className="card-body py-5">
+                <div className="card shadow-xl h-[70vh] w-[80vw] overflow-scroll no-scrollbar">
+                <div className="card-body py-4">
 
                 {/* Path Collapse  */}
                 <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
@@ -105,11 +107,14 @@ const ViewNode = () => {
                             if (pathObj.hasOwnProperty("pathName")) {
                                 return (<ViewPath 
                                         pathName={pathObj.pathName}
+                                        pathID={pathObj.pathID}
                                         orientation = {pathObj.orientation}
                                         id1 = {pathObj.id1}
                                         label1 = {pathObj.label1}
+                                        direction1 = {pathObj.direction1}
                                         id2 = {pathObj.id2}
                                         label2 = {pathObj.label2}
+                                        direction2 = {pathObj.direction2}
                                     />);
                             }
                         })}
