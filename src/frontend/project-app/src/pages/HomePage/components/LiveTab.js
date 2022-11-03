@@ -3,7 +3,7 @@ import LiveHeatmap from "./LiveHeatmap"
 
 const LiveTab = () => {
     return (
-        <div className="flex w-full h-full border-black border-8">
+        <div className="flex flex-col justify-evenly items-center h-full w-full bg-base-200 no-scrollbar">
             <LiveHeatmap />
         </div>
     );

@@ -10,9 +10,9 @@ const AnalyticsTab = () => {
  
 
     return (
-        <div className="flex flex-col justify-evenly items-center h-3/4 w-full bg-base-200">
+        <div className="flex flex-col justify-evenly items-center no-scrollbar h-full w-full bg-base-200  ">
             
-            
+            {/* <br></br> */}
             <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             {/* <div className="drawer-content">
@@ -21,6 +21,7 @@ const AnalyticsTab = () => {
             
             <div className="drawer-content">
             <AnalyticsHeatmap />
+            {/* <AnalyticsLineGraph /> */}
             <br></br>
             
             <AnalyticsLineGraph />
