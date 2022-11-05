@@ -53,7 +53,7 @@ export default function LineGraph() {
             <Plot
                 data = {generateTraces()}
                 layout={{
-                    autosize: true, height: 250, legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: 450, legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler

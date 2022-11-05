@@ -81,14 +81,32 @@ const getNumOfDays = (filterMode, data) => {
     }
 };
 
+// For spots
 const getCountById = (id, data) => {
     try {
-        const totalCounts = Object.values(data[id]);
+        const cameraIdData = data[id];
+        const totalCounts = 
+            Object.values(cameraIdData["left"]).concat(
+            Object.values(cameraIdData["right"])
+        );
         return totalCounts.reduce((acc, c) => acc + c, 0);
     } catch (err) {
         return NaN;
     }
 };
+
+// For paths
+const getCountByIdAndDirection = (id, direction, data) => {
+    try {
+        const cameraIdData = data[id];
+        const totalCounts = direction === 0 
+            ? Object.values(cameraIdData["left"]) 
+            : Object.values(cameraIdData["right"]);
+        return totalCounts.reduce((acc, c) => acc + c, 0);
+    } catch (err) {
+        return NaN
+    }
+}
 
 const populateSpotObjsWithCountLive = (spotObjs) => (
     spotObjs.map((obj) => {
@@ -127,8 +145,8 @@ const populatePathObjsWithCountAnalytics = (pathObjs, data, filterMode) => {
 
     return (
         pathObjs.map((obj) => {
-            const count1 = getCountById(obj.id1, data);
-            const count2 = getCountById(obj.id2, data);
+            const count1 = getCountByIdAndDirection(obj.id1, obj.direction1, data);
+            const count2 = getCountByIdAndDirection(obj.id2, obj.direction2, data);
 
             return ({
                 ...obj,
