@@ -300,7 +300,7 @@ const FilterSidebar = () => {
             
 
             <div className="drawer-side absolute top-0 right-70 w-1/4 h-screen overflow-x-hidden " >
-                <label htmlFor="filter-drawer" className="drawer-overlay"></label>
+                <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-full bg-base-100 text-base-content content-center">
                     <div className="text-4xl underline underline-offset-8 top-0"><p> Filters </p>
                     </div>
@@ -337,6 +337,8 @@ const FilterSidebar = () => {
                     </div>
                     <br /><br />
                     
+
+
                     <div className="TimeRangeSlider card w-full px-7 py-5 bg-base-200 flex flex-col space-y-4 ">
                         <h4>Time Range</h4>
                         <TimeRangeSlider
@@ -354,6 +356,7 @@ const FilterSidebar = () => {
                     
                     </div>
                     <br /><br />
+                    {/* <br /><br /> */}
 
                     <div className="btn-group btn-group-horizontal justify-center w-full flex space-x-4 card px-7 py-5 bg-base-200 ">
                         <input type="radio" name="options" data-title="year" className="btn" onClick={() => updateFilterToggle("year")} />
