@@ -170,8 +170,8 @@ const NewFilterSideBar = ({children}) => {
         for (const entry of data) {
             const date = entry['year_month_day']
             entry['year'] = date.substring(0, 4);
-            entry['year_month'] = date.substring(0, 4) + "/" + date.substring(4, 6);
-            entry['year_month_day'] = date.substring(0, 4) + "/" + date.substring(4, 6) + "/" + date.substring(6, 8);
+            entry['year_month'] = date.substring(0, 4) + "-" + date.substring(4, 6);
+            entry['year_month_day'] = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
             entry['startDate'] = dateRange[0].startDate
             entry['endDate'] = dateRange[0].endDate
 
@@ -227,9 +227,9 @@ const NewFilterSideBar = ({children}) => {
         const tempEndDate = new Date(endDate)
         const tempCalendarDate = new Date(calendarDate)
 
-        
-        console.log(tempStartDate, tempEndDate, tempCalendarDate);
-        console.log(tempStartDate <= tempCalendarDate, tempCalendarDate <= tempEndDate, stringToTime(timeRange.start) <= stringToTime(time), stringToTime(time) <= stringToTime(timeRange.end))
+        console.log("startDate" , startDate)
+        // console.log(tempStartDate, tempEndDate, tempCalendarDate);
+        // console.log(tempStartDate <= tempCalendarDate, tempCalendarDate <= tempEndDate, stringToTime(timeRange.start) <= stringToTime(time), stringToTime(time) <= stringToTime(timeRange.end))
     
         return tempStartDate <= tempCalendarDate && tempCalendarDate <= tempEndDate && stringToTime(timeRange.start) <= stringToTime(time) && stringToTime(time) <= stringToTime(timeRange.end);
     };
