@@ -65,7 +65,6 @@ def run_inference_for_single_image(model, image):
 
 
 def run_inference(model, category_index, cap, labels, roi_position=0.6, threshold=0.5, x_axis=True, skip_frames=20, show=False, camid=''):
-    counter = [0, 0]  # left, right, up, down
     total_frames = 0
 
     ct = CentroidTracker(maxDisappeared=40, maxDistance=50)
@@ -73,6 +72,8 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
     trackableObjects = {}
 
     while cap.isOpened():
+        counter = [0, 0]
+
         ret, image_np = cap.read()
         if not ret:
             break
@@ -112,6 +113,7 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                 rects.append((x_min, y_min, x_max, y_max))
 
         objects = ct.update(rects)
+        got_change = False
 
         for (objectID, centroid) in objects.items():
             to = trackableObjects.get(objectID, None)
@@ -123,12 +125,14 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                     x = [c[0] for c in to.centroids]
                     direction = centroid[0] - np.mean(x)
 
-                    if centroid[0] > roi_position*width and direction > 0 and np.mean(x) < args.roi_position*width:
+                    if direction > 0:
                         counter[1] += 1
                         to.counted = True
-                    elif centroid[0] < roi_position*width and direction < 0 and np.mean(x) > args.roi_position*width:
+                        got_change = True
+                    elif direction < 0:
                         counter[0] += 1
                         to.counted = True
+                        got_change = True
 
                 to.centroids.append(centroid)
 
@@ -160,26 +164,27 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                     0.8, (0, 0xFF, 0xFF), 2, cv2.FONT_HERSHEY_SIMPLEX)
 
         ## write JSON file: counter[0] = left, counter[1] = right
-        outputL = {"camera_id": camid}
-        outputL["count"] = counter[0]
-        outputL["direction"] = "left"
-        outputL["timestamp"] = str(datetime.datetime.now())
+        if got_change:
+            outputL = {"camera_id": camid}
+            outputL["count"] = counter[0]
+            outputL["direction"] = "left"
+            outputL["timestamp"] = str(datetime.datetime.now())
 
-        outputR = {"camera_id": camid}
-        outputR["count"] = counter[1]
-        outputR["direction"] = "right"
-        outputR["timestamp"] = str(datetime.datetime.now())
-        camera_log = {"log1": outputL, "log2": outputR}
+            outputR = {"camera_id": camid}
+            outputR["count"] = counter[1]
+            outputR["direction"] = "right"
+            outputR["timestamp"] = str(datetime.datetime.now())
+            camera_log = {"log1": outputL, "log2": outputR}
 
-        # with open("../output/camera_log.json","w") as f: json.dump(camera_log, f)
-        for name, log in camera_log.items():
-            result = fb_app.post(f"/camera_log/{datetime.datetime.now().strftime('%Y%m%d')}", log, {'print': 'pretty'})
-            print(f"Successfully uploaded {name} to Firebase with log ID {result['name']}")
+            # with open("../output/camera_log.json","w") as f: json.dump(camera_log, f)
+            for name, log in camera_log.items():
+                result = fb_app.post(f"/camera_log/{datetime.datetime.now().strftime('%Y%m%d')}", log, {'print': 'pretty'})
+                print(f"Successfully uploaded {name} to Firebase with log ID {result['name']}")
 
         total_frames += 1
 
-    cap.release()
-    cv2.destroyAllWindows()
+    #cap.release()
+    #cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
