@@ -1,7 +1,6 @@
-import React, { Component} from "react";
+import React from "react";
 import Plot from 'react-plotly.js';
-
-import LineGraph from "./LineGraph";
+import LineGraph from "./LineGraph"
 
 
 const AnalyticsLineGraph = () => {
@@ -9,13 +8,10 @@ const AnalyticsLineGraph = () => {
         <div className="card w-10/12 h-full shadow-xl bg-base-200">
             
             <div>
-            {/* w-full h-full className="p-4" */}
                 <LineGraph />
-                {/* <Draftlinechart /> */}
+                
+                
             </div>
-        
-            
-            
         </div>
     );
 }
