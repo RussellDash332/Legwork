@@ -5,24 +5,16 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    minWidth:800,
-    minHeight:600,
     webPreferences: {
       nodeIntegration: true
     }
   })
 
-  // Load the index.html from a url
+  //load the index.html from a url
   win.loadURL('http://localhost:3000');
 
   // Open the DevTools.
   win.webContents.openDevTools()
-
-  // Remove top option menus
-  win.removeMenu();
-
-  // Maximize app window when initialized
-  win.maximize();
 }
 
 // This method will be called when Electron has finished

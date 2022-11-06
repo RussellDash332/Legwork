@@ -15,33 +15,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-
-@layer components {
-
-  .sidebar-icon {
-    @apply relative flex items-center justify-center
-          h-12 w-12 mt-2 mb-2 mx-auto shadow-lg bg-base-100 
-          text-base-content
-          hover:bg-base-100 hover:text-primary
-          rounded-3xl hover:rounded-xl
-          transition-all duration-300 ease-linear;
-  }
-
-  .sidebar-tooltip {
-    @apply absolute w-auto p-2 m-2 min-w-max left-14
-    rounded-md shadow-md
-    text-white bg-gray-900
-    text-xs font-bold
-    transition-all duration-100 scale-0 origin-left;
-  }
-
-  .sidebar-tooltip2 {
-    @apply absolute w-auto p-2 m-2 min-w-max top-14 z-30
-    rounded-md shadow-md
-    text-white bg-gray-900
-    text-xs font-bold
-    transition-all duration-100 scale-0 origin-top;
-  }
-
-}

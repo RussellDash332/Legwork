@@ -78,12 +78,12 @@ const Login = () => {
         <div className="hero-content flex-col lg:flex-row-reverse gap-x-16">
 
             {/* Text */}
-            <div className="flex flex-col text-center items-center lg:text-left lg:items-start">
-                <div className="bg-base-content p-8 rounded-lg w-80 mb-4">
-                    <img src={require('../../resources/LegWork_Logo.png')} className="object-fit"/>
-                </div>
-                <h1 className="text-5xl font-bold">Welcome to LegWork!</h1>
-                <p className="py-6">Start your supermarket journey on the right foot.</p>
+            <div className="text-center lg:text-left">
+            <h1 className="text-5xl font-bold">Welcome!</h1>
+            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            
+            <p>{email}</p>
+            <p>{password}</p>
             </div>
 
             {/* Card */}
