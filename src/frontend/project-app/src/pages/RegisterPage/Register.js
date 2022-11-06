@@ -20,7 +20,7 @@ const Register = () => {
             setCreateToggle(false);
         } else if (createToggle) {
             // Firebase Create account
-            createAccount(username, email, confirmPassword,
+            createAccount(email, confirmPassword,
                 () => {
                     console.log('register successful');
                     setCreateToggle(false);
@@ -109,6 +109,11 @@ const Register = () => {
             <div className="text-center lg:text-right">
             <h1 className="text-5xl font-bold">Create an Account</h1>
             <p className="py-6">Start your journey with us!</p>
+            
+            <p>{username}</p>
+            <p>{email}</p>
+            <p>{password}</p>
+            <p>{confirmPassword}</p>
             </div>
 
             {/* Card */}

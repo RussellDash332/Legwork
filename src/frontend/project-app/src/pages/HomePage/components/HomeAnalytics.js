@@ -1,20 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import LiveTab from "./LiveTab";
-import AnalyticsTab from "./AnalyticsTab";
-import colorObject from "daisyui/src/colors";
-
 const HomeAnalytics = () => {
-    const [tabToggle, setTabToggle] = useState(0);
-
-    const clickLiveTab = () => {
-        setTabToggle(0); 
-    }
-
-    const clickAnalyticsTab = () => {
-        setTabToggle(1);
-    }
-
     return (
         <div className="flex flex-col min-h-screen w-full h-screen">       
             {/* Tab bar */}
