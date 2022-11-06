@@ -1,4 +1,32 @@
+import { imageOverlay } from "leaflet";
+
 const flipYCoordinate = (currY, maxY) => maxY - currY;
+
+const scaleXCoordinate = (currX) => {
+    if (currX === 0) {
+        return currX
+    }
+    console.log("Scaling X")
+    return currX/2
+};
+
+const scaleYCoordinate = (currY, src) => {
+    let naturalHeight = 10;
+    let naturalWidth = 10
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+        naturalHeight = img.naturalHeight
+        naturalWidth = img.naturalWidth
+        }
+    if (currY === 0) {
+        return currY
+    }
+    console.log("Scaling Y")
+    const heatmapHeight = (naturalHeight/naturalWidth) * 400
+    const configHeight = (naturalHeight/naturalWidth) * 800
+    return currY * (heatmapHeight/configHeight)
+};
 
 const Mode = {
     Live: "live",
@@ -156,7 +184,7 @@ const populatePathObjsWithCountAnalytics = (pathObjs, data, filterMode) => {
 };
 
 // Top Right & Bottom Left
-const getBoundingBox = (pathObj, scale, maxY) => {
+const getBoundingBox = (pathObj, scale, maxY, src) => {
     const shift = (30 * (scale / 50));
     const position1 = pathObj.position1;
     const position2 = pathObj.position2;
@@ -196,16 +224,67 @@ const getBoundingBox = (pathObj, scale, maxY) => {
             bottomLeftY = position2.y + shift;
         }
     }
-    return [[flipYCoordinate(bottomLeftY, maxY), bottomLeftX], 
-            [flipYCoordinate(topRightY, maxY), topRightX]];
+    return [[flipYCoordinate(scaleYCoordinate(bottomLeftY, src), maxY), scaleXCoordinate(bottomLeftX)], 
+            [flipYCoordinate(scaleYCoordinate(topRightY, src), maxY), scaleXCoordinate(topRightX)]];
 };
 
-const getAdjustedSpotCenter = (spotObj, scale, maxY) => {
+const getAdjustedSpotCenter = (spotObj, scale, maxY, src) => {
     const shift = (30 * (scale / 50)) / 2;
     const adjustedX = spotObj.position.x + shift;
-    const adjustedY = flipYCoordinate(spotObj.position.y + shift, maxY);
-    return [adjustedY, adjustedX];
+    const adjustedY = spotObj.position.y + shift;
+    return [flipYCoordinate(scaleYCoordinate(adjustedY, src), maxY), scaleXCoordinate(adjustedX)];
 };
+
+const getSpotCenter = (spotObj, scale) => {
+    const shift = (30 * (scale / 50)) / 2;
+    const adjustedX = spotObj.position.x + shift;
+    const adjustedY = spotObj.position.y + shift;
+    return [-adjustedY, adjustedX]
+}
+
+const getOriginalBoundingBox = (pathObj, scale) => {
+    const shift = (30 * (scale / 50));
+    const position1 = pathObj.position1;
+    const position2 = pathObj.position2;
+    let topRightX;
+    let topRightY;
+    let bottomLeftX;
+    let bottomLeftY;
+
+    // Check if vertical or Horizontal
+    if (pathObj.orientation === "vertical") {
+        // Check if node1 or node2 is top
+        if (position1.y <= position2.y) { // node1 is on top
+            topRightX = position1.x + shift;
+            topRightY = position1.y;
+            bottomLeftX = position2.x;
+            bottomLeftY = position2.y + shift;
+
+        } else { // node2 is on top
+            topRightX = position2.x + shift;
+            topRightY = position2.y;
+            bottomLeftX = position1.x;
+            bottomLeftY = position1.y + shift;
+        }
+
+    } else { // Horizontal
+        // Check if node1 or node2 is left
+        if (position1.x <= position2.x) { // node1 is left
+            topRightX = position2.x + shift;
+            topRightY = position2.y;
+            bottomLeftX = position1.x;
+            bottomLeftY = position1.y + shift;
+
+        } else { // node2 is on left
+            topRightX = position1.x + shift;
+            topRightY = position1.y;
+            bottomLeftX = position2.x;
+            bottomLeftY = position2.y + shift;
+        }
+    }
+    return [[-bottomLeftY, bottomLeftX], 
+            [-topRightY, topRightX]];
+}
 
 export { 
     Mode,
@@ -216,5 +295,7 @@ export {
     populatePathObjsWithCountLive,
     populatePathObjsWithCountAnalytics,
     getBoundingBox,
-    getAdjustedSpotCenter
+    getAdjustedSpotCenter,
+    getSpotCenter,
+    getOriginalBoundingBox
 }
