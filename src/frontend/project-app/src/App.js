@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Link,
@@ -27,19 +27,6 @@ function App() {
 
   return (
     <Router>
-
-      {/* development navigation */}
-      {/* <div>
-        <nav>
-          <ul>
-            <li> <Link to="/login">Login</Link> </li>
-            <li> <Link to="/register">Register</Link> </li>
-            <li> <Link to="/home">Home</Link> </li>
-            <li> <Link to="/configuration">Configuration</Link> </li>
-          </ul>
-        </nav>
-      </div> */}
-
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />}/>
         <Route path="/login" element={<Login />}/>
