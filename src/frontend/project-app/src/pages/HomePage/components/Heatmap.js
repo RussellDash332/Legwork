@@ -609,11 +609,11 @@ const Heatmap = ({ mode }) => {
         img.src = src;
 
         img.onload = () => {
-            const modifier = 0.33512 * img.naturalWidth + 453.82;
-            const height = (img.naturalHeight/img.naturalWidth) * modifier;
+            const width = 800;
+            const height = (img.naturalHeight/img.naturalWidth) * width;
 
-            const bounds = [[0, 0], [height, modifier]];
-            const center = [height / 2, modifier / 2];
+            const bounds = [[0, 0], [height, width]];
+            const center = [height / 2, width / 2];
             setImgSrc(src);
             setLeafletHeight(height);
             setBounds(bounds);

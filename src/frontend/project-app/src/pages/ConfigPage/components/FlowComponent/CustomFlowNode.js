@@ -316,7 +316,7 @@ export const Floorplan = memo(({data}) => {
     return (
         <>
             <div className="w-[800px]">
-                <img src={data.data_url} className="object-contain"/>
+                <img src={data.data_url} className="w-[800px] object-contain"/>
             </div>
         </>
     );
