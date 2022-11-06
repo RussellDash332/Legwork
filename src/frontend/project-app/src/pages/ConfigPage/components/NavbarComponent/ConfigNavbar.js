@@ -65,9 +65,9 @@ const ConfigNavbar = () => {
                 </a>
 
                 <div className="px-2">
-                    <a href="#helpConfig">
+                    <label htmlFor="helpConfig">
                         <BsQuestion className="btn btn-circle btn-xs" />
-                    </a>
+                    </label>
                 </div>
             </div>
 
