@@ -68,19 +68,4 @@ const getColor = (indivLiveCount, totalLiveCount) => {
         : "#FFFF00"
 };
 
-// Python: 3 if 1 == 2 else 4
-const foo = () => {
-    return 1 == 2
-    ? 3
-    : 4;
-}
-
-const foo2 = () => {
-    if (1 == 2) {
-        return 3;
-    } else {
-        return 4;
-    }
-}
-
 export { hoverData, thresholds, getColor };
