@@ -15,7 +15,9 @@ import {
     populatePathObjsWithCountLive,
     populatePathObjsWithCountAnalytics,
     getBoundingBox,
-    getAdjustedSpotCenter
+    getAdjustedSpotCenter,
+    getSpotCenter,
+    getOriginalBoundingBox
 } from "../utils/HeatmapUtils"
 import { set } from "date-fns";
 
@@ -609,8 +611,8 @@ const Heatmap = ({ mode }) => {
         img.src = src;
 
         img.onload = () => {
-            const modifier = 0.33512 * img.naturalWidth + 453.82;
-            const height = (img.naturalHeight/img.naturalWidth) * modifier;
+            const modifier = 400;
+            const height = (img.naturalHeight/img.naturalWidth) * modifier
 
             const bounds = [[0, 0], [height, modifier]];
             const center = [height / 2, modifier / 2];
@@ -658,7 +660,12 @@ const Heatmap = ({ mode }) => {
     const renderPaths = () => (
         pathsWithCounts.map((data) => (
             <FeatureGroup pathOptions={{ color: getColor(data.count, liveCount) }}>
-                <Rectangle bounds={getBoundingBox(data, scale, leafletHeight)} fill fillOpacity={0.8}>
+                <Rectangle bounds={
+                    (floorplanImage && floorplanImage[0]) 
+                    ? getBoundingBox(data, scale, leafletHeight, floorplanImage[0].data_url)
+                    : getOriginalBoundingBox(data, scale)
+                    } 
+                fill fillOpacity={0.8}>
                     <Tooltip>
                         {`Path: ${data.pathName}`} <br/>
                         {`Count: ${data.count}`}
@@ -670,7 +677,12 @@ const Heatmap = ({ mode }) => {
     const renderSpots = () => (
         spotsWithCounts.map((data) => (
         <FeatureGroup pathOptions={{ color: getColor(data.count, liveCount) }}>
-            <Circle center={getAdjustedSpotCenter(data, scale, leafletHeight)} radius={30 * scale/100} fill fillOpacity={0.8}>
+            <Circle center={
+                (floorplanImage && floorplanImage[0]) 
+                    ? getAdjustedSpotCenter(data, scale, leafletHeight, floorplanImage[0].data_url)
+                    : getSpotCenter(data, scale)
+            } 
+            radius={30 * scale/100} fill fillOpacity={0.8}>
                 <Tooltip>
                     {`Spot: ${data.label}`} <br/>
                     {`Count: ${data.count}`}
@@ -711,9 +723,9 @@ const Heatmap = ({ mode }) => {
     return (
         <MapContainer 
             center={center} 
-            zoom={0} 
+            zoom={1} 
             scrollWheelZoom
-            style={{ height: '85vh', width: '100%' }}
+            style={{ height: (mode==='live')?'85vh':'100%', width: '100%' }}
             crs={L.CRS.Simple}
             ref={mapRef}
         >
