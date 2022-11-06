@@ -64,21 +64,13 @@ def run_inference_for_single_image(model, image):
     return output_dict
 
 
-def run_inference(model, category_index, cap, labels, roi_position=0.6, threshold=0.5, x_axis=True, skip_frames=20, save_path='', show=False, camid=''):
+def run_inference(model, category_index, cap, labels, roi_position=0.6, threshold=0.5, x_axis=True, skip_frames=20, show=False, camid=''):
     counter = [0, 0]  # left, right, up, down
     total_frames = 0
 
     ct = CentroidTracker(maxDisappeared=40, maxDistance=50)
     trackers = []
     trackableObjects = {}
-
-    # Check if results should be saved
-    if save_path:
-        width = int(cap.get(3))
-        height = int(cap.get(4))
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        out = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(
-            'M', 'J', 'P', 'G'), fps, (width, height))
 
     while cap.isOpened():
         ret, image_np = cap.read()
@@ -172,29 +164,26 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 break
 
-        if save_path:
-            ## write JSON file: counter[0] = left, counter[1] = right
-            outputL = {"camera_id": camid}
-            outputL["count"] = counter[0]
-            outputL["direction"] = "left"
-            outputL["timestamp"] = str(datetime.datetime.now())
+        ## write JSON file: counter[0] = left, counter[1] = right
+        outputL = {"camera_id": camid}
+        outputL["count"] = counter[0]
+        outputL["direction"] = "left"
+        outputL["timestamp"] = str(datetime.datetime.now())
 
-            outputR = {"camera_id": camid}
-            outputR["count"] = counter[1]
-            outputR["direction"] = "right"
-            outputR["timestamp"] = str(datetime.datetime.now())
-            camera_log = {"log1": outputL, "log2": outputR}
+        outputR = {"camera_id": camid}
+        outputR["count"] = counter[1]
+        outputR["direction"] = "right"
+        outputR["timestamp"] = str(datetime.datetime.now())
+        camera_log = {"log1": outputL, "log2": outputR}
 
-            # with open("../output/camera_log.json","w") as f: json.dump(camera_log, f)
-            for name, log in camera_log.items():
-                result = fb_app.post(f"/camera_log/{datetime.datetime.now().strftime('%Y%m%d')}", log, {'print': 'pretty'})
-                print(f"Successfully uploaded {name} to Firebase with log ID {result['name']}")
+        # with open("../output/camera_log.json","w") as f: json.dump(camera_log, f)
+        for name, log in camera_log.items():
+            result = fb_app.post(f"/camera_log/{datetime.datetime.now().strftime('%Y%m%d')}", log, {'print': 'pretty'})
+            print(f"Successfully uploaded {name} to Firebase with log ID {result['name']}")
 
         total_frames += 1
 
     cap.release()
-    if save_path:
-        out.release()
     cv2.destroyAllWindows()
 
 
@@ -219,8 +208,6 @@ if __name__ == '__main__':
                         help='Number of frames to skip between using object detection model')
     parser.add_argument('-sh', '--show', default=True,
                         action="store_false", help='Show output')
-    parser.add_argument('-sp', '--save_path', type=str, default="./output/camera_log.json",
-                        help='Path to save the output. If None output won\'t be saved')
     parser.add_argument('-camid', type=str, default="1",help="ID of the camera taking the video")
     args = parser.parse_args()
 
@@ -237,4 +224,4 @@ if __name__ == '__main__':
         print("Error opening video stream or file")
 
     run_inference(detection_model, category_index, cap, labels=args.labels, threshold=args.threshold,
-                  roi_position=args.roi_position, x_axis=args.axis, skip_frames=args.skip_frames, save_path=args.save_path, show=args.show,camid=args.camid)
+                  roi_position=args.roi_position, x_axis=args.axis, skip_frames=args.skip_frames, show=args.show, camid=args.camid)
