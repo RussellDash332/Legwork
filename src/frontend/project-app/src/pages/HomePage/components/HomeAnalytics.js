@@ -38,7 +38,7 @@ const HomeAnalytics = () => {
             </div>
 
             {/* Content */}
-            <div className="w-full h-full">
+            <div className="w-full h-full no-scrollbar border-4 border-black">
                 {(tabToggle == 0) && <LiveTab /> }
                 {(tabToggle == 1) && <AnalyticsTab /> }
             </div>

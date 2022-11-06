@@ -1,44 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import TimeRangeSlider from "react-time-range-slider";
-import { useEffect, useRef, useState } from "react";
 import { DateRange } from "react-date-range";
 import format from "date-fns/format";
-
-
-import Data from "./NewData.js";
+import { FiFilter } from "react-icons/fi";
 import "./Filter.css";
-
-import 'react-date-range/dist/styles.css'; 
-import 'react-date-range/dist/theme/default.css'; 
-
 import CameraDataContext from "./CameraDataContext.js";
 
-const FilterSidebar = () => {
-
-    // const Mode = {
-    //     Year: "year",
-    //     Month: "month",
-    //     Day: "day"
-    // };
-    
-    // //select month, return "month"
-    // //select year, return "year"
-    // //select day, return "day"
-
-    // useEffect(() => {
-    //     if(filterGroupToggle == "year_month_day"){
-    //         return "day";
-    //     }
-    //     if(filterGroupToggle == "year_month"){
-    //         return "month";
-    //     }
-    //     if(filterGroupToggle == "year"){
-    //         return "year";
-    //     }    
-            
-    // }, [filterGroupToggle]);
-    
-
+const NewFilterSideBar = ({children}) => {
 
     const {
         data,
@@ -292,53 +260,65 @@ const FilterSidebar = () => {
         return aggregated_data;
     };
 
-    //---------------------------------------------------
-
-    return (
-        
-        <>
-            
-
-            <div className="drawer-side absolute top-0 right-70 w-1/4 h-screen overflow-x-hidden " >
+    return(
+        <div className="drawer drawer-end no-scrollbar">
+            <input id="filter-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content no-scrollbar">
+                {/* <!-- Page content here --> */}
+                {children}
+                <label htmlFor="filter-drawer" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-10 right-16 text-white">
+                    <FiFilter />
+                </label>
+            </div> 
+            <div className="drawer-side">
                 <label htmlFor="filter-drawer" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-full bg-base-100 text-base-content content-center">
-                    <div className="text-4xl underline underline-offset-8 top-0"><p> Filters </p>
+                <div className="p-4 w-1/4 bg-base-100 text-base-content">
+                    {/* start sidebar content  */}
+                    {/* title  */}
+                    <div className="text-4xl underline underline-offset-8 top-0">
+                        <p> Filters </p>
                     </div>
                     <br /><br />
                     
-                    <div className="calendarWrap">
-                        <h4>Date Range</h4>
+                    {/* calendar filter  */}
+                    <div className="calendarWrap card w-full">
+                        <div className="mb-4 pl-2">
+                            <h4>Date Range</h4>
+                        </div> 
                         <input
-                            value = {` ${format(dateRange[0].startDate, "MM/dd/yyyy")} to ${format(dateRange[0].endDate, "MM/dd/yyyy")} ` }
+                            value = {` ${format(dateRange[0].startDate, "MM/dd/yyyy")}    to    ${format(dateRange[0].endDate, "MM/dd/yyyy")} ` }
                             readOnly
-                            className = "inputBox"
+                            className = "inputBox text-center"
                             onClick={ () => setOpen(open => !open) }
                         />    
 
                         <div ref={refOne}>
-                        {open &&
-                        <DateRange
-                            onChange = {item => {
-                                setRange(prevState => [item.selection]);
-                                console.log(item.selection)
+                            {open &&
+                            <DateRange
+                                onChange = {item => {
+                                    setRange(prevState => [item.selection]);
+                                    console.log(item.selection)
 
-                            }}
-                            editableDateInputs = {true}
-                            moveRangeOnFirstSelection = {false}
-                            ranges = {dateRange}
-                            months = {2}
-                            direction = "vertical"
-                            className = "calendarElement"
-                            />
-                        }
+                                }}
+                                editableDateInputs = {true}
+                                moveRangeOnFirstSelection = {false}
+                                ranges = {dateRange}
+                                months = {2}
+                                direction = "vertical"
+                                className = "calendarElement"
+                                />
+                            }
                         </div>
-
-                        <br /><br />
+                        <br />
                     </div>
-                    <br /><br />
+                    <br />
+                    <br />
                     
+                    {/* time filter */}
                     <div className="TimeRangeSlider card w-full px-7 py-5 bg-base-200 flex flex-col space-y-4 ">
-                        <h4>Time Range</h4>
+                        <div>
+                            <h4>Time Range</h4>
+                        </div> 
                         <TimeRangeSlider
                             disabled={false}
                             format={24}
@@ -350,20 +330,30 @@ const FilterSidebar = () => {
                             onChange={timeChangeHandler}
                             step={10}
                             value={timeRange}/>
-                        <div>Start Time: {timeRange.start}   End Time: {timeRange.end}</div>
+                        <div className="flex justify-between">
+                            <div>
+                                Start Time: {timeRange.start}
+                            </div>
+                            <div>
+                                End Time: {timeRange.end}
+                            </div>                     
+                        </div>
                     
                     </div>
-                    <br /><br />
+                    <br />
 
+                    {/* group filter  */}
                     <div className="btn-group btn-group-horizontal justify-center w-full flex space-x-4 card px-7 py-5 bg-base-200 ">
                         <input type="radio" name="options" data-title="year" className="btn" onClick={() => updateFilterToggle("year")} />
                         <input type="radio" name="options" data-title="month" className="btn" onClick={() => updateFilterToggle("year_month")} />
                         <input type="radio" name="options" data-title="day" className="btn" onClick={() => updateFilterToggle("year_month_day")}/>
                     </div>
-                </ul>     
+
+                </div>
             </div>
-        </>
-    );
+        </div>
+    )
+
 }
 
-export default FilterSidebar;
+export default NewFilterSideBar;
