@@ -266,7 +266,7 @@ const NewFilterSideBar = ({children}) => {
             <div className="drawer-content no-scrollbar">
                 {/* <!-- Page content here --> */}
                 {children}
-                <label htmlFor="filter-drawer" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-10 right-16 text-white">
+                <label htmlFor="filter-drawer" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-10 right-10 text-white">
                     <FiFilter />
                 </label>
             </div> 
