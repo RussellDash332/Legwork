@@ -10,94 +10,94 @@ import { ca } from "date-fns/locale";
 
 export default function LineGraph() {
 
-    // const {
-    //     filteredData,
-    //     paths,
-    //     spots
-    //     } = useContext(CameraDataContext);
+    const {
+        filteredData,
+        paths,
+        spots
+        } = useContext(CameraDataContext);
 
-    const filteredData = {
+//     const filteredData = {
         
-        "camera_id_1":{
-            "left": 
-                {
-                    "2022-03-09": 7,
-                    "2022-01-22": 79,
-                    "2022-02-12": 90
-                },
-                "right": 
-                {
-                    "2022-01-22": 7,
-                    "2023-01-22": 14
-                }
-        },
+//         "camera_id_1":{
+//             "left": 
+//                 {
+//                     "2022-03-09": 7,
+//                     "2022-01-22": 79,
+//                     "2022-02-12": 90
+//                 },
+//                 "right": 
+//                 {
+//                     "2022-01-22": 7,
+//                     "2023-01-22": 14
+//                 }
+//         },
                 
-        "camera_id_2":{
-                "left": 
-                {
-                    "2022-07-27": 6,
-                    "2022-02-16": 67,
-                    "2022-10-07": 27
-                },
-                "right": 
-                {
-                    "2022-03-17": 5,
-                    "2023-03-17": 10
-                }
-        },
-        "camera_id_3":{
-                "left": 
-                {
-                    "2022-08-28": 5,
-                    "2022-01-29": 10,
-                    "2022-12-19": 10
-                },
-                "right": 
-                {
-                    "2022-04-28": 5,
-                    "2023-04-28": 10
-                }
-        },
-        "camera_id_4":{
-                "left": 
-                {
-                    "2022-03-09": 23,
-                    "2022-01-22": 24,
-                    "2022-02-12": 17
-                },
-                "right": 
-                {
-                    "2022-01-22": 23,
-                    "2023-01-22": 24
-                }
-        }
-  };
+//         "camera_id_2":{
+//                 "left": 
+//                 {
+//                     "2022-07-27": 6,
+//                     "2022-02-16": 67,
+//                     "2022-10-07": 27
+//                 },
+//                 "right": 
+//                 {
+//                     "2022-03-17": 5,
+//                     "2023-03-17": 10
+//                 }
+//         },
+//         "camera_id_3":{
+//                 "left": 
+//                 {
+//                     "2022-08-28": 5,
+//                     "2022-01-29": 10,
+//                     "2022-12-19": 10
+//                 },
+//                 "right": 
+//                 {
+//                     "2022-04-28": 5,
+//                     "2023-04-28": 10
+//                 }
+//         },
+//         "camera_id_4":{
+//                 "left": 
+//                 {
+//                     "2022-03-09": 23,
+//                     "2022-01-22": 24,
+//                     "2022-02-12": 17
+//                 },
+//                 "right": 
+//                 {
+//                     "2022-01-22": 23,
+//                     "2023-01-22": 24
+//                 }
+//         }
+//   };
 
 
-const spots = [
-    {
-    id: "camera_id_3",
-    label: "spot1label",
-    position: "spot1pos"
-    },
-    {
-    id: "camera_id_2",
-    label: "spot2label",
-    position: "spot2pos"
-    }
-];
-const paths = [
-    {
-    pathName: "path1",
-    id1: "camera_id_1",
-    label1: "cam1label",
-    direction1: 0, //left
-    id2: "camera_id_4",
-    label2: "cam2label",
-    direction2: 0 //left
-    }
+// const spots = [
+//     {
+//     id: "camera_id_3",
+//     label: "spot1label",
+//     position: "spot1pos"
+//     },
+//     {
+//     id: "camera_id_2",
+//     label: "spot2label",
+//     position: "spot2pos"
+//     }
+// ];
+// const paths = [
+//     {
+//     pathName: "path1",
+//     id1: "camera_id_1",
+//     label1: "cam1label",
+//     direction1: 0, //left
+//     id2: "camera_id_4",
+//     label2: "cam2label",
+//     direction2: 0 //left
+//     }
 
-];
+// ];
 
 
 
