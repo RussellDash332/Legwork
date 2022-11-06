@@ -148,7 +148,7 @@ const NewFilterSideBar = ({children}) => {
                 currentDate = date;
             }
         }
-        console.log("currentdater", currentDate)
+        // console.log("currentdater", currentDate)
         return currentDate;
     }
 
@@ -227,7 +227,7 @@ const NewFilterSideBar = ({children}) => {
         const tempEndDate = new Date(endDate)
         const tempCalendarDate = new Date(calendarDate)
 
-        console.log("startDate" , startDate)
+        // console.log("startDate" , startDate)
         // console.log(tempStartDate, tempEndDate, tempCalendarDate);
         // console.log(tempStartDate <= tempCalendarDate, tempCalendarDate <= tempEndDate, stringToTime(timeRange.start) <= stringToTime(time), stringToTime(time) <= stringToTime(timeRange.end))
     
@@ -239,12 +239,12 @@ const NewFilterSideBar = ({children}) => {
         //187-198 need to edit
         // flatten data into entries
         const flattened_data = flatten_data(data, "processdata");
-        console.log("flat data", flattened_data)
+        // console.log("flat data", flattened_data)
         const formatted_data = format_data(flattened_data);
-        console.log("formatted data", formatted_data)
+        // console.log("formatted data", formatted_data)
 
         const filtered_data = formatted_data.filter(checkValidRange);
-        console.log("rangedata", filtered_data)
+        // console.log("rangedata", filtered_data)
 
         // check if timestamp is within the range
         // const flattened_data3 = flattened_data2.filter(checkValidRange)
@@ -256,7 +256,7 @@ const NewFilterSideBar = ({children}) => {
         // 4. aggregate by camera_id, year
         const aggregated_data = filtered_data.reduce(aggregateByCameraId, {})
         
-        console.log("aggre data" ,aggregated_data)
+        // console.log("aggre data" ,aggregated_data)
         return aggregated_data;
     };
 
