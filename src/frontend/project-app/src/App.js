@@ -1,10 +1,10 @@
-import './App.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Link,
+  redirect,
   Navigate
 } from "react-router-dom";
 
@@ -16,20 +16,11 @@ import Home from './pages/HomePage/Home';
 import Configuration from './pages/ConfigPage/Configuration';
 
 function App() {
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-
-    const htmlElement = document.querySelector('html')
-    htmlElement.setAttribute("data-theme", savedTheme);
-
-    console.log("saved theme in local storage: ", savedTheme);
-  }, [])
-
   return (
     <Router>
 
       {/* development navigation */}
-      {/* <div>
+      <div>
         <nav>
           <ul>
             <li> <Link to="/login">Login</Link> </li>
@@ -38,7 +29,7 @@ function App() {
             <li> <Link to="/configuration">Configuration</Link> </li>
           </ul>
         </nav>
-      </div> */}
+      </div>
 
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />}/>
