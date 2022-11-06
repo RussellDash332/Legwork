@@ -261,7 +261,7 @@ const NewFilterSideBar = ({children}) => {
     };
 
     return(
-        <div className="drawer drawer-end no-scrollbar">
+        <div className="drawer drawer-end no-scrollbar h-full w-full">
             <input id="filter-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content no-scrollbar">
                 {/* <!-- Page content here --> */}
@@ -272,7 +272,7 @@ const NewFilterSideBar = ({children}) => {
             </div> 
             <div className="drawer-side">
                 <label htmlFor="filter-drawer" className="drawer-overlay"></label>
-                <div className="p-4 w-1/4 bg-base-100 text-base-content">
+                <div className="p-4 w-1/4 min-w-[360px] bg-base-100 text-base-content">
                     {/* start sidebar content  */}
                     {/* title  */}
                     <div className="text-4xl underline underline-offset-8 top-0">

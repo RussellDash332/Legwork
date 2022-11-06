@@ -16,7 +16,7 @@ const HomeAnalytics = () => {
     }
 
     return (
-        <div className="flex flex-col min-h-screen w-full h-screen">       
+        <div className="flex flex-col min-h-screen w-full h-screen overflow-x-hidden">       
             {/* Tab bar */}
             <div className="tabs bg-base-100">
 
@@ -38,7 +38,7 @@ const HomeAnalytics = () => {
             </div>
 
             {/* Content */}
-            <div className="w-full h-full no-scrollbar border-4 border-black">
+            <div className="w-full h-full no-scrollbar">
                 {(tabToggle == 0) && <LiveTab /> }
                 {(tabToggle == 1) && <AnalyticsTab /> }
             </div>
