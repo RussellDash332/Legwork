@@ -68,74 +68,78 @@ const AddSpot = () => {
     }, [cameraName1])
 
     return (
-        <div className="modal" id="addSpot">
-        <div className="modal-box max-w-min no-scrollbar">
-            {/* Close button */}
-            <a id="close-addSpot" href="#"/>
-            <a href="#" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={resetInputs}>✕</a>
+        <>
+            <input type="checkbox" id="addSpot" className="modal-toggle" />
 
-            {/* Title */}
-            <div className="form-control mb-2">
-                <h3 className="font-bold text-2xl">Add New Spot</h3>
-            </div>
+            <div className="modal">
+            <div className="modal-box max-w-min no-scrollbar">
+                {/* Close button */}
+                <label id="close-addSpot" htmlFor="addSpot"/>
+                <label htmlFor="addSpot" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={resetInputs}>✕</label>
 
-            <hr className="h-1 text-primary bg-primary mb-4"/>
-            
-            {/* Content */}
-            <div className="flex flex-col w-full lg:flex-row">
+                {/* Title */}
+                <div className="form-control mb-2">
+                    <h3 className="font-bold text-2xl">Add New Spot</h3>
+                </div>
 
-                {/* Card */}
-                <div className="card w-96 bg-base-300 shadow-xl h-64">
-                <div className="card-body py-5">
-                    <h2 className="card-title font-bold">Camera 1</h2>
-                    
-                    <p className="label-text-alt text-end"> Camera Name </p>
-                    <input type="text" 
-                        placeholder="Type here (max. 12 characters)"
-                        className="input input-bordered w-full max-w-xs"
-                        value={cameraName1} 
-                        onChange={(e) => setCameraName1(e.currentTarget.value)}
-                        disabled={saveToggle}
-                        maxLength={12} />
-                    <div className="h-2">
-                        {(missingNameError1) 
-                            && <label className="label p-0">
-                                    <span className="label-text-alt text-red-400">
-                                        Device Name cannot be empty
-                                    </span>
-                                </label>
-                        }
-                    </div> 
+                <hr className="h-1 text-primary bg-primary mb-4"/>
+                
+                {/* Content */}
+                <div className="flex flex-col w-full lg:flex-row">
 
-                    <p className="label-text-alt text-end"> Device ID </p>
-                    <input type="text" placeholder="Type here" 
-                        className={(uniqueIDError || missingIDError) 
-                            ? "input input-bordered w-full max-w-xs input-error" 
-                            : "input input-bordered w-full max-w-xs"}
-                        value={cameraID1} 
-                        onChange={(e) => setCameraID1(e.currentTarget.value)}
-                        disabled={saveToggle} />
-                    <div className="h-4">
-                        {(uniqueIDError || missingIDError) 
-                            && <label className="label p-0">
-                                    <span className="label-text-alt text-red-400">
-                                        {(missingIDError)
-                                        ? "Device ID cannot be empty"
-                                        : "Device ID has already been used"}
-                                    </span>
-                                </label>
-                        }
+                    {/* Card */}
+                    <div className="card w-96 bg-base-300 shadow-xl h-64">
+                    <div className="card-body py-5">
+                        <h2 className="card-title font-bold">Camera 1</h2>
+                        
+                        <p className="label-text-alt text-end"> Camera Name </p>
+                        <input type="text" 
+                            placeholder="Type here (max. 12 characters)"
+                            className="input input-bordered w-full max-w-xs"
+                            value={cameraName1} 
+                            onChange={(e) => setCameraName1(e.currentTarget.value)}
+                            disabled={saveToggle}
+                            maxLength={12} />
+                        <div className="h-2">
+                            {(missingNameError1) 
+                                && <label className="label p-0">
+                                        <span className="label-text-alt text-red-400">
+                                            Device Name cannot be empty
+                                        </span>
+                                    </label>
+                            }
+                        </div> 
+
+                        <p className="label-text-alt text-end"> Device ID </p>
+                        <input type="text" placeholder="Type here" 
+                            className={(uniqueIDError || missingIDError) 
+                                ? "input input-bordered w-full max-w-xs input-error" 
+                                : "input input-bordered w-full max-w-xs"}
+                            value={cameraID1} 
+                            onChange={(e) => setCameraID1(e.currentTarget.value)}
+                            disabled={saveToggle} />
+                        <div className="h-4">
+                            {(uniqueIDError || missingIDError) 
+                                && <label className="label p-0">
+                                        <span className="label-text-alt text-red-400">
+                                            {(missingIDError)
+                                            ? "Device ID cannot be empty"
+                                            : "Device ID has already been used"}
+                                        </span>
+                                    </label>
+                            }
+                        </div>
                     </div>
-                </div>
+                    </div>
+
                 </div>
 
+                <div className="flex justify-center pt-5">
+                <button className={(saveToggle) ? "btn btn-primary loading" : "btn btn-primary text-white"} onClick={clickSave}>Create & Add</button>
+                </div>
             </div>
-
-            <div className="flex justify-center pt-5">
-            <button className={(saveToggle) ? "btn btn-primary loading" : "btn btn-primary text-white"} onClick={clickSave}>Create & Add</button>
             </div>
-        </div>
-        </div>
+        </>
     );
 }
 
