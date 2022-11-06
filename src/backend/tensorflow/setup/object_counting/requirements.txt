@@ -1,6 +1,7 @@
 scipy
-cmake
 tensorflow
 dlib
-opencv_python==4.5.2.52
+opencv_python==4.6.0.66
+opencv_python_headless==4.6.0.66
 numpy
+keras==2.10.0

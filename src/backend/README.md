@@ -132,7 +132,7 @@ Referenced guide: https://neptune.ai/blog/how-to-train-your-own-object-detector-
    ```
    An example is given below.
    ```
-   python tensorflow_cumulative_object_counting.py -m ./saved_model/ -l ../data/train/human-lower-limb_label_map.pbtxt -v ../video/<video_name.mp4> -camid <cam_id>`
+   python object_counting/tensorflow_cumulative_object_counting.py -m models/<model_name>/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -v video/test.mp4 -camid <cam_id>`
    ```
 
 ## Firebase Setup Guide
@@ -141,10 +141,20 @@ After training the model, we can run the object counter to produce the desired o
 1. Setup Firebase database URL manually at `tensorflow/object_counting/env.py`.
 1. The code in `tensorflow/object_counting/tensorflow_cumulative_object_counting.py` will send the object counting result straight to the provided Firebase real database. This is similar to the one we can see at `firebase/firebase_test_util.py`, where it tries to send a POST request to the database for a new data outputted.
 
-## Common Issues
-- AttributeError: partially initialized module 'cv2' has no attribute 'gapi_wip_gst_GStreamerPipeline' (most likely due to a circular import)
-  - The solution is to ensure that these two packages are of the same version: `opencv-python` and `opencv-python-headless`.
-- Getting this error https://stackoverflow.com/questions/70537488/cannot-import-name-registermattype-from-cv2-cv2
-  - One common error solution is to do `pip install opencv-python-headless==4.5.2.52`.
-- AttributeError: module 'tensorflow.python.training.experimental.mixed_precision' has no attribute '_register_wrapper_optimizer_cls'
-  - Based on [this](https://stackoverflow.com/questions/66178738/attributeerror-module-tensorflow-python-training-experimental-mixed-precision), the solution is to upgrade the `keras` package via `pip install keras --upgrade`.
+## Using Docker
+1. Go to this directory and build the image.
+    ```
+    docker build -t <image_name> .
+    ```
+    For example,
+    ```
+    docker build -t legwork .
+    ```
+2. Run a container from this image by specifying the parameters (and name and ports).
+    ```
+    docker run --name <container_name> -p <host_port>:<container_port> -e video=<video_link> -e camid=<cam_id> -d <image-name>
+    ```
+    For example,
+    ```
+    docker run --name legwork-test -p 9000:9000 -e video=rtsp://esp32cam-rtsp.local:554/mjpeg/1 -e camid=1 -d legwork
+    ```
