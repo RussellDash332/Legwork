@@ -22,8 +22,8 @@ export default function LineGraph() {
         "camera_id_1":{
             "left": 
                 {
-                    "2022": 5,
-                    "2023": 10
+                    "2022": 7,
+                    "2023": 79
                 },
                 "right": 
                 {
@@ -106,15 +106,15 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
     const cam1data = cam1;
     // cam1data = { left: { 2022: 5, 2023: 10 }, right: { 2022: 5, 2023: 10 } }
     if (direction1 === 0) {
-        cam1used = cam1data.right; // if cam facing left, use right dat
+        cam1used = cam1data.left; // if cam facing left, use left data
     }
-    else {cam1used = cam1data.left}// eg. cam1used -> { 2022: 7, 2023: 14 }
+    else {cam1used = cam1data.right}// eg. cam1used -> { 2022: 7, 2023: 14 }
    
     const cam2data = cam2;
     if (direction2 === 0) {
-        cam2used = cam2data.right; // if cam facing left, use right data
+        cam2used = cam2data.left; // if cam facing left, use left data
     }
-    else {cam2used = cam2data.left} // eg. cam2used -> { 2022: 5, 2023: 10 }
+    else {cam2used = cam2data.right} // eg. cam2used -> { 2022: 5, 2023: 10 }
   
 
     const datecombine = Object.keys(cam1used);
