@@ -3,7 +3,6 @@ import { FiFilter } from "react-icons/fi";
 
 import AnalyticsHeatmap from "./AnalyticsHeatmap";
 import AnalyticsLineGraph from "./AnalyticsLineGraph";
-import FilterSidebar from "./FilterSidebar";
 import NewFilterSideBar from "./NewFilterSideBar";
 
 const AnalyticsTab = () => {
