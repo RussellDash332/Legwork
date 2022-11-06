@@ -11,7 +11,9 @@ const NewFilterSideBar = ({children}) => {
     const {
         data,
         filteredData,
-        setFilteredData
+        setFilteredData,
+        filterGroupToggle,
+        setFilterGroupToggle
     } = useContext(CameraDataContext);
 
     const changeStartHandler = (time) => {
@@ -72,7 +74,7 @@ const NewFilterSideBar = ({children}) => {
         start: "00:00",
         end: "23:59"
     });
-    const [filterGroupToggle, setFilterGroupToggle] = useState("year_month_day");
+    
 
     useEffect(() => {
         if(Object.keys(data).length!=0){

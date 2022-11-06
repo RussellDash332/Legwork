@@ -20,6 +20,7 @@ export const CameraDataContextProvider = ({children}) => {
     const [scale, setScale] = useState(50);
     const [paths, setPaths] = useState([]);
     const [spots, setSpots] = useState([]);
+    const [filterGroupToggle, setFilterGroupToggle] = useState("year_month_day");
 
     // Initial Listener on data
     useEffect(() => {
@@ -86,7 +87,9 @@ export const CameraDataContextProvider = ({children}) => {
                 paths,
                 spots,
                 scale,
-                floorplanImage
+                floorplanImage,
+                filterGroupToggle,
+                setFilterGroupToggle
             }}
         >
             {children}
