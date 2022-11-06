@@ -6,7 +6,6 @@ const scaleXCoordinate = (currX) => {
     if (currX === 0) {
         return currX
     }
-    console.log("Scaling X")
     return currX/2
 };
 
@@ -22,7 +21,6 @@ const scaleYCoordinate = (currY, src) => {
     if (currY === 0) {
         return currY
     }
-    console.log("Scaling Y")
     const heatmapHeight = (naturalHeight/naturalWidth) * 400
     const configHeight = (naturalHeight/naturalWidth) * 800
     return currY * (heatmapHeight/configHeight)
@@ -95,11 +93,12 @@ const getPaths = (nodes, edges) => {
 
 const getNumOfDays = (filterMode, data) => {
     try {
-        const numOfEntries = Object.keys(data[Object.keys(data)[0]]).length;
+        const test = Object.values(data)[0]
+        const numOfEntries = Object.keys(Object.values(test)[0]).length;
         switch (filterMode) {
             case "year":
                 return numOfEntries * 365;
-            case "month":
+            case "year_month":
                 return numOfEntries * 30;
             default:
                 return numOfEntries;
@@ -117,6 +116,7 @@ const getCountById = (id, data) => {
             Object.values(cameraIdData["left"]).concat(
             Object.values(cameraIdData["right"])
         );
+        console.log("Total Spot count", totalCounts.reduce((a, b) => a + b, 0))
         return totalCounts.reduce((acc, c) => acc + c, 0);
     } catch (err) {
         return NaN;
@@ -130,17 +130,28 @@ const getCountByIdAndDirection = (id, direction, data) => {
         const totalCounts = direction === 0 
             ? Object.values(cameraIdData["left"]) 
             : Object.values(cameraIdData["right"]);
+        console.log("Total Path count", totalCounts)
         return totalCounts.reduce((acc, c) => acc + c, 0);
     } catch (err) {
         return NaN
     }
 }
 
-const populateSpotObjsWithCountLive = (spotObjs) => (
+const populateSpotObjsWithCountLive = (spotObjs, liveData) => (
     spotObjs.map((obj) => {
+        const unfoldedData = Object.values(liveData).map(x => Object.values(x));
+        let compiledData = [];
+        for (let i = 0; i < unfoldedData.length; i ++) {
+            compiledData = compiledData.concat(unfoldedData[i]);
+        }
+        const liveCount = compiledData.filter(x => x.camera_id === obj.id)
+        .map(x => {
+            return x.count
+        })
+        .reduce((acc, c) => acc + c, 0)
         return ({
             ...obj,
-            count: NaN
+            count: liveCount
         })
     })
 );
@@ -159,11 +170,25 @@ const populateSpotObjsWithCountAnalytics = (spotObjs, data, filterMode) => {
         }));
 };
 
-const populatePathObjsWithCountLive = (pathObjs) => (
+const populatePathObjsWithCountLive = (pathObjs, liveData) => (
     pathObjs.map((obj) => {
+        const unfoldedData = Object.values(liveData).map(x => Object.values(x));
+        let compiledData = [];
+        for (let i = 0; i < unfoldedData.length; i ++) {
+            compiledData = compiledData.concat(unfoldedData[i]);
+        }
+        const liveCount = compiledData.filter(x => {
+            const dir1 = (obj.direction1 === 0) ? "left" : "right";
+            const dir2 = (obj.direction2 === 0) ? "left" : "right";
+            return (x.camera_id === obj.id1 && x.direction === dir1) || (x.camera_id === obj.id2 && x.direction === dir2) 
+        })
+        .map(x => {
+            return x.count
+        })
+        .reduce((acc, c) => acc + c, 0)
         return ({
             ...obj,
-            count: NaN
+            count: liveCount
         })
     })
 );
@@ -175,7 +200,11 @@ const populatePathObjsWithCountAnalytics = (pathObjs, data, filterMode) => {
         pathObjs.map((obj) => {
             const count1 = getCountByIdAndDirection(obj.id1, obj.direction1, data);
             const count2 = getCountByIdAndDirection(obj.id2, obj.direction2, data);
-
+            console.log("Path with counts", {
+                ...obj,
+                count: Math.round((count1 + count2) / numOfDays)
+            })
+            console.log("Count1, Count2", count1, count2, numOfDays)
             return ({
                 ...obj,
                 count: Math.round((count1 + count2) / numOfDays)
@@ -285,6 +314,23 @@ const getOriginalBoundingBox = (pathObj, scale) => {
     return [[-bottomLeftY, bottomLeftX], 
             [-topRightY, topRightX]];
 }
+
+// const getEmptyBounds = (pathObjs, spots, scale) => {
+//     let minX = pathObjs[0].position1.x ;
+//     let maxX;
+//     let minY;
+//     let maxY;
+//     // checking through the paths
+//     for (let i = 1; i < pathObjs.length; i++) {
+//         pathObjs[i].position1.x 
+
+
+
+
+
+//     }
+// }
+//minx,maxx miny,maxy rmb to divide 2
 
 export { 
     Mode,

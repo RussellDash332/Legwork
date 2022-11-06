@@ -578,20 +578,27 @@ const newSampleData = {
 const sampleSpotObjs = [
 {
     spotName: "spot-1",
-    id: "1",
+    id: "123",
     label: "cam 7",
     position: {
         x: 200,
         y: 200
     },
+    spotName: "spot-2",
+    id: "123",
+    label: "cam 7",
+    position: {
+        x: 200,
+        y: 200
+    }
 }
 ];
 
 const Heatmap = ({ mode }) => {
     const {
-        paths, spots, floorplanImage, scale, filteredData
+        paths, spots, floorplanImage, scale, filteredData, filterGroupToggle, data
     } = useContext(CameraDataContext);
-    const filterMode = "year";
+    const filterMode = filterGroupToggle;
     const attribution = "&copy; Developed by LegWork Inc." ;
     const [imgSrc, setImgSrc] = useState(Floorplan);
     const [leafletHeight, setLeafletHeight] = useState((602/1033) * 800);
@@ -601,10 +608,11 @@ const Heatmap = ({ mode }) => {
     const floorplanLayerRef = useRef();
     const gridlinesLayerRef = useRef();
 
-    console.log("src", imgSrc);
-    console.log("leafletHeight", leafletHeight);
-    console.log("bounds", bounds);
-    console.log("center", center);
+    // console.log("src", imgSrc);
+    // console.log("leafletHeight", leafletHeight);
+    // console.log("bounds", bounds);
+    // console.log("center", center);
+    console.log("String filtered data", filteredData);
 
     const loadImage = (setLeafletHeight, setBounds, setCenter, setImgSrc, src) => {
         const img = new Image();
@@ -639,17 +647,17 @@ const Heatmap = ({ mode }) => {
     // Get paths
     let pathsWithCounts;
     if (mode === Mode.Live) {
-        pathsWithCounts = populatePathObjsWithCountLive(paths);
+        pathsWithCounts = populatePathObjsWithCountLive(paths, data);
     } else { // Analytics
-        pathsWithCounts = populatePathObjsWithCountAnalytics(paths, newSampleData, filterMode);
+        pathsWithCounts = populatePathObjsWithCountAnalytics(paths, filteredData, filterMode);
     }
 
     // Get spots
     let spotsWithCounts;
     if (mode === Mode.Live) {
-        spotsWithCounts = populateSpotObjsWithCountLive(spots);
+        spotsWithCounts = populateSpotObjsWithCountLive(spots, data);
     } else { // Analytics
-        spotsWithCounts = populateSpotObjsWithCountAnalytics(spots, newSampleData, filterMode);
+        spotsWithCounts = populateSpotObjsWithCountAnalytics(spots, filteredData, filterMode);
     }
 
     // Set live count
