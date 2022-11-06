@@ -5,6 +5,8 @@ import format from "date-fns/format";
 import { FiFilter } from "react-icons/fi";
 import "./Filter.css";
 import CameraDataContext from "./CameraDataContext.js";
+import 'react-date-range/dist/styles.css'; 
+import 'react-date-range/dist/theme/default.css'; 
 
 const NewFilterSideBar = ({children}) => {
 
@@ -283,7 +285,7 @@ const NewFilterSideBar = ({children}) => {
                     <br /><br />
                     
                     {/* calendar filter  */}
-                    <div className="calendarWrap card w-full">
+                    <div className="calendarWrap w-full">
                         <div className="mb-4 pl-2">
                             <h4>Date Range</h4>
                         </div> 
