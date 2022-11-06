@@ -315,22 +315,35 @@ const getOriginalBoundingBox = (pathObj, scale) => {
             [-topRightY, topRightX]];
 }
 
-// const getEmptyBounds = (pathObjs, spots, scale) => {
-//     let minX = pathObjs[0].position1.x ;
-//     let maxX;
-//     let minY;
-//     let maxY;
-//     // checking through the paths
-//     for (let i = 1; i < pathObjs.length; i++) {
-//         pathObjs[i].position1.x 
-
-
-
-
-
-//     }
-// }
-//minx,maxx miny,maxy rmb to divide 2
+const getEmptyBounds = (pathObjs, spotObjs) => {
+    console.log("HERE", pathObjs, spotObjs);
+    if (pathObjs.length !== 0) {
+        let minX = pathObjs[0][0][1];
+        let maxX = pathObjs[0][0][1];
+        let minY = pathObjs[0][0][0];
+        let maxY = pathObjs[0][0][0];
+    } else {
+        let minX = spotObjs[0][1];
+        let maxX = spotObjs[0][1];
+        let minY = spotObjs[0][0];
+        let maxY = spotObjs[0][0];
+    }
+    // paths
+    for (let i = 1; i < pathObjs.length; i++) {
+        minX = Math.min(minX, pathObjs[i][0][1], pathObjs[i][1][1]);
+        minY = Math.min(minY, pathObjs[i][0][0], pathObjs[i][1][0]);
+        maxX = Math.max(maxX, pathObjs[i][0][1], pathObjs[i][1][1]);
+        maxY = Math.max(maxY, pathObjs[i][0][0], pathObjs[i][1][0]);
+    }
+    // spots
+    for (let z = 0; z < pathObjs.length; z++) {
+        minX = Math.min(minX, spotObjs[z][1]);
+        minY = Math.min(minY, spotObjs[z][0]);
+        maxX = Math.max(maxX, spotObjs[z][1]);
+        maxY = Math.max(maxY, spotObjs[z][0]);
+    }
+    return [(maxY - minY)/2, (maxX-minX)/2]
+}
 
 export { 
     Mode,
@@ -343,5 +356,6 @@ export {
     getBoundingBox,
     getAdjustedSpotCenter,
     getSpotCenter,
-    getOriginalBoundingBox
+    getOriginalBoundingBox,
+    getEmptyBounds
 }

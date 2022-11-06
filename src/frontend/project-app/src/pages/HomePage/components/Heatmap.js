@@ -17,7 +17,8 @@ import {
     getBoundingBox,
     getAdjustedSpotCenter,
     getSpotCenter,
-    getOriginalBoundingBox
+    getOriginalBoundingBox,
+    getEmptyBounds
 } from "../utils/HeatmapUtils"
 import { set } from "date-fns";
 
@@ -730,7 +731,7 @@ const Heatmap = ({ mode }) => {
 
     return (
         <MapContainer 
-            center={center} 
+            center={center}
             zoom={1} 
             scrollWheelZoom
             style={{ height: (mode==='live')?'85vh':'100%', width: '100%' }}
