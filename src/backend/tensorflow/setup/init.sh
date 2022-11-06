@@ -14,6 +14,7 @@ python3 setup/object_detection/setup.py install
 python3 object_detection/builders/model_builder_tf2_test.py
 
 # Setup object_counting
+pip install cmake
 pip install -r setup/object_counting/requirements.txt
 
 # Setup models and config for transfer learning
