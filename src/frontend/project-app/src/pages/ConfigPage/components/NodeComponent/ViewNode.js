@@ -79,86 +79,74 @@ const ViewNode = () => {
 
 
     return (
-        <div className="modal" id="viewNode">
-        <div className="modal-box max-w-fit overflow-hidden">
+        <>
+            <input type="checkbox" id="viewNode" className="modal-toggle" />
+            
+            <div className="modal">
+            <div className="modal-box max-w-fit overflow-hidden">
 
-            {/* Close button */}
-            <a id="close-viewNode" href="#"/>
-            <a href="#" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</a>
+                {/* Close button */}
+                <label htmlFor="viewNode" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
 
-            {/* Title */}
-            <div className="form-control mb-4">
-                <h3 className="font-bold text-2xl">View Components</h3>
-            </div>
-
-            {/* Content */}
-            <div className="flex flex-col w-full lg:flex-row">
-                <div className="card shadow-xl h-[70vh] w-[80vw] overflow-scroll no-scrollbar">
-                <div className="card-body py-4">
-
-                {/* Path Collapse  */}
-                <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-                    <input type="checkbox" /> 
-                    <div className="collapse-title text-xl font-bold">
-                        Paths
-                    </div>
-                    <div className="collapse-content"> 
-                        {pathArray.map((pathObj) => {
-                            if (pathObj.hasOwnProperty("pathName")) {
-                                return (<ViewPath 
-                                        pathName={pathObj.pathName}
-                                        pathID={pathObj.pathID}
-                                        orientation = {pathObj.orientation}
-                                        id1 = {pathObj.id1}
-                                        label1 = {pathObj.label1}
-                                        direction1 = {pathObj.direction1}
-                                        id2 = {pathObj.id2}
-                                        label2 = {pathObj.label2}
-                                        direction2 = {pathObj.direction2}
-                                    />);
-                            }
-                        })}
-                    </div>
+                {/* Title */}
+                <div className="form-control mb-4">
+                    <h3 className="font-bold text-2xl">View Components</h3>
                 </div>
 
-                {/* Spot Collapse  */}
-                <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-                    <input type="checkbox" /> 
-                    <div className="collapse-title text-xl font-bold">
-                        Spots
+                {/* Content */}
+                <div className="flex flex-col w-full lg:flex-row">
+                    <div className="card shadow-xl h-[70vh] w-[80vw] overflow-scroll no-scrollbar">
+                    <div className="card-body py-4">
+
+                    {/* Path Collapse  */}
+                    <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+                        <input type="checkbox" /> 
+                        <div className="collapse-title text-xl font-bold">
+                            Paths
+                        </div>
+                        <div className="collapse-content"> 
+                            {pathArray.map((pathObj) => {
+                                if (pathObj.hasOwnProperty("pathName")) {
+                                    return (<ViewPath 
+                                            pathName={pathObj.pathName}
+                                            pathID={pathObj.pathID}
+                                            orientation = {pathObj.orientation}
+                                            id1 = {pathObj.id1}
+                                            label1 = {pathObj.label1}
+                                            direction1 = {pathObj.direction1}
+                                            id2 = {pathObj.id2}
+                                            label2 = {pathObj.label2}
+                                            direction2 = {pathObj.direction2}
+                                        />);
+                                }
+                            })}
+                        </div>
                     </div>
-                    <div className="collapse-content"> 
-                        {spotArray.map((spotObj) => {
-                            if (spotObj.hasOwnProperty("id")) {
-                                return (<ViewSpot 
-                                        id = {spotObj.id}
-                                        label = {spotObj.label}
-                                    />);
-                            }
-                        })}
+
+                    {/* Spot Collapse  */}
+                    <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+                        <input type="checkbox" /> 
+                        <div className="collapse-title text-xl font-bold">
+                            Spots
+                        </div>
+                        <div className="collapse-content"> 
+                            {spotArray.map((spotObj) => {
+                                if (spotObj.hasOwnProperty("id")) {
+                                    return (<ViewSpot 
+                                            id = {spotObj.id}
+                                            label = {spotObj.label}
+                                        />);
+                                }
+                            })}
+                        </div>
                     </div>
-                </div>
 
-
-
-
-                    {/* <div className="w-full">
-                        
                     </div>
-                    
-                    
-                    <button className="btn btn-primary" onClick={() => console.log(getPaths(nodes, edges))}></button>
-                    <div className="h-96 aspect-square bg-red-200" />
-                    <div className="h-96 aspect-square bg-green-200" />
-                    <div className="h-96 aspect-square bg-yellow-200" />
-                    <div className="h-96 aspect-square bg-base-content" />
-                    <p>Testing</p> */}
-
-                </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
+            </div>
+        </>
     );
 }
 

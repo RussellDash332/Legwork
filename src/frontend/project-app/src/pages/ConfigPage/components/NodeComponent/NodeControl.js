@@ -10,15 +10,15 @@ const NodeControl = () => {
     return (
         <div className="flex flex-row w-28 absolute bottom-4 right-4 justify-between z-10">
             <div>
-                <a href="#addNode" className="btn btn-circle btn-primary btn-md shadow-xl text-white">
+                <label htmlFor="addNode" className="btn btn-circle btn-primary btn-md shadow-xl text-white">
                     <IoIosAdd className="h-6 w-6"/>
-                </a>
+                </label>
             </div>
             
             <div>
-                <a href="#viewNode" className="btn btn-circle btn-primary btn-md shadow-xl text-white">
+                <label htmlFor="viewNode" className="btn btn-circle btn-primary btn-md shadow-xl text-white">
                     <IoIosApps className="h-6 w-6"/>
-                </a>
+                </label>
             </div>
 
 

@@ -41,9 +41,9 @@ const LayerControl = (props) => {
                     <span className="label-text font-bold ml-3">Floorplan</span>                   
                 </label>
 
-                <a href="#uploadFloorplan">
+                <label htmlFor="uploadFloorplan">
                     <IoIosCloudUpload className="btn btn-square btn-xs btn-ghost"/>  
-                </a>
+                </label>
                 
             </div>
             
