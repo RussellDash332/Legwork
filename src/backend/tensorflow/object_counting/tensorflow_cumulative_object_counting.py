@@ -159,11 +159,6 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
         cv2.putText(image_np, 'Status: ' + status, (10, 70), font,
                     0.8, (0, 0xFF, 0xFF), 2, cv2.FONT_HERSHEY_SIMPLEX)
 
-        if show:
-            cv2.imshow('cumulative_object_counting', image_np)
-            if cv2.waitKey(25) & 0xFF == ord('q'):
-                break
-
         ## write JSON file: counter[0] = left, counter[1] = right
         outputL = {"camera_id": camid}
         outputL["count"] = counter[0]
