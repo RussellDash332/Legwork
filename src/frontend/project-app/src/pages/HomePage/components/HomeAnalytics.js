@@ -18,7 +18,7 @@ const HomeAnalytics = () => {
     return (
         <div className="flex flex-col min-h-screen w-full h-screen">       
             {/* Tab bar */}
-            <div className="tabs bg-base-100">
+            <div className="tabs bg-base-100 z-10">
 
                 <a className={(tabToggle == 0) 
                     ? "tab tab-lg tab-lifted tab-active ml-auto text-content"
