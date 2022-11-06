@@ -12,7 +12,6 @@ export default function LineGraph() {
 
     // const {
     //     filteredData,
-    //     setFilteredData,
     //     paths,
     //     spots
     //     } = useContext(CameraDataContext);
@@ -22,50 +21,54 @@ export default function LineGraph() {
         "camera_id_1":{
             "left": 
                 {
-                    "2022": 7,
-                    "2023": 79
+                    "2022-03-09": 7,
+                    "2022-01-22": 79,
+                    "2022-02-12": 90
                 },
                 "right": 
                 {
-                    "2022": 7,
-                    "2023": 14
+                    "2022-01-22": 7,
+                    "2023-01-22": 14
                 }
         },
                 
         "camera_id_2":{
                 "left": 
                 {
-                    "2022": 6,
-                    "2023": 67
+                    "2022-07-27": 6,
+                    "2022-02-16": 67,
+                    "2022-10-07": 27
                 },
                 "right": 
                 {
-                    "2022": 5,
-                    "2023": 10
+                    "2022-03-17": 5,
+                    "2023-03-17": 10
                 }
         },
         "camera_id_3":{
                 "left": 
                 {
-                    "2022": 5,
-                    "2023": 10
+                    "2022-08-28": 5,
+                    "2022-01-29": 10,
+                    "2022-12-19": 10
                 },
                 "right": 
                 {
-                    "2022": 5,
-                    "2023": 10
+                    "2022-04-28": 5,
+                    "2023-04-28": 10
                 }
         },
         "camera_id_4":{
                 "left": 
                 {
-                    "2022": 23,
-                    "2023": 24
+                    "2022-03-09": 23,
+                    "2022-01-22": 24,
+                    "2022-02-12": 17
                 },
                 "right": 
                 {
-                    "2022": 23,
-                    "2023": 24
+                    "2022-01-22": 23,
+                    "2023-01-22": 24
                 }
         }
   };
@@ -178,8 +181,9 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
             let cameradata = filteredData[dataid[step]];
             // check if cam id is a spot
             if (spotids.includes(dataid[step])) {
+                let spotlabel = spots.filter(x => x.id == dataid[step])[0].label;
                 camdataused = Object.values(cameradata);
-                newdata[dataid[step]] = camdataused[0]
+                newdata[spotlabel] = camdataused[0];
                 // camdataused -> { 2022: 5, 2023: 10 } 
             }
             else {
@@ -208,7 +212,7 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
     
     // spots is id, paths is pathname
     // newdata = {
-    //     "id1": 
+    //     "spot1": 
     //     {
     //         "2022": 20,
     //         "2023": 40
@@ -220,7 +224,18 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
     //     }
     // }
 
+    const compareDate = (a,b) => {
+
+
+        let comparison = 0;
     
+        if (a.date > b.date) {
+            comparison = 1;
+        } else if (a.date < b.date) {
+            comparison = -1;
+        }
+        return comparison;
+    };
 
 
 
@@ -234,16 +249,34 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
             let lineid = lines[step];
             let x_axis = Object.keys(innerValues[step]);
             let y_axis = Object.values(innerValues[step]);
+            let flatdata = [];
+            for (let i = 0; i< x_axis.length; i++) {
+                const fdata = {
+                    date: x_axis[i],
+                    count: y_axis[i],
+                };
+                flatdata.push(fdata);
+            }
+            
+            let xdata = [];
+            let ydata =[];
+            const sortedData = flatdata.sort(compareDate);
+            for (let j = 0; j< sortedData.length; j++) {
+                xdata.push(sortedData[j].date);
+                ydata.push(sortedData[j].count);
+            }
+
             const trace = {
-                x: x_axis,
-                y: y_axis,
+                x: xdata,
+                y: ydata,
                 type: 'scatter',
                 mode: 'lines+markers',
                 name: lineid,
             };
             traces.push(trace);
-
+    
         };
+
 
         return traces;
 
@@ -258,7 +291,7 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
             <Plot
                 data = {generateTraces()}
                 layout={{
-                    autosize: true, height: "500", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date', categoryorder: 'category ascending'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
+                    autosize: true, height: "500", legend: {"orientation": "v", y:1}, title: 'Count vs Date', xaxis: {title: 'Date', type: 'category', categoryorder: 'category ascending'}, yaxis: {title: 'Count'}, 'modebar': {'orientation': 'v','bgcolor': 'rgba(0,0,0,0.5)'}
                 }}
                 
                 useResizeHandler
