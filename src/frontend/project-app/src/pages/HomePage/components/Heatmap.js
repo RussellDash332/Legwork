@@ -645,25 +645,58 @@ const Heatmap = ({ mode }) => {
     }, [floorplanImage]);
 
     // Get paths
-    let pathsWithCounts;
-    if (mode === Mode.Live) {
-        pathsWithCounts = populatePathObjsWithCountLive(paths, data);
-    } else { // Analytics
-        pathsWithCounts = populatePathObjsWithCountAnalytics(paths, filteredData, filterMode);
-    }
+    const [pathsWithCounts, setPathsWithCounts] = useState([]);
+    useEffect(() => {
+        if (mode === Mode.Live) {
+            setPathsWithCounts(populatePathObjsWithCountLive(paths, data));
+        } else { // Analytics
+            setPathsWithCounts(populatePathObjsWithCountAnalytics(paths, filteredData, filterMode));
+        }
+    }, [data, filteredData, paths])
+    
 
     // Get spots
-    let spotsWithCounts;
-    if (mode === Mode.Live) {
-        spotsWithCounts = populateSpotObjsWithCountLive(spots, data);
-    } else { // Analytics
-        spotsWithCounts = populateSpotObjsWithCountAnalytics(spots, filteredData, filterMode);
-    }
+    const [spotsWithCounts, setSpotsWithCounts] = useState([]);
+    useEffect(() => {
+        if (mode === Mode.Live) {
+            setSpotsWithCounts(populateSpotObjsWithCountLive(spots, data));
+        } else { // Analytics
+            setSpotsWithCounts(populateSpotObjsWithCountAnalytics(spots, filteredData, filterMode));
+        }
+    }, [data, filteredData, spots])
 
     // Set live count
     const liveCount = 
         (pathsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0)) +
         (spotsWithCounts.reduce((acc, currPathObj) => acc + currPathObj.count, 0));
+
+
+    useEffect(() => {
+        if (spotsWithCounts.length !== 0 || pathsWithCounts !== 0) {
+            if (floorplanImage && floorplanImage[0]) {
+                setCenter(
+                    getEmptyBounds(pathsWithCounts.map(x => {
+                        return getBoundingBox(x, scale, leafletHeight, floorplanImage[0].data_url)
+                     }), spotsWithCounts.map(x => {
+                         return getAdjustedSpotCenter(x, scale, leafletHeight, floorplanImage[0].data_url)
+     
+                     }))
+                )
+            } else {
+                setCenter(
+                    getEmptyBounds(
+                        pathsWithCounts.map(x => {
+                            return getOriginalBoundingBox(x, scale)
+                        }),
+                        spotsWithCounts.map(x => { 
+                            return getSpotCenter(x, scale)
+                        })
+                    )
+                )
+            }
+            
+        }
+    }, [spotsWithCounts, pathsWithCounts])
 
     const renderPaths = () => (
         pathsWithCounts.map((data) => (
