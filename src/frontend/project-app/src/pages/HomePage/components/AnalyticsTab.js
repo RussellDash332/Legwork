@@ -11,27 +11,17 @@ const AnalyticsTab = () => {
 
     return (
         <NewFilterSideBar className="no-scrollbar">
-        <div className="flex flex-col justify-evenly items-center h-3/4 w-full bg-base-200 no-scrollbar">
-
-            <AnalyticsHeatmap />
-            {/* <AnalyticsLineGraph /> */}
+        <div className="flex flex-col overflow-hidden h-fit w-full bg-base-200">
             <br></br>
-
-            <AnalyticsLineGraph />
-            <br></br>
-
-        {/* <div className="drawer drawer-end">
-                <input id="filter-drawer" type="checkbox" className="drawer-toggle transition" />
-                <div className="drawer-content w-full">
-                    <label htmlFor="filter-drawer" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl relative top-10 left-100 text-white">
-                        <FiFilter />
-                    </label>
-                </div>
-
-                <FilterSidebar />
-            </div> */} 
-            
-
+            <div className="pb-6 flex flex-col justify-evenly items-center overflow-scroll no-scrollbar h-full w-full">
+                
+                <AnalyticsHeatmap />
+                {/* <AnalyticsLineGraph /> */}
+                <br></br>
+                <AnalyticsLineGraph />
+                
+            </div>
+        
         </div>
         </NewFilterSideBar>
     );

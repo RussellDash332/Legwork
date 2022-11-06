@@ -5,11 +5,9 @@ import LineGraph from "./LineGraph"
 
 const AnalyticsLineGraph = () => {
     return (
-        <div className="card w-10/12 min-h-fit shadow-xl bg-base-200">
+        <div className="rounded-md overflow-hidden w-10/12 h-[500px] shadow-xl bg-base-200">
             <div>
                 <LineGraph />
-                
-                
             </div>
         </div>
     );
