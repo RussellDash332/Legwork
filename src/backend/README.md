@@ -148,11 +148,11 @@ After training the model, we can run the object counter to produce the desired o
     ```
     docker build -t legwork .
     ```
-2. Run a container from this image by specifying the parameters.
+2. Run a container from this image by specifying the parameters (and name and ports).
     ```
-    docker run -p 9000:9000 -e video=<video_link> -e camid=<cam_id> -d <image-name>
+    docker run --name <container_name> -p <host_port>:<container_port> -e video=<video_link> -e camid=<cam_id> -d <image-name>
     ```
     For example,
     ```
-    docker run -p 9000:9000 -e video=rtsp://esp32cam-rtsp.local:554/mjpeg/1 -e camid=1 -d legwork
+    docker run --name legwork-test -p 9000:9000 -e video=rtsp://esp32cam-rtsp.local:554/mjpeg/1 -e camid=1 -d legwork
     ```
