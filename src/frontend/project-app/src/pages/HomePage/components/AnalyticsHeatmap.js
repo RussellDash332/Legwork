@@ -62,7 +62,7 @@ const AnalyticsHeatmap = () => {
     }, []);
 
     return (
-        <div classname = "card w-10/12 h-full shadow-xl bg-base-200">
+        <div className = "card w-10/12 h-full shadow-xl bg-base-200 z-10">
         <Heatmap mode="analytics" />
         </div>
     );
