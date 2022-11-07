@@ -1,15 +1,20 @@
 {
-  "name": "project-app",
+  "name": "legwork-app",
   "version": "0.1.0",
   "private": true,
+  "author": "04-priv-front",
+  "description": "LegWork App",
+  "homepage": "./",
   "main": "public/main.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "concurrently": "^7.5.0",
+    "cross-env": "^7.0.3",
     "daisyui": "^2.31.0",
     "date-fns": "^2.29.3",
-    "electron": "^21.1.1",
+    "electronmon": "^2.0.2",
     "firebase": "^9.12.1",
     "leaflet": "^1.9.2",
     "papaparse": "^5.3.2",
@@ -27,14 +32,36 @@
     "react-time-range-slider": "^1.1.2",
     "reactflow": "^11.1.1",
     "simpleheat": "^0.4.0",
+    "wait-on": "^6.0.1",
     "web-vitals": "^2.1.4"
+  },
+  "build": {
+    "appId": "com.electron.legworkapp",
+    "productName": "LegWork App",
+    "files": ["build/**/*", "node_modules/**/*"],
+    "directories": {
+      "buildResources": "public"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "deb"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "electron ."
+    "electron-dev": "electron .",
+    "electron:start": "concurrently -k \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electronmon .\"",
+    "electron:package:mac": "yarn build && electron-builder -m -c.extraMetadata.main=build/main.js",
+    "electron:package:win": "yarn build && electron-builder -w -c.extraMetadata.main=build/main.js",
+    "electron:package:linux": "yarn build && electron-builder -l -c.extraMetadata.main=build/mian.js"
   },
   "eslintConfig": {
     "extends": [
@@ -44,17 +71,15 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 1 electron version"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 electron version"
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "electron": "^21.1.1",
+    "electron-builder": "^23.6.0"
   }
 }
