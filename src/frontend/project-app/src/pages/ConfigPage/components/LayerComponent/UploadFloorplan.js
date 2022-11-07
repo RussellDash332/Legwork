@@ -33,10 +33,19 @@ const UploadFloorplan = () => {
     }
 
     const onUpload = (imageList, addUpdateIndex) => {
-        console.log(imageList);
-        console.log(imageList[0].file);
+        console.log("imgg 1",imageList);
+        console.log("imgg 2",imageList[0].file);
         setUploadImage(imageList);
     }
+
+    const removePreview = () => {
+        setUploadImage([]);
+    }
+
+    useEffect(() => {
+        console.log("imgg 3", uploadImage)
+        console.log("imgg 2", uploadImage.length !== 0)
+    }, [uploadImage])
 
     return (
         <>
@@ -89,24 +98,21 @@ const UploadFloorplan = () => {
 
                                 {/* Preview */}
                                 <div className="flex">
-                                    <div className="bg-base-300 aspect-[150/65] h-40 rounded-md flex justify-center items-center"
-                                        // {...dragProps}
-                                    >
+                                    <div className="bg-base-300 aspect-[150/65] h-40 rounded-md flex justify-center items-center">
                                         {(uploadImage.length === 0)
                                         ? <p>(No Image Uploaded)</p>
                                         : <div>
                                             <img src={uploadImage[0].data_url} className="object-contain aspect-[150/65] h-36" />
                                         </div>}
-                                        
-                                        {/* {(isDragging)
-                                            && <div className="aspect-[150/65] h-[120px] rounded-md absolute border-dashed border-2 border-base-100 flex justify-center" {...dragProps}>
-                                                <BiImageAdd className="self-center w-10 h-10"/>
-                                            </div>} */}
                                     </div>
 
                                     {(uploadImage.length !== 0) &&
-                                    <div className="flex flex-col justify-between">
-                                        <button className="btn btn-sm btn-circle btn-ghost" disabled={submitToggle} onClick={() => onImageRemove(0)}>✕</button>
+                                    <div className="flex flex-col justify-end">
+                                        {/* <button className="btn btn-sm btn-circle btn-ghost"
+                                            disabled={submitToggle}
+                                            onClick={() => {onImageRemove(0)}}>
+                                            ✕
+                                        </button> */}
                                         <p className="text-xs text-ellipsis ml-2">({uploadImage[0].file.size.toLocaleString()} kb)</p>
                                     </div>}
                                     
