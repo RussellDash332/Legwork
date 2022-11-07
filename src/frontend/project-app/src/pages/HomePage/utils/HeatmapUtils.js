@@ -316,17 +316,21 @@ const getOriginalBoundingBox = (pathObj, scale) => {
 }
 
 const getEmptyBounds = (pathObjs, spotObjs) => {
-    console.log("HERE", pathObjs, spotObjs);
+    let minX;
+    let maxX;
+    let minY;
+    let maxY;
+
     if (pathObjs.length !== 0) {
-        let minX = pathObjs[0][0][1];
-        let maxX = pathObjs[0][0][1];
-        let minY = pathObjs[0][0][0];
-        let maxY = pathObjs[0][0][0];
+        minX = pathObjs[0][0][1];
+        maxX = pathObjs[0][0][1];
+        minY = pathObjs[0][0][0];
+        maxY = pathObjs[0][0][0];
     } else {
-        let minX = spotObjs[0][1];
-        let maxX = spotObjs[0][1];
-        let minY = spotObjs[0][0];
-        let maxY = spotObjs[0][0];
+        minX = spotObjs[0][1];
+        maxX = spotObjs[0][1];
+        minY = spotObjs[0][0];
+        maxY = spotObjs[0][0];
     }
     // paths
     for (let i = 1; i < pathObjs.length; i++) {
@@ -342,7 +346,8 @@ const getEmptyBounds = (pathObjs, spotObjs) => {
         maxX = Math.max(maxX, spotObjs[z][1]);
         maxY = Math.max(maxY, spotObjs[z][0]);
     }
-    return [(maxY - minY)/2, (maxX-minX)/2]
+    console.log("HERE", [(maxY + minY)/2, (maxX + minX)/2]);
+    return [(maxY + minY)/2, (maxX + minX)/2]
 }
 
 export { 

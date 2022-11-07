@@ -19,8 +19,9 @@ import {
     getSpotCenter,
     getOriginalBoundingBox,
     getEmptyBounds
-} from "../utils/HeatmapUtils"
+} from "../utils/HeatmapUtils";
 import { set } from "date-fns";
+import { useMapEvent } from 'react-leaflet/hooks'
 
 const samplePathObjs = [
 {
@@ -603,7 +604,7 @@ const Heatmap = ({ mode }) => {
     const attribution = "&copy; Developed by LegWork Inc." ;
     const [imgSrc, setImgSrc] = useState(Floorplan);
     const [leafletHeight, setLeafletHeight] = useState((602/1033) * 800);
-    const [bounds, setBounds] = useState([[0, 0], [(602/1033) * 800, 800]]);
+    const [bounds, setBounds] = useState([[0, 0], [400, 800]]);
     const [center, setCenter] = useState([((602/1033) * 800) / 2, 800 / 2]);
     const mapRef = useRef();
     const floorplanLayerRef = useRef();
@@ -615,7 +616,7 @@ const Heatmap = ({ mode }) => {
     // console.log("center", center);
     console.log("String filtered data", filteredData);
 
-    const loadImage = (setLeafletHeight, setBounds, setCenter, setImgSrc, src) => {
+    const loadImage = (setLeafletHeight, setBounds, setImgSrc, src) => {
         const img = new Image();
         img.src = src;
 
@@ -623,26 +624,27 @@ const Heatmap = ({ mode }) => {
             const modifier = 400;
             const height = (img.naturalHeight/img.naturalWidth) * modifier
 
-            const bounds = [[0, 0], [height, modifier]];
+            const newbounds = [[0, 0], [height, modifier]];
             const center = [height / 2, modifier / 2];
             setImgSrc(src);
             setLeafletHeight(height);
-            setBounds(bounds);
-            setCenter(center);
+            setBounds(newbounds);
 
             const map = mapRef.current;
             const floorplanLayer = floorplanLayerRef.current;
             const gridlinesLayer = gridlinesLayerRef.current;
 
-            const floorplanImage = L.imageOverlay(src, bounds, { attribution }).addTo(floorplanLayer);
-            const gridImage = L.imageOverlay(Gridimage, bounds, { attribution }).addTo(gridlinesLayer);
+            const floorplanImage = L.imageOverlay(src, newbounds, { attribution }).addTo(floorplanLayer);
+            const gridImage = L.imageOverlay(Gridimage, newbounds, { attribution }).addTo(gridlinesLayer);
             map.fitBounds(floorplanImage.getBounds());
         }
     }
 
     useEffect(() => {
-        if (floorplanImage && floorplanImage[0])
-        loadImage(setLeafletHeight, setBounds, setCenter, setImgSrc, floorplanImage[0].data_url);
+        if (floorplanImage && floorplanImage[0]) {
+            loadImage(setLeafletHeight, setBounds, setImgSrc, floorplanImage[0].data_url);
+        }
+
     }, [floorplanImage]);
 
     // Get paths
@@ -673,17 +675,23 @@ const Heatmap = ({ mode }) => {
 
 
     useEffect(() => {
-        if (spotsWithCounts.length !== 0 || pathsWithCounts !== 0) {
+        if (spotsWithCounts.length !== 0 || pathsWithCounts.length !== 0) {
+
+
             if (floorplanImage && floorplanImage[0]) {
+                console.log("HERE 11")
                 setCenter(
-                    getEmptyBounds(pathsWithCounts.map(x => {
-                        return getBoundingBox(x, scale, leafletHeight, floorplanImage[0].data_url)
-                     }), spotsWithCounts.map(x => {
-                         return getAdjustedSpotCenter(x, scale, leafletHeight, floorplanImage[0].data_url)
-     
-                     }))
+                    getEmptyBounds(
+                        pathsWithCounts.map(x => {
+                            return getBoundingBox(x, scale, leafletHeight, floorplanImage[0].data_url)
+                        }),
+                        spotsWithCounts.map(x => {
+                            return getAdjustedSpotCenter(x, scale, leafletHeight, floorplanImage[0].data_url)
+                         })
+                    )
                 )
             } else {
+                console.log("HERE 21")
                 setCenter(
                     getEmptyBounds(
                         pathsWithCounts.map(x => {
@@ -695,9 +703,44 @@ const Heatmap = ({ mode }) => {
                     )
                 )
             }
+
             
         }
-    }, [spotsWithCounts, pathsWithCounts])
+    }, [spotsWithCounts])
+
+    useEffect(() => {
+        if (spotsWithCounts.length !== 0 || pathsWithCounts.length !== 0) {
+
+
+            if (floorplanImage && floorplanImage[0]) {
+                console.log("HERE 21")
+                setCenter(
+                    getEmptyBounds(
+                        pathsWithCounts.map(x => {
+                            return getBoundingBox(x, scale, leafletHeight, floorplanImage[0].data_url)
+                        }),
+                        spotsWithCounts.map(x => {
+                            return getAdjustedSpotCenter(x, scale, leafletHeight, floorplanImage[0].data_url)
+                         })
+                    )
+                )
+            } else {
+                console.log("HERE 22")
+                setCenter(
+                    getEmptyBounds(
+                        pathsWithCounts.map(x => {
+                            return getOriginalBoundingBox(x, scale)
+                        }),
+                        spotsWithCounts.map(x => { 
+                            return getSpotCenter(x, scale)
+                        })
+                    )
+                )
+            }
+
+            
+        }
+    }, [pathsWithCounts])
 
     const renderPaths = () => (
         pathsWithCounts.map((data) => (
@@ -761,6 +804,7 @@ const Heatmap = ({ mode }) => {
             </LayerGroup>
         </LayersControl.BaseLayer>
     );
+    
 
     return (
         <MapContainer 
@@ -771,15 +815,7 @@ const Heatmap = ({ mode }) => {
             crs={L.CRS.Simple}
             ref={mapRef}
         >
-            {/* <HeatmapLayer
-                points={dataPoints}
-                fitBoundsOnLoad
-                fitBoundsOnUpdate
-                radius={20}
-                latitudeExtractor={(m) => m.coordinates[0]}
-                longitudeExtractor={(m) => m.coordinates[1]}
-                intensityExtractor={(m) => m.intensity}
-            /> */}
+            <ChangeView center={center}/>
             <LayersControl position="topright">
                 {renderFloorPlan()}
                 {renderGridlines()}
@@ -787,5 +823,14 @@ const Heatmap = ({ mode }) => {
         </MapContainer>
     );
 };
+
+const ChangeView = ({center}) => {
+    const map = useMapEvent({
+
+        zoom: () => {
+            map.flyTo(center)
+        }
+    })
+}
 
 export default Heatmap;
