@@ -1,36 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { logoutAccount } from "../../api/firebase-auth";
+import React, { useContext, useEffect, useState } from "react";
+import { CameraDataContextProvider } from "./components/CameraDataContext";
+import { subscribeUserAvailability } from "../../api/firebase-db";
+import { UserContext } from "../ProtectedRoute";
 
 /* Components */
-import HomeNew from "./components/HomeNew";
-import HomeAnalytics from "./components/HomeAnalytics";
+import HomeNew from './components/HomeNew';
+import HomeAnalytics from './components/HomeAnalytics';
+import HomeSidebar from "./components/HomeSidebar";
+
 
 const Home = () => {
-    /* Navigation */
-    const navigate = useNavigate();
-    const [logoutToggle, setLogoutToggle] = useState(false);
+    const { user } = useContext(UserContext);
+    const [availability, setAvailability] = useState(false);
 
     useEffect(() => {
-        if (logoutToggle) {
-            logoutAccount(() => {
-                setLogoutToggle(false);
-                navigate("/login");
-            },
-            () => {
-                console.log("failed to logout");
-            })
-        }
-    }, [logoutToggle])
+        subscribeUserAvailability(user.uid, (availability) => {
+            // console.log("home availaibility", availability);
+            setAvailability(availability);
+        })
 
-    const clickLogout = () => {
-        setLogoutToggle(true);
-    }
+    }, [user])
 
     return (
-        <div>
-            <HomeNew />
-            <HomeAnalytics />
+        <div className="flex w-screen min-h-screen pl-16">
+            {/* nav bar */}
+            <HomeSidebar />
+
+            {/* changing screen */}
+            <div className="w-full h-screen flex flex-col">
+                {(!availability) ? <HomeNew />
+                :<CameraDataContextProvider>
+                    <HomeAnalytics />
+                </CameraDataContextProvider>
+                }
+            </div>
+            
         </div>
     );
 }
