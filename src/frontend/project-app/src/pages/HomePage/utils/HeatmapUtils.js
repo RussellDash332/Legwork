@@ -340,13 +340,13 @@ const getEmptyBounds = (pathObjs, spotObjs) => {
         maxY = Math.max(maxY, pathObjs[i][0][0], pathObjs[i][1][0]);
     }
     // spots
-    for (let z = 0; z < pathObjs.length; z++) {
+    for (let z = 0; z < spotObjs.length; z++) {
         minX = Math.min(minX, spotObjs[z][1]);
         minY = Math.min(minY, spotObjs[z][0]);
         maxX = Math.max(maxX, spotObjs[z][1]);
         maxY = Math.max(maxY, spotObjs[z][0]);
     }
-    console.log("HERE", [(maxY + minY)/2, (maxX + minX)/2]);
+    // console.log("HERE", [(maxY + minY)/2, (maxX + minX)/2]);
     return [(maxY + minY)/2, (maxX + minX)/2]
 }
 

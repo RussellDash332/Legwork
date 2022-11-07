@@ -679,7 +679,7 @@ const Heatmap = ({ mode }) => {
 
 
             if (floorplanImage && floorplanImage[0]) {
-                console.log("HERE 11")
+                // console.log("HERE 11")
                 setCenter(
                     getEmptyBounds(
                         pathsWithCounts.map(x => {
@@ -691,7 +691,7 @@ const Heatmap = ({ mode }) => {
                     )
                 )
             } else {
-                console.log("HERE 21")
+                // console.log("HERE 21")
                 setCenter(
                     getEmptyBounds(
                         pathsWithCounts.map(x => {
@@ -713,7 +713,7 @@ const Heatmap = ({ mode }) => {
 
 
             if (floorplanImage && floorplanImage[0]) {
-                console.log("HERE 21")
+                // console.log("HERE 21")
                 setCenter(
                     getEmptyBounds(
                         pathsWithCounts.map(x => {
@@ -725,7 +725,7 @@ const Heatmap = ({ mode }) => {
                     )
                 )
             } else {
-                console.log("HERE 22")
+                // console.log("HERE 22")
                 setCenter(
                     getEmptyBounds(
                         pathsWithCounts.map(x => {
