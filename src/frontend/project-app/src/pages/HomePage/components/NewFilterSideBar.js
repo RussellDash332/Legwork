@@ -90,16 +90,25 @@ const NewFilterSideBar = ({children}) => {
 
     },[]);
 
-    
+
+
+    const [submitFilterToggle, setSubmitFilterToggle] = useState(false);
+
+    const clickSubmitFilter = () => {
+        setSubmitFilterToggle(true);
+    }
 
     useEffect(() => {
-        if(Object.keys(data).length!=0){
-            const pdata = processData(data)
-            console.log("processdata",pdata)
-            setFilteredData(pdata)
-        }   
-    }, [timeRange, dateRange, filterGroupToggle]);
-
+        if (submitFilterToggle) {
+            if(Object.keys(data).length!=0){
+                const pdata = processData(data)
+                console.log("processdata",pdata)
+                setFilteredData(pdata)
+                setSubmitFilterToggle(false);
+                document.getElementById("close-filter").click();
+            } 
+        }
+    }, [submitFilterToggle])
 
 
     /* Functions */
@@ -270,7 +279,7 @@ const NewFilterSideBar = ({children}) => {
             <div className="drawer-content no-scrollbar">
                 {/* <!-- Page content here --> */}
                 {children}
-                <label htmlFor="filter-drawer" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-10 right-10 text-white">
+                <label id="close-filter" htmlFor="filter-drawer" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-10 right-10 text-white">
                     <FiFilter />
                 </label>
             </div> 
@@ -353,6 +362,15 @@ const NewFilterSideBar = ({children}) => {
                         <input type="radio" name="options" data-title="day" className="btn" onClick={() => updateFilterToggle("year_month_day")}/>
                     </div>
 
+                    <br/>
+                    <br/>
+
+                    <div className="w-full flex justify-center">
+                        <label className="btn btn-primary" onClick={clickSubmitFilter}>
+                            Filter!
+                        </label>
+                    </div>
+                    
                 </div>
             </div>
         </div>
