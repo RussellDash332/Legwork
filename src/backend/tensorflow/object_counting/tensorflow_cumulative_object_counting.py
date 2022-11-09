@@ -126,11 +126,11 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                     direction = centroid[0] - np.mean(x)
 
                     if centroid[0] > roi_position*width and direction > 0 and np.mean(x) < args.roi_position*width:
-                        counter[1] += 1
+                        counter = [0,1]
                         to.counted = True
                         got_change = True
                     elif centroid[0] < roi_position*width and direction < 0 and np.mean(x) > args.roi_position*width:
-                        counter[0] += 1
+                        counter = [1,0]
                         to.counted = True
                         got_change = True
 
