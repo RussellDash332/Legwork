@@ -1,5 +1,5 @@
 {
-  "name": "legwork-app",
+  "name": "project-app",
   "version": "0.1.0",
   "private": true,
   "author": "04-priv-front",
@@ -36,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "build": {
-    "appId": "com.electron.legworkapp",
+    "appId": "com.electron.legwork",
     "productName": "LegWork App",
     "files": ["build/**/*", "node_modules/**/*"],
     "directories": {
@@ -61,7 +61,7 @@
     "electron:start": "concurrently -k \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electronmon .\"",
     "electron:package:mac": "yarn build && electron-builder -m -c.extraMetadata.main=build/main.js",
     "electron:package:win": "yarn build && electron-builder -w -c.extraMetadata.main=build/main.js",
-    "electron:package:linux": "yarn build && electron-builder -l -c.extraMetadata.main=build/mian.js"
+    "electron:package:linux": "yarn build && electron-builder -l -c.extraMetadata.main=build/main.js"
   },
   "eslintConfig": {
     "extends": [
