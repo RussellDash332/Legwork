@@ -175,8 +175,8 @@ const Register = () => {
                 {/* Terms & Policy Text */}
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">By proceeding and tapping on Create Account, you agree to LegWorks's <a  href="#termsOfService" className="label-text link">
-                            Terms of Service </a> and <a href="#privacyPolicy" className="label-text link"> Privacy Policy</a>.
+                        <span className="label-text">By proceeding and tapping on Create Account, you agree to LegWorks's <label  htmlFor="termsOfService" className="label-text link">
+                            Terms of Service </label> and <label htmlFor="privacyPolicy" className="label-text link"> Privacy Policy</label>.
                         </span>
                     </label>
                 </div>
