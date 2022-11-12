@@ -62,7 +62,7 @@ const HomeSidebar = () => {
             <div className="sidebar-icon group" onClick={clickConfigure}>
                 <IoMdSettings className="h-6 w-6" />
                 <span className="sidebar-tooltip group-hover:scale-100">
-                    Configure
+                    Configure Project
                 </span>
             </div>
 
