@@ -11,6 +11,10 @@ const UploadFloorplan = () => {
     const [submitToggle, setSubmitToggle] = useState(false);
 
     useEffect(() => {
+        setUploadImage([]);
+    }, [])
+
+    useEffect(() => {
         if (submitToggle) {
             if (uploadImage.length !== 0) {
                 storeFloorplanImage(user.uid,
