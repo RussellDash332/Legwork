@@ -25,7 +25,7 @@ const ViewSpot = ({id, label}) => {
         <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 rounded-box my-2">
             <input type="checkbox" onChange={collapseContainer} /> 
             <div className="collapse-title text-base font-medium">
-                {id}
+                {label}
             </div>
             <div className="collapse-content"> 
                 {/* Content */}
