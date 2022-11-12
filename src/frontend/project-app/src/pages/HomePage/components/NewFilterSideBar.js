@@ -10,6 +10,33 @@ import 'react-date-range/dist/theme/default.css';
 
 const NewFilterSideBar = ({children}) => {
 
+    useEffect(() => {
+        // set current date on component load
+        document.addEventListener("keydown", hideOnEscape, true)
+        document.addEventListener("click", hideOnClickOutside, true)
+    },[])
+
+    useEffect(() => {
+        if(Object.keys(data).length!==0){
+            setRange([{
+                    startDate: findSmallestDate(data),
+                    endDate: new Date(),
+                    key: 'selection'
+                }])
+        }   
+    },[]);
+
+    useEffect(() => {
+        if (submitFilterToggle) {
+            if(Object.keys(data).length!=0){
+                const pdata = processData(data)
+                setFilteredData(pdata)
+                setSubmitFilterToggle(false);
+                document.getElementById("close-filter").click();
+            } 
+        }
+    }, [submitFilterToggle])
+
     const {
         data,
         filteredData,
@@ -37,7 +64,6 @@ const NewFilterSideBar = ({children}) => {
     const refOne = useRef(null);
 
     const hideOnEscape = (e) => {
-        console.log(e.key)
         if( e.key === "Escape"){
             setOpen(false)
         }
@@ -55,16 +81,6 @@ const NewFilterSideBar = ({children}) => {
         setFilterGroupToggle(value);
     };
 
-    useEffect(() => {
-        // set current date on component load
-        
-        document.addEventListener("keydown", hideOnEscape, true)
-        document.addEventListener("click", hideOnClickOutside, true)
-    },[]);
-
-
-    //-----------------------
-
     const [dateRange, setRange] = useState([
         {
             startDate: new Date(),
@@ -72,25 +88,11 @@ const NewFilterSideBar = ({children}) => {
             key: 'selection'
         }
     ]);
+
     const [timeRange, setTimeRange] = useState({
         start: "00:00",
         end: "23:59"
     });
-    
-
-    useEffect(() => {
-        if(Object.keys(data).length!=0){
-            setRange([{
-                    startDate: findSmallestDate(data),
-                    // startDate: new Date(),
-                    endDate: new Date(),
-                    key: 'selection'
-                }])
-        }   
-
-    },[]);
-
-
 
     const [submitFilterToggle, setSubmitFilterToggle] = useState(false);
 
@@ -98,70 +100,18 @@ const NewFilterSideBar = ({children}) => {
         setSubmitFilterToggle(true);
     }
 
-    useEffect(() => {
-        if (submitFilterToggle) {
-            if(Object.keys(data).length!=0){
-                const pdata = processData(data)
-                console.log("processdata",pdata)
-                setFilteredData(pdata)
-                setSubmitFilterToggle(false);
-                document.getElementById("close-filter").click();
-            } 
-        }
-    }, [submitFilterToggle])
-
-
-    /* Functions */
-    // const findSmallestDate = (inputData) => {
-    //     let smallestTimeStamp = Infinity;
-
-    //     //obj.keys to get all keys in yyyymmdd format which is an array 
-    //     // .map(x -> ) apply strtodat function to all elements, array function to find the min date, then output smallest date
-
-    //     //CHANGE THIS
-    //     Object.values(inputData.cameraLog).forEach(obj => {
-            
-    //         if(obj.timestamp < smallestTimeStamp){
-    //             smallestTimeStamp = obj.timestamp
-    //             // console.log(smallestTimeStamp)
-    //         }
-
-    //     })
-    //     console.log(new Date(smallestTimeStamp*1000))
-    //     return new Date(smallestTimeStamp*1000);
-    // };
-
-    // const formatTimestamp = (dataPoint) => {
-    //     const timestamp = dataPoint['timestamp'] 
-    //     const date = new Date(timestamp) //Tue Jan 20 1970 14:22:45 GMT+0730 (Singapore Standard Time)
-        
-    //     dataPoint['startDate'] = dateRange[0].startDate
-    //     dataPoint['endDate'] = dateRange[0].endDate
-    //     dataPoint['time'] =  date.getHours() + ":" + date.getMinutes()
-    //     dataPoint['year'] = new Date(timestamp*1000).getFullYear()
-    //     dataPoint['month_year'] = String(new Date(timestamp*1000).getMonth()) + "/" + String(new Date(timestamp*1000).getFullYear())
-    //     dataPoint['day_month_year'] = String(new Date(timestamp*1000).getDay()) + "/" + String(new Date(timestamp*1000).getMonth()) + "/" + String(new Date(timestamp*1000).getFullYear())
-
-    //     return dataPoint;
-    // };
-
     const findSmallestDate = (data) => {
         const flattened_data = flatten_data(data, "smallestDate")
         let currentDate = new Date();
 
         for (const entry of flattened_data) {
             const dateStr = entry['year_month_day']
-            // const date = new Date(dateStr.substring(0, 4) + '-' + dateStr.substring(4, 6) + '-' + dateStr.substring(6, 8));
-            
             const date = new Date(dateStr.substring(0, 4) + '-' + dateStr.substring(4, 6) + '-' + dateStr.substring(6, 8) + " 00:00");
-
-
 
             if (date < currentDate) {
                 currentDate = date;
             }
         }
-        // console.log("currentdater", currentDate)
         return currentDate;
     }
 
@@ -174,8 +124,7 @@ const NewFilterSideBar = ({children}) => {
                 flattened_data.push(newEntry);
             }
         }
-
-        return flattened_data
+        return flattened_data;
     }
 
     const format_data = (data) => {
@@ -192,8 +141,7 @@ const NewFilterSideBar = ({children}) => {
             entry['time'] =  timestamp.getHours() + ":" + timestamp.getMinutes()
             new_data.push(entry)
         }
-
-        return new_data
+        return new_data;
     }
 
     const aggregateByCameraId = (prev, current, index) => {
@@ -240,36 +188,22 @@ const NewFilterSideBar = ({children}) => {
         const tempEndDate = new Date(endDate)
         const tempCalendarDate = new Date(calendarDate)
 
-        // console.log("startDate" , startDate)
-        // console.log(tempStartDate, tempEndDate, tempCalendarDate);
-        // console.log(tempStartDate <= tempCalendarDate, tempCalendarDate <= tempEndDate, stringToTime(timeRange.start) <= stringToTime(time), stringToTime(time) <= stringToTime(timeRange.end))
-    
         return tempStartDate <= tempCalendarDate && tempCalendarDate <= tempEndDate && stringToTime(timeRange.start) <= stringToTime(time) && stringToTime(time) <= stringToTime(timeRange.end);
     };
 
     const processData = (data) => {
-
-        //187-198 need to edit
-        // flatten data into entries
+        // 1. processing of data for easier filtering
         const flattened_data = flatten_data(data, "processdata");
-        // console.log("flat data", flattened_data)
-        const formatted_data = format_data(flattened_data);
-        // console.log("formatted data", formatted_data)
-
-        const filtered_data = formatted_data.filter(checkValidRange);
-        // console.log("rangedata", filtered_data)
-
-        // check if timestamp is within the range
-        // const flattened_data3 = flattened_data2.filter(checkValidRange)
-        // console.log("validrange data")
-        // console.log(flattened_data3)
         
-        // console.log("checkvalidrange", checkValidRange(flattened_data2[0]))
+        // 2. formatting the dates
+        const formatted_data = format_data(flattened_data);
+
+        // 3. check if timestamp is within the range
+        const filtered_data = formatted_data.filter(checkValidRange);
 
         // 4. aggregate by camera_id, year
-        const aggregated_data = filtered_data.reduce(aggregateByCameraId, {})
-        
-        // console.log("aggre data" ,aggregated_data)
+        const aggregated_data = filtered_data.reduce(aggregateByCameraId, {});
+
         return aggregated_data;
     };
 
@@ -277,7 +211,6 @@ const NewFilterSideBar = ({children}) => {
         <div className="drawer drawer-end no-scrollbar h-full w-full">
             <input id="filter-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content no-scrollbar">
-                {/* <!-- Page content here --> */}
                 {children}
                 <label id="close-filter" htmlFor="filter-drawer" className="drawer-button btn btn-circle btn-primary btn-md shadow-xl absolute bottom-10 right-10 text-white">
                     <FiFilter />
@@ -310,8 +243,6 @@ const NewFilterSideBar = ({children}) => {
                             <DateRange
                                 onChange = {item => {
                                     setRange(prevState => [item.selection]);
-                                    console.log(item.selection)
-
                                 }}
                                 editableDateInputs = {true}
                                 moveRangeOnFirstSelection = {false}

@@ -12,11 +12,6 @@ input.inputBox {
     display: inline-block;
     padding: 5px 20px;
     background-color: hsl(var(--b2));
-    /* position: relative;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: var(--rounded-box, 1rem); */
-
   }
   
   .calendarElement {
