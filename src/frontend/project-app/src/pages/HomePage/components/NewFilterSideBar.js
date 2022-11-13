@@ -10,33 +10,6 @@ import 'react-date-range/dist/theme/default.css';
 
 const NewFilterSideBar = ({children}) => {
 
-    useEffect(() => {
-        // set current date on component load
-        document.addEventListener("keydown", hideOnEscape, true)
-        document.addEventListener("click", hideOnClickOutside, true)
-    },[])
-
-    useEffect(() => {
-        if(Object.keys(data).length!==0){
-            setRange([{
-                    startDate: findSmallestDate(data),
-                    endDate: new Date(),
-                    key: 'selection'
-                }])
-        }   
-    },[]);
-
-    useEffect(() => {
-        if (submitFilterToggle) {
-            if(Object.keys(data).length!=0){
-                const pdata = processData(data)
-                setFilteredData(pdata)
-                setSubmitFilterToggle(false);
-                document.getElementById("close-filter").click();
-            } 
-        }
-    }, [submitFilterToggle])
-
     const {
         data,
         filteredData,
@@ -206,6 +179,33 @@ const NewFilterSideBar = ({children}) => {
 
         return aggregated_data;
     };
+
+    useEffect(() => {
+        // set current date on component load
+        document.addEventListener("keydown", hideOnEscape, true)
+        document.addEventListener("click", hideOnClickOutside, true)
+    },[])
+
+    useEffect(() => {
+        if(Object.keys(data).length!==0){
+            setRange([{
+                    startDate: findSmallestDate(data),
+                    endDate: new Date(),
+                    key: 'selection'
+                }])
+        }   
+    },[]);
+
+    useEffect(() => {
+        if (submitFilterToggle) {
+            if(Object.keys(data).length!=0){
+                const pdata = processData(data)
+                setFilteredData(pdata)
+                setSubmitFilterToggle(false);
+                document.getElementById("close-filter").click();
+            } 
+        }
+    }, [submitFilterToggle])
 
     return(
         <div className="drawer drawer-end no-scrollbar h-full w-full">
