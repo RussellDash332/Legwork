@@ -35,11 +35,19 @@ COPY tensorflow/video ./
 WORKDIR /backend/tensorflow
 COPY tensorflow/model_zoo.txt ./
 COPY tensorflow/update_config.py ./
+COPY tensorflow/print_it.py ./
 RUN pip3 install -r ../firebase/requirements.txt
 RUN sh setup/init.sh
+
+WORKDIR /backend/tensorflow/models
+COPY tensorflow/models ./
 
 ENV camid 1
 ENV video rtsp://esp32cam-rtsp.local:554/mjpeg/1
 
 # python object_counting/tensorflow_cumulative_object_counting.py -m models/<model_name>/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid <cam_id> -v <video_link>
-CMD [ "python", "object_counting/tensorflow_cumulative_object_counting.py", "-m", "models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model", "-l", "data/train/human-lower-limb_label_map.pbtxt", "-camid", "${camid}", "-v", "${video}"]
+WORKDIR /backend/tensorflow
+CMD python object_counting/tensorflow_cumulative_object_counting.py -m models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid $camid -v $video
+
+# For debugging
+# CMD python print_it.py -m models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model -l data/train/human-lower-limb_label_map.pbtxt -camid $camid -v $video

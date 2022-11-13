@@ -64,7 +64,7 @@ def run_inference_for_single_image(model, image):
     return output_dict
 
 
-def run_inference(model, category_index, cap, labels, roi_position=0.6, threshold=0.5, x_axis=True, skip_frames=20, show=False, camid=''):
+def run_inference(model, category_index, cap, labels, roi_position=0.5, threshold=0.5, x_axis=True, skip_frames=20, show=False, camid=''):
     total_frames = 0
 
     ct = CentroidTracker(maxDisappeared=40, maxDistance=50)
@@ -125,14 +125,12 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                     x = [c[0] for c in to.centroids]
                     direction = centroid[0] - np.mean(x)
 
-                    if centroid[0] > roi_position*width and direction > 0 and np.mean(x) < args.roi_position*width:
-                        counter = [0,1]
+                    if direction > 0:
+                        counter[1] += 1
                         to.counted = True
-                        got_change = True
-                    elif centroid[0] < roi_position*width and direction < 0 and np.mean(x) > args.roi_position*width:
-                        counter = [1,0]
+                    elif direction < 0:
+                        counter[0] += 1
                         to.counted = True
-                        got_change = True
 
                 to.centroids.append(centroid)
 
@@ -164,7 +162,7 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
                     0.8, (0, 0xFF, 0xFF), 2, cv2.FONT_HERSHEY_SIMPLEX)
 
         ## write JSON file: counter[0] = left, counter[1] = right
-        if got_change:
+        if sum(counter) > 0:
             outputL = {"camera_id": camid}
             outputL["count"] = counter[0]
             outputL["direction"] = "left"
@@ -183,10 +181,6 @@ def run_inference(model, category_index, cap, labels, roi_position=0.6, threshol
 
         total_frames += 1
 
-    #cap.release()
-    #cv2.destroyAllWindows()
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Detect objects inside webcam videostream')
@@ -199,7 +193,7 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--threshold', type=float,
                         default=0.5, help='Detection threshold')
     parser.add_argument('-roi', '--roi_position', type=float,
-                        default=0.6, help='ROI Position (0-1)')
+                        default=0.5, help='ROI Position (0-1)')
     parser.add_argument('-la', '--labels', nargs='+', type=str,
                         help='Label names to detect (default="all-labels")')
     parser.add_argument('-a', '--axis', default=True, action="store_false",

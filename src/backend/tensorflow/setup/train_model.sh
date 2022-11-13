@@ -13,7 +13,7 @@ do
     python3 object_detection/model_main_tf2.py \
         --model_dir=models/$model_name \
         --pipeline_config_path=models/$model_name/pipeline.config \
-        --num_train_steps=200
+        --num_train_steps=2000
     # Evaluate
     echo $(echo "Eval $model_name")
     python3 object_detection/model_main_tf2.py \
