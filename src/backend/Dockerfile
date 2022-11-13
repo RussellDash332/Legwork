@@ -39,15 +39,18 @@ COPY tensorflow/print_it.py ./
 RUN pip3 install -r ../firebase/requirements.txt
 RUN sh setup/init.sh
 
-WORKDIR /backend/tensorflow/models
-COPY tensorflow/models ./
-
 ENV camid 1
-ENV video rtsp://esp32cam-rtsp.local:554/mjpeg/1
+ENV video 1
+ENV ip 1
 
 # python object_counting/tensorflow_cumulative_object_counting.py -m models/<model_name>/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid <cam_id> -v <video_link>
+# python object_counting/tensorflow_cumulative_object_counting.py -m models/<model_name>/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid <cam_id> -ip <ip_address>
 WORKDIR /backend/tensorflow
-CMD python object_counting/tensorflow_cumulative_object_counting.py -m models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid $camid -v $video
+CMD python object_counting/tensorflow_cumulative_object_counting.py -m models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid $camid -v $video -ip $ip
+
+# Example
+# python object_counting/tensorflow_cumulative_object_counting.py -m models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid abcdef -v rtsp://esp32-ec62609bd3c8.local:554/mjpeg/1
+# python object_counting/tensorflow_cumulative_object_counting.py -m models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model/ -l data/train/human-lower-limb_label_map.pbtxt -camid abcdef -ip 192.168.166.228
 
 # For debugging
 # CMD python print_it.py -m models/centernet_resnet101_v1_fpn_512x512_coco17_tpu-8/saved_model -l data/train/human-lower-limb_label_map.pbtxt -camid $camid -v $video
