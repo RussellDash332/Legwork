@@ -7,6 +7,11 @@ external/
 models/
 protoc/
 
+# Camera-related
+src/backend/esp32cam/.pio/
+src/backend/esp32cam/.vscode/
+src/backend/esp32cam/.gitignore
+
 # Sandbox folders
 sandbox/
 

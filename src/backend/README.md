@@ -8,17 +8,19 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 
 1. Open the `esp32cam` folder in a new window such that `esp32cam` is the root directory.
 
+1. PlatformIO will take same time to load the setup tasks.
+
 1. On the status bar at the bottom of the screen, tap on the right arrow to upload the code (This might take some time).
 
     <img src="assets/status_bar.png" width=50%>
 
-1. Once successful upload, go to wifi settings to search for **ESP32CAM-RTSP**.
+1. Once a successful upload message is seen, go to wifi settings to search for **ESP32CAM-RTSP**.
 
     <img src="assets/wifi_setting.png" width=30%>
 
 1. A browser should be automatically loaded. In case this does not happens automatically, connect to http://192.168.4.1.
 
-1. A configuration screen will appear if connecting for the first time.
+1. Go to settings. A configuration screen will appear if connecting for the first time.
 
     <img src="assets/Configuration.png" width=30%>
 
@@ -31,16 +33,16 @@ Referenced guide: https://github.com/rzeldent/esp32cam-rtsp
 
     <img src="assets/index_2.png" width=50%>
 
-1. RTSP stream can be found at `rtsp://esp32cam-rtsp.local:554/mjpeg/1`.
+1. RTSP stream can be found at a link similar to `rtsp://esp32cam-rtsp.local:554/mjpeg/1`, do save it well.
 
 ### (Optional) Stage 2: Testing with VLC media player
 After stage 1, users can use **VLC media player** to test whether the setup is working by doing these steps below. This stage is optional.
 
-1. Once esp32 camera setup is complete, open **VLC media player**, go to the *Media* dropdown to select *Open network Stream*.
+1. Once esp32 camera setup is complete, open **VLC media player**, go to the *Media* dropdown to select *Open Network Stream*.
 
     <img src="assets/VLC_selection.png" width=30%>
 
-1. Insert the RTSP link [rtsp://esp32cam-rtsp.local:554/mjpeg/1](rtsp://esp32cam-rtsp.local:554/mjpeg/1) into the textbox.
+1. Insert the **RTSP link** into the textbox. Note that you may get a different RTSP link to the example given below.
 
     <img src="assets/VLC_input_rtsp_link.png" width=50%>
 
