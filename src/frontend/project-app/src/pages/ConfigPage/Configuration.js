@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactFlowProvider } from "reactflow";
 
 import { FlowContextProvider } from "./components/FlowComponent/FlowContext";
@@ -12,6 +12,26 @@ import Flow from './components/FlowComponent/Flow';
 
 
 const Configuration = () => {
+
+    const beforeUnloadHandler = (event) => {
+        const e = event || window.event;
+        e.preventDefault();
+
+        if (e) {
+            e.returnValue = ''; // Legacy method for cross browser support
+            }
+        return ''; // Legacy method for cross browser support
+    }
+
+    useEffect(() => {
+        window.removeEventListener('beforeunload', beforeUnloadHandler, true);
+        window.addEventListener('beforeunload', beforeUnloadHandler, true);
+
+        return () => {
+            window.removeEventListener('beforeunload', beforeUnloadHandler, true);
+        };
+    }, [])   
+
     return (
         <FlowContextProvider>
             <div className="h-screen flex flex-col">
