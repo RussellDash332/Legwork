@@ -177,6 +177,8 @@ After training the model, we can run the object counter to produce the desired o
 1. The code in `tensorflow/object_counting/tensorflow_cumulative_object_counting.py` will send the object counting result straight to the provided Firebase real database. This is similar to the one we can see at `firebase/firebase_test_util.py`, where it tries to send a POST request to the database for a new data outputted.
 
 ## Using Docker
+You can pull the image from [this repository](https://hub.docker.com/repository/docker/russellsaerang/legwork).
+
 1. Go to this directory and build the image.
     ```
     docker build -t <image_name> .
