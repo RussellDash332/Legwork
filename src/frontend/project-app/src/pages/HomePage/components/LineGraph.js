@@ -109,17 +109,42 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
     const cam1data = cam1;
     // cam1data = { left: { 2022: 5, 2023: 10 }, right: { 2022: 5, 2023: 10 } }
     if (direction1 === 0) {
-        cam1used = cam1data.left; // if cam facing left, use left data
+        try {
+            cam1used = cam1data.left;
+        }
+        catch (err) {
+            cam1used = {};
+        }
     }
-    else {cam1used = cam1data.right}// eg. cam1used -> { 2022: 7, 2023: 14 }
+    else {
+        try {
+            cam1used = cam1data.right;
+        }
+        catch (err) {
+            cam1used = {};
+        }
+    }
+    // eg. cam1used -> { 2022: 7, 2023: 14 }
    
     const cam2data = cam2;
     if (direction2 === 0) {
-        cam2used = cam2data.left; // if cam facing left, use left data
+        try {
+            cam2used = cam2data.left;
+        }
+        catch (err) {
+            cam2used = {};
+        }
     }
-    else {cam2used = cam2data.right} // eg. cam2used -> { 2022: 5, 2023: 10 }
-  
-
+    else {
+        try {
+            cam2used =cam2data.left;
+        }
+        catch (err) {
+            cam2used = {};
+        }
+    } // eg. cam2used -> { 2022: 5, 2023: 10 }
+    
+    console.log('cam2used', cam2used);
     const datecombine = Object.keys(cam1used);
     const combinedfinal = {};
     for (let k=0; k < datecombine.length; k++) {
@@ -132,6 +157,9 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
     return combinedfinal;
   
 };
+
+
+
         //cam1 = eg. filteredData[camid]
         // a = object.values(cam1) -> [{2022:5, 2023:10}, {2022:5, 2023:10}]
         // a[0] = {2022:5, 2023:10}
@@ -197,7 +225,7 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
                         checkid.push(otherid)
                         dir1 = paths[i].direction1;
                         dir2 = paths[i].direction2;
-                        combinedfinal = combinepath(filteredData[dataid[step]], dataid[step], dir1, filteredData[otherid], otherid.at, dir2);
+                        combinedfinal = combinepath(filteredData[dataid[step]], dataid[step], dir1, filteredData[otherid], otherid, dir2);
                         newdata[paths[i].pathName] = combinedfinal;
                         // combine data of both id
                         // combinefinal = combinepath(filterData[dataid[step]], filteredData[otherid]) -> return combinedfinal = {2022:20, 2023:40}
@@ -224,6 +252,7 @@ const combinepath = (cam1, id1, direction1, cam2, id2, direction2) => {
     //     }
     // }
 
+    // function to sort the
     const compareDate = (a,b) => {
 
 
