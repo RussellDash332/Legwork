@@ -30,6 +30,11 @@ npm run electron-dev
 2. Check/Modify output target format
     - Open `package.json` under `project-app` folder
     - Locate `"build"` and modify `"target"` field to expected output target format for respective platform
+    - For more information on target:
+        - Windows: https://www.electron.build/configuration/win
+        - Mac: https://www.electron.build/configuration/mac
+        - Linux: https://www.electron.build/configuration/linux.html
+
 ```
 "build": {
     "appId": "com.electron.legwork",
