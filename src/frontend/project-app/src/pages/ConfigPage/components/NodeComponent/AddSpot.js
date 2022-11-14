@@ -90,7 +90,7 @@ const AddSpot = () => {
                     {/* Card */}
                     <div className="card w-96 bg-base-300 shadow-xl h-64">
                     <div className="card-body py-5">
-                        <h2 className="card-title font-bold">Camera 1</h2>
+                        <h2 className="card-title font-bold">Camera</h2>
                         
                         <p className="label-text-alt text-end"> Camera Name </p>
                         <input type="text" 

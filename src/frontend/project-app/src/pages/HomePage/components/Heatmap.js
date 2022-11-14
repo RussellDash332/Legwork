@@ -815,7 +815,7 @@ const Heatmap = ({ mode }) => {
             crs={L.CRS.Simple}
             ref={mapRef}
         >
-            <ChangeView center={center}/>
+            {/* <ChangeView center={center}/> */}
             <LayersControl position="topright">
                 {renderFloorPlan()}
                 {renderGridlines()}
