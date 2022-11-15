@@ -1,0 +1,12 @@
+*/.pio/
+*/.vscode/
+*/.gitignore
+*/platformio-device-*.log
+*/build/
+*/*/build/
+*/dist/
+*/*.egg-info/
+*/protoc/
+*/sandbox/
+*/tf2env/
+*/__pycache__/

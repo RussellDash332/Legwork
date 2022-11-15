@@ -4,8 +4,9 @@ FROM python:3.10.8-buster
 
 WORKDIR /backend
 
+# Update packages
 RUN apt update
-RUN apt install -y python3-pip
+RUN apt install -y python3-pip tree
 RUN apt-get install -y python3-venv ffmpeg libsm6 libxext6
 
 # Create venv
@@ -14,31 +15,15 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN pip3 install wheel
 
-WORKDIR /backend/esp32cam
-COPY esp32cam ./
-WORKDIR /backend/firebase
-COPY firebase ./
+# Copy working directory
+COPY . .
 
-WORKDIR /backend/tensorflow/data
-COPY tensorflow/data ./
-WORKDIR /backend/tensorflow/object_counting
-COPY tensorflow/object_counting ./
-WORKDIR /backend/tensorflow/object_detection
-COPY tensorflow/object_detection ./
-WORKDIR /backend/tensorflow/output
-COPY tensorflow/output ./
-WORKDIR /backend/tensorflow/setup
-COPY tensorflow/setup ./
-WORKDIR /backend/tensorflow/video
-COPY tensorflow/video ./
-
+# Setup and install backend packages
 WORKDIR /backend/tensorflow
-COPY tensorflow/model_zoo.txt ./
-COPY tensorflow/update_config.py ./
-COPY tensorflow/print_it.py ./
 RUN pip3 install -r ../firebase/requirements.txt
 RUN sh setup/init.sh
 
+# Define environment variable
 ENV camid 1
 ENV video 1
 ENV ip 1
