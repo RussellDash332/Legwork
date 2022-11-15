@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+#==============FRONTEND===============#
+  webapp:
+    container_name: legwork-webapp
+    image: "siewkit/legwork-app"
+    ports:
+      - 8080:3000
+
+#==============BACKEND================#
+# For each camera device set up,  
+# one copy of backend service template  
+# needs to be filled up
+
+#=====================================#
+#       Backend Service Template      #
+#=====================================#
+  camera:
+    container_name: # Container name
+    image: "russellsaerang/legwork"
+    environment: 
+      video: # video_link
+      camid: # camera_id
+#=====================================#
