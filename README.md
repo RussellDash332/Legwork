@@ -24,4 +24,28 @@
     |       |   └── (some shell scripts to automate setup)
     |       └── (virtual environment name and config files)
     └── frontend
+        └── project-app (react app folder)
+            ├── public (electron config files)
+            └── src (app contents)
+            |   ├── api (api config files and functions)
+            |   ├── assets (test assests)
+            |   ├── data (test data)
+            |   ├── pages (app pages)
+            |   |   ├── ConfigPage (configuration page components and base file)
+            |   |   |   └── components
+            |   |   |       ├── FlowComponent
+            |   |   |       ├── HelpComponent
+            |   |   |       ├── LayerComponent
+            |   |   |       ├── NavbarComponent
+            |   |   |       ├── NodeComponent
+            |   |   |       └── ScaleComponent
+            |   |   ├── HomePage (home page components and base file)
+            |   |   |   ├── components
+            |   |   |   └── utils
+            |   |   ├── LoginPage (home page base file)
+            |   |   └── RegisterPage (registration page components and base file)
+            |   |       └── components
+            |   ├── resources (application logo)
+            |   └── (base app files)
+            └── (config files and app package details)
 ````
